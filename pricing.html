@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가격 및 구매 — SOEZ B2B 택배 송장 만들기</title>
+  <meta name="description" content="SOEZ B2B 택배 송장 만들기 구매 안내. 한 번 구매로 평생 사용하세요.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-body">
+
+<!-- ── 네비게이션 ── -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="emoji">🚚</span>
+      <div>
+        SOEZ
+        <span>B2B 택배 송장 만들기</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">기능 소개</a></li>
+      <li><a href="pricing.html" class="active">가격 및 구매</a></li>
+      <li><a href="pricing.html" class="nav-cta">지금 구매하기</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── 페이지 히어로 ── -->
+<section class="page-hero">
+  <div class="container">
+    <h1>💳 가격 및 구매</h1>
+    <p>한 번 구매로 평생 사용. 추가 요금 없음.</p>
+  </div>
+</section>
+
+<!-- ── 가격 ── -->
+<section class="section" id="buy">
+  <div class="container">
+    <h2 class="section-title">요금제</h2>
+    <p class="section-sub">단순하고 합리적인 가격. 구독료 없이 한 번만 결제하세요.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card featured">
+        <div class="price-popular">⭐ 가장 인기</div>
+        <div class="price-name">개인 라이선스</div>
+        <div class="price-amount">₩ <span id="price-personal">990,000</span><small> / 영구</small></div>
+        <div class="price-desc">PC 1대에서 평생 사용 · 부가세 포함</div>
+        <ul class="price-features">
+          <li>PC 1대 라이선스 (영구)</li>
+          <li>모든 기능 포함</li>
+          <li>무료 업데이트 제공</li>
+          <li>설치 파일 (.exe) 즉시 제공</li>
+          <li>카카오톡 설치 지원</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;display:block;">💬 카카오톡으로 구매하기</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">추가 PC 라이선스</div>
+        <div class="price-amount">₩ <span id="price-extra">490,000</span><small> / 1대</small></div>
+        <div class="price-desc">기존 구매자 추가 PC 등록 · 부가세 포함</div>
+        <ul class="price-features">
+          <li>PC 1대 추가 (영구)</li>
+          <li>모든 기능 동일</li>
+          <li>기존 구매자 전용 할인가</li>
+          <li>즉시 발급 처리</li>
+          <li>카카오톡 문의 후 발급</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="width:100%;text-align:center;display:block;">문의하기</a>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:24px;font-size:.85rem;color:var(--text3);">
+      💡 결제 완료 후 이메일로 설치 파일과 바우처 코드가 자동 발송됩니다.<br>
+      바우처 코드 입력 한 번으로 즉시 활성화됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ── 구매 절차 ── -->
+<section class="steps" id="how-to-buy">
+  <div class="container">
+    <h2 class="section-title">구매 방법</h2>
+    <p class="section-sub">간단한 4단계로 바로 사용할 수 있습니다</p>
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-num">💬</div>
+        <h4>① 카카오톡 문의</h4>
+        <p>카카오톡 채널 <strong>SOEZ</strong>로 문의하시면 결제 방법과 설치 파일 안내를 드립니다.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">💳</div>
+        <h4>② 결제 완료</h4>
+        <p>안내받은 방법으로 결제하시면 이메일로 <strong>바우처 코드</strong>가 자동 발송됩니다.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">📥</div>
+        <h4>③ 설치</h4>
+        <p>설치 파일(.exe)을 다운로드하여 설치합니다. 1분이면 완료됩니다.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">✅</div>
+        <h4>④ 바우처 코드 입력</h4>
+        <p>프로그램 실행 후 이메일로 받은 바우처 코드를 입력하면 즉시 활성화됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 연락처 / 문의 ── -->
+<section class="section" id="contact">
+  <div class="container">
+    <h2 class="section-title">구매 문의</h2>
+    <p class="section-sub">카카오톡 채널 <strong>SOEZ</strong>로 편하게 문의해 주세요</p>
+
+    <div style="max-width:560px;margin:0 auto;">
+
+      <!-- 카카오톡 채널 카드 -->
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(27,43,75,.08);">
+
+        <!-- 채널 헤더 (카카오 느낌) -->
+        <div style="background:#FEE500;padding:28px 32px 20px;text-align:center;position:relative;">
+          <div style="display:inline-flex;align-items:center;justify-content:center;
+                      width:72px;height:72px;background:#1B2B4B;border-radius:18px;
+                      margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,.18);">
+            <span style="color:#fff;font-size:1.6rem;font-weight:900;letter-spacing:2px;">S</span>
+          </div>
+          <div style="font-size:1.3rem;font-weight:900;color:#1B1B1B;margin-bottom:4px;">SOEZ</div>
+          <div style="font-size:.82rem;color:#5C5C5C;">카카오톡 비즈니스 채널</div>
+        </div>
+
+        <!-- 채널 본문 -->
+        <div style="padding:28px 32px;">
+          <p style="color:#374151;font-size:.92rem;line-height:1.8;margin-bottom:20px;text-align:center;">
+            구매 문의 · 설치 지원 · 라이선스 발급<br>
+            모두 카카오톡으로 빠르게 처리해 드립니다.
+          </p>
+
+          <!-- 검색 안내 배지 -->
+          <div style="background:#FFFBEA;border:1px solid #FCD34D;border-radius:10px;
+                      padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:1.1rem;">🔍</span>
+            <div>
+              <div style="font-size:.78rem;color:#92400E;font-weight:700;">카카오톡에서 채널 찾기</div>
+              <div style="font-size:.85rem;color:#78350F;">카카오톡 앱 → 검색 → <strong>"SOEZ"</strong> 입력</div>
+            </div>
+          </div>
+
+          <!-- 채팅 버튼 -->
+          <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener"
+             style="display:flex;align-items:center;justify-content:center;gap:10px;
+                    background:#FEE500;color:#1B1B1B;font-weight:800;font-size:1rem;
+                    border-radius:12px;padding:15px 20px;text-decoration:none;
+                    margin-bottom:10px;transition:opacity .2s;"
+             onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+            <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+              <path d="M24 4C12.95 4 4 11.82 4 21.5c0 6.08 3.56 11.43 9 14.62L11.5 44l9.2-4.9C21.87 39.36 22.92 39.5 24 39.5c11.05 0 20-7.82 20-17.5S35.05 4 24 4z" fill="#1B1B1B"/>
+            </svg>
+            카카오톡으로 문의하기
+          </a>
+
+          <!-- 채널 추가 버튼 -->
+          <a href="http://pf.kakao.com/_ACvjX" target="_blank" rel="noopener"
+             style="display:block;text-align:center;background:#F8FAFC;
+                    border:1px solid #E2E8F0;border-radius:12px;padding:12px;
+                    color:#1B2B4B;font-weight:700;font-size:.88rem;text-decoration:none;
+                    transition:background .2s;"
+             onmouseover="this.style.background='#EBF0FB'" onmouseout="this.style.background='#F8FAFC'">
+            + 채널 추가하기 (소식 받기)
+          </a>
+        </div>
+      </div>
+
+      <!-- 응답 정보 카드 2종 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">⏰</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--navy);">평균 응답 시간</div>
+          <div style="font-size:.88rem;color:var(--primary);font-weight:700;margin-top:4px;">30분 이내</div>
+          <div style="font-size:.74rem;color:var(--text3);margin-top:2px;">평일 09:00 ~ 18:00</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">🔑</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--navy);">라이선스 발급</div>
+          <div style="font-size:.88rem;color:var(--success);font-weight:700;margin-top:4px;">당일 처리</div>
+          <div style="font-size:.74rem;color:var(--text3);margin-top:2px;">주말·공휴일 휴무</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="section" style="background:var(--bg);" id="faq">
+  <div class="container">
+    <h2 class="section-title">자주 묻는 질문</h2>
+    <p class="section-sub">구매 전 궁금한 점을 확인하세요</p>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          PC를 교체하면 다시 구매해야 하나요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          PC를 교체하신 경우 카카오톡으로 문의해 주시면 라이선스를 새 PC로 이전해 드립니다.
+          별도 추가 비용 없이 이전 가능합니다. (1년 1회 이전 기준)
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Mac이나 스마트폰에서도 사용할 수 있나요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          현재는 Windows 10/11 전용 프로그램입니다. Mac 및 모바일 버전은 추후 출시 예정이며,
+          기존 구매자 분들께는 우선 안내해 드릴 예정입니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          업데이트는 유료인가요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          한 번 구매하시면 이후 모든 업데이트는 무료로 제공됩니다.
+          새 버전이 출시되면 같은 방식으로 설치 파일을 받아 업그레이드하시면 됩니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          어떤 택배사 양식을 지원하나요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          현재 일반 B2B 택배 송장 양식을 지원합니다. 특정 택배사 양식이 필요하신 경우
+          카카오톡으로 문의 주시면 검토 후 추가 지원 여부를 안내해 드립니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          환불이 가능한가요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          라이선스 키 미발급 상태에서는 전액 환불이 가능합니다.
+          라이선스 키 발급 후에는 디지털 상품 특성상 환불이 어렵습니다.
+          구매 전 충분히 확인하시고 궁금한 점은 문의 부탁드립니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          거래처가 몇 개까지 등록 가능한가요?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          거래처 등록 수에 제한이 없습니다. 수백, 수천 개의 거래처도 등록하여 관리할 수 있습니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>지금 구매하고 업무 시간을 절약하세요</h2>
+    <p>궁금한 점은 카카오톡으로 언제든지 문의해 주세요.</p>
+    <div class="cta-btns">
+      <a href="#buy" class="btn btn-white btn-lg">🛒 구매하기</a>
+      <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.4);">💬 카카오톡 문의</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">SOEZ</div>
+        <p>대리점·도매업 전용 택배 송장 자동화 프로그램.<br>반복 업무를 자동화하여 소중한 시간을 절약하세요.</p>
+      </div>
+      <div class="footer-col">
+        <h4>메뉴</h4>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="features.html">기능 소개</a></li>
+          <li><a href="pricing.html">가격 및 구매</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>고객 지원</h4>
+        <ul>
+          <li><a href="#faq">자주 묻는 질문</a></li>
+          <li><a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener">카카오톡 문의 (SOEZ)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SOEZ. All rights reserved.</span>
+      <div style="display:flex;gap:20px;">
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+
+</body>
+</html>
