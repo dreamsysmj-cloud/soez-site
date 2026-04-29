@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>설치 파일 다운로드 — SOEZ B2B 택배 송장 만들기</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', sans-serif;
+      background: #F0F4FF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── 헤더 ── */
+    header {
+      background: #1B2B4B;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 5px; text-decoration: none; }
+    .logo span { color: #F5A623; }
+    nav a {
+      color: #A8BFDB; text-decoration: none; font-size: 13px;
+      margin-left: 20px; transition: color .2s;
+    }
+    nav a:hover { color: #fff; }
+
+    /* ── 메인 카드 ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card-icon {
+      width: 64px; height: 64px;
+      background: #EBF1FF;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #1B2B4B;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* ── 입력 ── */
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1B2B4B;
+      margin-bottom: 8px;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #D1D9E6;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+      color: #222;
+    }
+    input[type="email"]:focus { border-color: #3B6FD4; }
+    input[type="email"].error { border-color: #E53E3E; }
+
+    .btn-check {
+      width: 100%;
+      margin-top: 16px;
+      padding: 15px;
+      background: #3B6FD4;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .3px;
+      transition: background .2s, transform .1s;
+    }
+    .btn-check:hover { background: #2F5BB5; }
+    .btn-check:active { transform: scale(.98); }
+    .btn-check:disabled { background: #A0B4D6; cursor: not-allowed; }
+
+    /* ── 에러 메시지 ── */
+    .msg-error {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #991B1B;
+      line-height: 1.6;
+    }
+
+    /* ── 다운로드 결과 ── */
+    .result {
+      display: none;
+      margin-top: 28px;
+    }
+
+    .result-greeting {
+      font-size: 15px;
+      color: #1B2B4B;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .dl-box {
+      background: #EBF1FF;
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .dl-box .dl-icon { font-size: 40px; margin-bottom: 10px; }
+    .dl-box .dl-title { font-size: 14px; color: #444; margin-bottom: 16px; line-height: 1.6; }
+    .dl-box .version { font-size: 12px; color: #888; margin-bottom: 16px; }
+
+    .btn-download {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #1B2B4B;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .3px;
+      transition: background .2s;
+    }
+    .btn-download:hover { background: #273F6E; }
+
+    .dl-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ── 바우처 안내 ── */
+    .voucher-notice {
+      margin-top: 20px;
+      padding: 14px 16px;
+      background: #FFFBEB;
+      border: 1px solid #FCD34D;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #92400E;
+      line-height: 1.7;
+    }
+
+    /* ── 구분선 ── */
+    .divider {
+      margin: 28px 0;
+      border: none;
+      border-top: 1px solid #E8EDF5;
+    }
+
+    /* ── 도움말 ── */
+    .help-area {
+      margin-top: 28px;
+      text-align: center;
+    }
+    .help-area p { font-size: 13px; color: #888; margin-bottom: 10px; }
+    .help-area a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #FEE500;
+      color: #3A1D1D;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .help-area a:hover { background: #f0d900; }
+
+    /* ── 로딩 스피너 ── */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 푸터 ── */
+    footer {
+      background: #1B2B4B;
+      color: #A8BFDB;
+      text-align: center;
+      padding: 18px;
+      font-size: 12px;
+    }
+    footer a { color: #A8BFDB; text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">S<span>O</span>EZ</a>
+  <nav>
+    <a href="index.html">홈</a>
+    <a href="pricing.html">구매</a>
+    <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">문의</a>
+  </nav>
+</header>
+
+<main>
+  <div class="card">
+    <div class="card-icon">📦</div>
+    <h1>설치 파일 다운로드</h1>
+    <p class="subtitle">
+      구매 시 입력하신 <strong>이메일 주소</strong>를 입력하시면<br>
+      구매 이력을 확인 후 다운로드 링크를 제공해 드립니다.
+    </p>
+
+    <label for="emailInput">구매 이메일 주소</label>
+    <input
+      type="email"
+      id="emailInput"
+      placeholder="example@email.com"
+      autocomplete="email"
+    />
+
+    <button class="btn-check" id="checkBtn" onclick="checkEmail()">
+      구매 확인 및 다운로드
+    </button>
+
+    <div class="msg-error" id="msgError"></div>
+
+    <!-- 다운로드 결과 영역 -->
+    <div class="result" id="resultArea">
+      <hr class="divider">
+      <p class="result-greeting" id="greetingText"></p>
+
+      <div class="dl-box">
+        <div class="dl-icon">💾</div>
+        <div class="dl-title">
+          <strong>B2B 택배 송장 만들기</strong><br>
+          Windows 10/11 전용 설치 파일
+        </div>
+        <div class="version" id="versionText"></div>
+        <a class="btn-download" id="dlBtn" href="#" download>
+          📥 설치 파일 다운로드
+        </a>
+        <p class="dl-note">
+          파일 크기 약 50~80MB · 다운로드가 시작되지 않으면 링크를 다시 클릭해주세요.
+        </p>
+      </div>
+
+      <div class="voucher-notice">
+        ⚠️ 설치 후 <strong>바우처 코드(라이선스 코드)</strong>가 필요합니다.<br>
+        이메일로 발송된 코드를 앱 실행 시 입력해 주세요.<br>
+        이메일을 못 받으셨다면 스팸함을 확인하시거나 카카오톡으로 문의해 주세요.
+      </div>
+    </div>
+
+    <!-- 도움말 -->
+    <div class="help-area">
+      <p>이메일이 기억나지 않거나 문제가 있으신가요?</p>
+      <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">
+        💬 카카오톡 채널 SOEZ 문의
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 SOEZ. All rights reserved. &nbsp;|&nbsp;
+  <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">카카오톡 문의</a> &nbsp;|&nbsp;
+  <a href="index.html">홈페이지</a>
+</footer>
+
+<script>
+  // ── 서버 주소 (Railway 배포 URL) ──
+  const SERVER_URL = "https://web-production-7913d.up.railway.app";
+
+  const emailInput = document.getElementById("emailInput");
+  const checkBtn   = document.getElementById("checkBtn");
+  const msgError   = document.getElementById("msgError");
+  const resultArea = document.getElementById("resultArea");
+
+  // 엔터키 지원
+  emailInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") checkEmail();
+  });
+
+  async function checkEmail() {
+    const email = emailInput.value.trim();
+
+    // 기본 유효성 검사
+    if (!email || !email.includes("@")) {
+      showError("올바른 이메일 주소를 입력해주세요.");
+      emailInput.classList.add("error");
+      return;
+    }
+
+    emailInput.classList.remove("error");
+    msgError.style.display = "none";
+    resultArea.style.display = "none";
+
+    // 로딩 상태
+    checkBtn.disabled = true;
+    checkBtn.innerHTML = '<span class="spinner"></span>확인 중...';
+
+    try {
+      const res = await fetch(`${SERVER_URL}/download`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        // 성공 — 다운로드 버튼 표시
+        document.getElementById("greetingText").textContent =
+          `${data.buyer_name}님, 구매 이력이 확인되었습니다! 🎉`;
+        document.getElementById("versionText").textContent =
+          `최신 버전 v${data.app_version}`;
+        document.getElementById("dlBtn").href = data.download_url;
+        resultArea.style.display = "block";
+
+        // 자동 스크롤
+        resultArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      } else {
+        showError(data.detail || "구매 이력을 확인할 수 없습니다.");
+        emailInput.classList.add("error");
+      }
+    } catch (err) {
+      showError("서버에 연결할 수 없습니다. 잠시 후 다시 시도하거나 카카오톡으로 문의해 주세요.");
+    } finally {
+      checkBtn.disabled = false;
+      checkBtn.innerHTML = "구매 확인 및 다운로드";
+    }
+  }
+
+  function showError(msg) {
+    msgError.textContent = msg;
+    msgError.style.display = "block";
+    resultArea.style.display = "none";
+  }
+</script>
+
+</body>
+</html>
