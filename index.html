@@ -1,11 +1,133 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SOEZ — B2B 택배 송장 만들기 | 대리점·도매업 전용 송장 자동화</title>
   <meta name="description" content="거래처 등록부터 엑셀 송장 자동 생성까지. 클릭 몇 번으로 수십 건의 택배 송장을 한 번에 만드세요.">
-  <link rel="stylesheet" href="style.css">
+  <style>
+:root {
+  --navy: #0F1B3A;
+  --navy2: #1B2B4B;
+  --blue: #3B6FD4;
+  --blue2: #2C5BB8;
+  --blue-light: #EBF0FB;
+  --text: #0F172A;
+  --text2: #64748B;
+  --border: #E2E8F0;
+  --bg: #F8FAFC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body.page-body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  color: var(--text); background: #fff; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+em { font-style: normal; color: #FBBF24; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: .92rem;
+  border: 1px solid transparent; cursor: pointer; transition: all .2s ease; white-space: nowrap;
+}
+.btn-lg { padding: 16px 28px; font-size: 1rem; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue2); transform: translateY(-1px); }
+.btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
+.btn-outline:hover { background: var(--bg); }
+.btn-white { background: #fff; color: var(--navy); }
+.btn-white:hover { background: #F1F5F9; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
+.nav-logo .emoji { font-size: 1.5rem; }
+.nav-logo div { line-height: 1.15; }
+.nav-logo span { display: block; font-size: .7rem; font-weight: 500; color: var(--text2); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: .92rem; font-weight: 600; color: var(--text2); transition: color .2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-cta { background: var(--blue); color: #fff !important; padding: 10px 18px; border-radius: 8px; }
+.nav-cta:hover { background: var(--blue2); }
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #1A2D5C 60%, #2C4A8A 100%);
+  color: #fff; padding: 80px 0 100px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(59,111,212,.35), transparent 50%); pointer-events: none; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; }
+.hero-badge { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  padding: 6px 14px; border-radius: 999px; font-size: .82rem; font-weight: 600; margin-bottom: 22px; }
+.hero-text h1 { font-size: 3.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 22px; letter-spacing: -.02em; }
+.hero-text p { font-size: 1.05rem; color: #CBD5E1; margin-bottom: 32px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual { background: #fff; border-radius: 14px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.5); overflow: hidden; }
+.hero-visual-bar { display: flex; align-items: center; gap: 6px; background: #F1F5F9; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.hero-visual-bar span.dot1, .hero-visual-bar span.dot2, .hero-visual-bar span.dot3 { width: 12px; height: 12px; border-radius: 50%; }
+.dot1 { background: #EF4444; } .dot2 { background: #F59E0B; } .dot3 { background: #10B981; }
+.hero-visual-bar .title { margin-left: 12px; font-size: .78rem; color: var(--text2); font-weight: 600; }
+.hero-screen { padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 360px; }
+.mock-row { height: 14px; background: var(--border); border-radius: 4px; }
+.mock-row.blue { background: var(--blue-light); height: 26px; width: 60%; }
+.mock-row.short { width: 40%; } .mock-row.med { width: 70%; }
+.mock-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 6px 0; }
+.mock-thead { display: grid; grid-template-columns: repeat(4,1fr); background: var(--navy); }
+.mock-th { height: 28px; border-right: 1px solid rgba(255,255,255,.1); }
+.mock-tbody { display: flex; flex-direction: column; }
+.mock-tr { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); }
+.mock-tr:nth-child(even) { background: #F8FAFC; }
+.mock-td { height: 26px; border-right: 1px solid var(--border); display: flex; align-items: center; padding: 0 8px; }
+.mock-td.g::after { content: ''; height: 8px; width: 60%; background: var(--blue-light); border-radius: 3px; }
+.stats { background: var(--bg); padding: 50px 0; border-bottom: 1px solid var(--border); }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center; }
+.stat-num { font-size: 2.4rem; font-weight: 900; color: var(--blue); margin-bottom: 4px; letter-spacing: -.02em; }
+.stat-label { font-size: .88rem; color: var(--text2); font-weight: 500; }
+.section { padding: 90px 0; }
+.section-title { font-size: 2.2rem; font-weight: 900; text-align: center; margin-bottom: 10px; letter-spacing: -.02em; }
+.section-sub { text-align: center; color: var(--text2); font-size: 1rem; margin-bottom: 50px; }
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.feature-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 32px 26px; transition: all .25s ease; }
+.feature-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -10px rgba(15,27,58,.15); border-color: var(--blue); }
+.feature-icon { font-size: 2rem; margin-bottom: 16px; width: 56px; height: 56px; background: var(--blue-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.feature-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; }
+.feature-card p { font-size: .92rem; color: var(--text2); }
+.screenshots { background: var(--bg); }
+.screenshots-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+.screenshot-item { background: #fff; border-radius: 14px; border: 1px solid var(--border); overflow: hidden; }
+.screenshot-bar { display: flex; gap: 6px; padding: 10px 14px; background: #F1F5F9; border-bottom: 1px solid var(--border); }
+.screenshot-bar .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.screenshot-label { padding: 14px 20px 8px; font-weight: 700; font-size: .95rem; }
+.screenshot-content { padding: 12px 20px 24px; display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
+.upcoming-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.upcoming-card { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 32px 26px; position: relative; }
+.upcoming-badge { position: absolute; top: 16px; right: 16px; background: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; }
+.upcoming-icon { font-size: 1.8rem; margin-bottom: 14px; width: 50px; height: 50px; background: #F1F5F9; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.upcoming-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
+.upcoming-card p { font-size: .9rem; color: var(--text2); }
+.cta-banner { background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%); color: #fff; padding: 80px 0; text-align: center; }
+.cta-banner h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 14px; letter-spacing: -.02em; }
+.cta-banner p { font-size: 1.05rem; color: #CBD5E1; margin-bottom: 28px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.footer { background: var(--navy); color: #CBD5E1; padding: 60px 0 30px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand .logo { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 14px; }
+.footer-brand p { font-size: .88rem; line-height: 1.7; color: #94A3B8; }
+.footer-col h4 { font-size: .95rem; font-weight: 800; color: #fff; margin-bottom: 14px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: .88rem; color: #94A3B8; transition: color .2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: .82rem; color: #94A3B8; }
+.footer-bottom a:hover { color: #fff; }
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-text h1 { font-size: 2.3rem; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .features-grid, .screenshots-grid, .upcoming-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 14px; }
+  .nav-links li:nth-child(4) { display: none; }
+}
+  </style>
 </head>
 <body class="page-body">
 
@@ -24,7 +146,7 @@
       <li><a href="features.html">기능 소개</a></li>
       <li><a href="pricing.html">가격 및 구매</a></li>
       <li><a href="download.html">설치 파일 다운로드</a></li>
-      <li><a href="pricing.html" class="nav-cta">지금 구매하기</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
     </ul>
   </div>
 </nav>
@@ -34,9 +156,10 @@
   <div class="container hero-inner">
     <div class="hero-text">
       <div class="hero-badge">✨ 대리점 · 도매업 전용 자동화 솔루션</div>
-      <h1>B2B 택배 송장,<br><em>클릭 몇 번</em>으로 완성</h1>
-      <p>거래처 관리부터 엑셀 송장 자동 생성까지.<br>
-         수십 건의 송장을 몇 초 만에 만들고 원하는 폴더에 자동 저장하세요.</p>
+      <h1>B2B 택배 송장등록파일,
+클릭 몇 번으로 완성</h1>
+      <p>간단한 거래처 관리부터 간편한 엑셀 송장 등록 파일 자동 생성까지.
+수십 수백 건의 송장을 몇 초 만에 만들고 원하는 폴더에 자동 저장하세요.</p>
       <div class="hero-btns">
         <a href="pricing.html" class="btn btn-primary btn-lg">🛒 지금 구매하기</a>
         <a href="features.html" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.4);">기능 살펴보기 →</a>
@@ -79,20 +202,20 @@
   <div class="container">
     <div class="stats-grid">
       <div>
-        <div class="stat-num">10초</div>
-        <div class="stat-label">송장 생성 평균 소요 시간</div>
+        <div class="stat-num">빠른 작업</div>
+        <div class="stat-label">송장 생성 평균 소요 시간 단축</div>
       </div>
       <div>
         <div class="stat-num">무제한</div>
         <div class="stat-label">거래처 등록 가능 수</div>
       </div>
       <div>
-        <div class="stat-num">자동화</div>
-        <div class="stat-label">날짜별 폴더 & 파일명 생성</div>
+        <div class="stat-num">자동화 폴더</div>
+        <div class="stat-label">날짜별 폴더 &amp; 파일명 생성</div>
       </div>
       <div>
-        <div class="stat-num">PC 1대</div>
-        <div class="stat-label">라이선스 (안전한 PC 잠금)</div>
+        <div class="stat-num">오프라인 PC</div>
+        <div class="stat-label">안전한 데이터 관리</div>
       </div>
     </div>
   </div>
@@ -111,13 +234,13 @@
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <h3>원클릭 송장 생성</h3>
-        <p>등록된 거래처를 선택하면 주소, 연락처가 자동으로 채워집니다. 수량과 품목만 확인하면 끝.</p>
+        <h3>원클릭 송장 등록 파일 생성</h3>
+        <p>등록된 거래처를 선택하면 주소, 연락처가 자동으로 채워집니다. 수량만 입력 및 확인하면 끝.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <h3>엑셀 자동 저장</h3>
-        <p>송장 양식에 맞는 엑셀 파일이 자동 생성됩니다. 날짜·시간이 포함된 파일명으로 원하는 폴더에 저장.</p>
+        <h3>송장 등록 양식의 엑셀 자동 저장</h3>
+        <p>등록된 택배사 송장 양식에 맞게 엑셀 파일이 자동 생성됩니다.&nbsp;날짜·시간이 포함된 파일명으로 원하는 폴더에 저장.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🗂️</div>
@@ -127,7 +250,7 @@
       <div class="feature-card">
         <div class="feature-icon">🚛</div>
         <h3>운임 구분 설정</h3>
-        <p>신용·현금·착불 운임을 각각 설정하고 거래처별로 자동 적용됩니다. 운임 계산 실수를 없애세요.</p>
+        <p>신용·현금·착불 운임을 각각 설정 가능하고 거래처별로 자동 적용됩니다.&nbsp;</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📤</div>
@@ -444,5 +567,7 @@
   </div>
 </footer>
 
-</body>
-</html>
+
+
+
+</body></html>
