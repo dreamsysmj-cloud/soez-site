@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구매 신청 — SOEZ B2B 택배 송장 만들기</title>
+  <meta name="description" content="무통장 입금 방식으로 간편하게 구매하세요. 신청 후 입금 확인 시 바우처 코드를 이메일로 발송합니다.">
+  <style>
+:root {
+  --navy: #0F1B3A;
+  --navy2: #1B2B4B;
+  --blue: #3B6FD4;
+  --blue2: #2C5BB8;
+  --blue-light: #EBF0FB;
+  --text: #0F172A;
+  --text2: #64748B;
+  --border: #E2E8F0;
+  --bg: #F8FAFC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  color: var(--text); background: var(--bg); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
+.nav-logo .emoji { font-size: 1.5rem; }
+.nav-logo div { line-height: 1.15; }
+.nav-logo span { display: block; font-size: .7rem; font-weight: 500; color: var(--text2); }
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-links a { font-size: .92rem; font-weight: 600; color: var(--text2); transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--blue); color: #fff !important; padding: 10px 18px; border-radius: 8px; }
+.nav-cta:hover { background: var(--blue2) !important; }
+
+/* PAGE HEADER */
+.page-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #1A2D5C 60%, #2C4A8A 100%);
+  color: #fff; padding: 56px 0 60px; text-align: center;
+}
+.page-header h1 { font-size: 2rem; font-weight: 900; margin-bottom: 10px; }
+.page-header p { font-size: 1rem; color: #A8BFDB; }
+
+/* MAIN LAYOUT */
+.order-layout {
+  max-width: 1040px; margin: 48px auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start;
+}
+
+/* FORM CARD */
+.card {
+  background: #fff; border-radius: 16px; border: 1px solid var(--border);
+  padding: 36px 40px; box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+.card h2 { font-size: 1.2rem; font-weight: 800; color: var(--navy2); margin-bottom: 28px; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: .88rem; font-weight: 700; color: var(--text); margin-bottom: 7px;
+}
+.form-group label .required { color: #E53E3E; margin-left: 2px; }
+.form-group label .optional { font-weight: 400; color: var(--text2); font-size: .8rem; margin-left: 4px; }
+.form-group input, .form-group select {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: .95rem; color: var(--text);
+  transition: border-color .2s, box-shadow .2s; outline: none; background: #fff;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,111,212,.12);
+}
+.form-group input::placeholder { color: #B0BAC9; }
+
+/* 파일 업로드 */
+.file-upload-area {
+  border: 2px dashed var(--border); border-radius: 10px;
+  padding: 22px; text-align: center; cursor: pointer; transition: all .2s;
+  background: var(--bg);
+}
+.file-upload-area:hover { border-color: var(--blue); background: var(--blue-light); }
+.file-upload-area.has-file { border-color: #22C55E; background: #F0FDF4; }
+.file-upload-area .icon { font-size: 2rem; margin-bottom: 8px; }
+.file-upload-area p { font-size: .85rem; color: var(--text2); margin-bottom: 4px; }
+.file-upload-area .file-name { font-size: .83rem; color: #166534; font-weight: 600; margin-top: 6px; display: none; }
+#biz_reg_file { display: none; }
+
+/* 제출 버튼 */
+.btn-submit {
+  width: 100%; padding: 16px; background: var(--blue); color: #fff;
+  border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 800;
+  cursor: pointer; transition: all .2s; margin-top: 8px;
+}
+.btn-submit:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(59,111,212,.3); }
+.btn-submit:disabled { background: #93A4C4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* 성공 화면 */
+.success-screen { display: none; text-align: center; padding: 12px 0; }
+.success-icon { font-size: 4rem; margin-bottom: 16px; }
+.success-screen h2 { font-size: 1.5rem; font-weight: 900; color: var(--navy2); margin-bottom: 10px; }
+.success-screen p { font-size: .95rem; color: var(--text2); line-height: 1.7; }
+
+/* 입금 정보 박스 */
+.bank-info-box {
+  background: var(--blue-light); border: 2px solid var(--blue);
+  border-radius: 12px; padding: 24px; margin: 20px 0; text-align: left;
+}
+.bank-info-box h3 { font-size: 1rem; font-weight: 800; color: var(--navy2); margin-bottom: 16px; }
+.bank-row { display: flex; justify-content: space-between; padding: 9px 0;
+            border-bottom: 1px solid #D0DCF5; font-size: .93rem; }
+.bank-row:last-child { border-bottom: none; }
+.bank-row .label { color: var(--text2); }
+.bank-row .value { font-weight: 700; color: var(--navy2); }
+.bank-row .amount { font-size: 1.2rem; color: #E53E3E; font-weight: 900; }
+.copy-btn {
+  font-size: .8rem; background: none; border: 1px solid var(--blue);
+  color: var(--blue); border-radius: 4px; padding: 2px 8px; cursor: pointer;
+  margin-left: 8px; transition: all .15s;
+}
+.copy-btn:hover { background: var(--blue); color: #fff; }
+
+/* 사이드바 */
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card {
+  background: #fff; border-radius: 14px; border: 1px solid var(--border);
+  padding: 24px 26px; box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.sidebar-card h3 { font-size: .95rem; font-weight: 800; color: var(--navy2); margin-bottom: 14px; }
+.price-tag { font-size: 2.2rem; font-weight: 900; color: var(--blue); line-height: 1; }
+.price-sub { font-size: .8rem; color: var(--text2); margin-top: 4px; }
+.feature-list li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: .88rem; color: var(--text2); padding: 5px 0;
+}
+.feature-list li .check { color: #22C55E; font-weight: 700; flex-shrink: 0; }
+.process-steps { counter-reset: step; }
+.process-step {
+  display: flex; gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--border); font-size: .85rem;
+}
+.process-step:last-child { border-bottom: none; }
+.step-num {
+  width: 24px; height: 24px; background: var(--blue); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 800; flex-shrink: 0;
+}
+.step-text { color: var(--text2); line-height: 1.5; }
+.step-text strong { color: var(--text); display: block; font-size: .88rem; }
+
+/* FOOTER */
+.footer { background: var(--navy); color: #94A3B8; padding: 36px 0; margin-top: 64px; text-align: center; font-size: .85rem; }
+.footer a { color: #94A3B8; }
+.footer a:hover { color: #fff; }
+
+/* 에러 메시지 */
+.error-msg { display: none; background: #FEF2F2; border: 1px solid #FECACA;
+             border-radius: 8px; padding: 12px 16px; font-size: .88rem;
+             color: #B91C1C; margin-bottom: 16px; }
+
+@media (max-width: 768px) {
+  .order-layout { grid-template-columns: 1fr; }
+  .card { padding: 24px 20px; }
+  .sidebar { order: -1; }
+  .page-header h1 { font-size: 1.5rem; }
+  .nav-links { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="emoji">📦</span>
+      <div>SOEZ<span>B2B 택배 송장 만들기</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">홈</a>
+      <a href="features.html">기능</a>
+      <a href="pricing.html">가격</a>
+      <a href="download.html">다운로드</a>
+      <a href="order.html" class="nav-cta" style="color:#fff;">구매 신청</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>💳 구매 신청</h1>
+    <p>무통장 입금으로 간편하게 구매하세요. 확인 후 1영업일 이내 라이선스를 발송합니다.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="order-layout">
+
+  <!-- 폼 카드 -->
+  <div class="card">
+    <h2>📋 구매 신청서</h2>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- 신청 폼 -->
+    <form id="orderForm">
+      <div class="form-group">
+        <label>상호(업체명) <span class="required">*</span></label>
+        <input type="text" name="company_name" id="company_name"
+               placeholder="예: (주)쏘이지 물류" required maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>구매자 이름 <span class="required">*</span></label>
+        <input type="text" name="buyer_name" id="buyer_name"
+               placeholder="예: 홍길동" required maxlength="50">
+      </div>
+      <div class="form-group">
+        <label>연락처 <span class="required">*</span></label>
+        <input type="tel" name="phone" id="phone"
+               placeholder="예: 010-1234-5678" required maxlength="20">
+      </div>
+      <div class="form-group">
+        <label>이메일 <span class="required">*</span></label>
+        <input type="email" name="email" id="email"
+               placeholder="예: soez@example.com" required maxlength="100">
+        <p style="font-size:.8rem;color:var(--text2);margin-top:5px;">
+          📧 바우처 코드와 설치 파일 링크를 이 이메일로 발송합니다.
+        </p>
+      </div>
+      <div class="form-group">
+        <label>사업자등록증 <span class="optional">(선택)</span></label>
+        <div class="file-upload-area" id="fileArea" onclick="document.getElementById('biz_reg_file').click()">
+          <div class="icon">📄</div>
+          <p>클릭하여 파일을 선택하세요</p>
+          <p style="font-size:.78rem;color:#B0BAC9;">JPG · PNG · PDF 지원 · 최대 10MB</p>
+          <div class="file-name" id="fileName"></div>
+        </div>
+        <input type="file" id="biz_reg_file" name="biz_reg_file"
+               accept=".jpg,.jpeg,.png,.pdf">
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        신청서 제출하기 →
+      </button>
+    </form>
+
+    <!-- 성공 화면 -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h2>구매 신청이 접수되었습니다!</h2>
+      <p>아래 계좌로 입금해 주시면<br>확인 후 <strong>1영업일 이내</strong>에 바우처 코드를 이메일로 발송합니다.</p>
+
+      <div class="bank-info-box" id="bankInfoBox">
+        <h3>💳 무통장 입금 계좌 정보</h3>
+        <div class="bank-row">
+          <span class="label">은행</span>
+          <span class="value" id="resBank">—</span>
+        </div>
+        <div class="bank-row">
+          <span class="label">계좌번호</span>
+          <span class="value">
+            <span id="resAccount">—</span>
+            <button class="copy-btn" onclick="copyText('resAccount')">복사</button>
+          </span>
+        </div>
+        <div class="bank-row">
+          <span class="label">예금주</span>
+          <span class="value" id="resHolder">—</span>
+        </div>
+        <div class="bank-row">
+          <span class="label">입금 금액</span>
+          <span class="value amount" id="resAmount">—</span>
+        </div>
+      </div>
+
+      <p style="font-size:.85rem;background:#FFF7ED;border:1px solid #FCD34D;border-radius:8px;padding:12px 16px;color:#92400E;text-align:left;margin-top:4px;">
+        ⚠️ 입금자명을 <strong id="resName">신청자 이름</strong>으로 입금해 주세요.<br>
+        이름이 다를 경우 확인이 지연될 수 있습니다.
+      </p>
+
+      <p style="margin-top:20px;font-size:.85rem;color:var(--text2);">
+        접수 확인 이메일을 발송했습니다. 이메일을 확인해 주세요.
+      </p>
+    </div>
+  </div>
+
+  <!-- 사이드바 -->
+  <div class="sidebar">
+
+    <!-- 가격 -->
+    <div class="sidebar-card">
+      <h3>💰 가격</h3>
+      <div class="price-tag">₩39,000</div>
+      <div class="price-sub">1 PC 영구 라이선스 · 부가세 포함</div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+      <ul class="feature-list">
+        <li><span class="check">✓</span> 무제한 대리점 등록</li>
+        <li><span class="check">✓</span> 엑셀 송장 자동 생성</li>
+        <li><span class="check">✓</span> 자동 폴더/파일 저장</li>
+        <li><span class="check">✓</span> 5개 택배사 프리셋</li>
+        <li><span class="check">✓</span> 오프라인 PC 사용 가능</li>
+        <li><span class="check">✓</span> 업데이트 무상 제공</li>
+        <li><span class="check">✓</span> 카카오톡 고객 지원</li>
+      </ul>
+    </div>
+
+    <!-- 구매 프로세스 -->
+    <div class="sidebar-card">
+      <h3>📌 구매 진행 순서</h3>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>신청서 제출</strong>
+            정보 입력 후 제출
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>무통장 입금</strong>
+            안내 계좌로 입금
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>입금 확인</strong>
+            영업일 기준 1일 이내
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>이메일 발송</strong>
+            바우처 코드 + 설치파일 링크
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <strong>즉시 사용 시작!</strong>
+            코드 입력 후 PC 활성화
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 문의 -->
+    <div class="sidebar-card" style="background:var(--navy2);border-color:var(--navy2);">
+      <h3 style="color:#fff;">💬 문의하기</h3>
+      <p style="font-size:.85rem;color:#A8BFDB;line-height:1.6;margin-bottom:14px;">
+        구매 전 궁금한 점이 있으신가요?<br>
+        카카오톡으로 바로 문의하세요.
+      </p>
+      <a href="http://pf.kakao.com/_ACvjX/chat"
+         style="display:block;text-align:center;background:#FEE500;color:#000;font-weight:800;padding:12px;border-radius:8px;font-size:.92rem;">
+        💛 카카오톡 문의
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p style="margin-bottom:8px;">
+      <a href="index.html">홈</a> &nbsp;·&nbsp;
+      <a href="features.html">기능</a> &nbsp;·&nbsp;
+      <a href="pricing.html">가격</a> &nbsp;·&nbsp;
+      <a href="download.html">다운로드</a> &nbsp;·&nbsp;
+      <a href="http://pf.kakao.com/_ACvjX/chat">카카오톡 문의</a>
+    </p>
+    <p>© 2026 SOEZ(쏘이지) · 사업자등록번호: 759-03-03828</p>
+  </div>
+</footer>
+
+<script>
+  // ── 서버 URL ──────────────────────────────────
+  const API_URL = "https://soez-license-server-production.up.railway.app";
+
+  // ── 파일 선택 UI ──────────────────────────────
+  const fileInput = document.getElementById("biz_reg_file");
+  const fileArea  = document.getElementById("fileArea");
+  const fileName  = document.getElementById("fileName");
+
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+      const f = fileInput.files[0];
+      if (f.size > 10 * 1024 * 1024) {
+        alert("파일 크기는 10MB 이하만 가능합니다.");
+        fileInput.value = "";
+        return;
+      }
+      fileName.textContent = "✅ " + f.name;
+      fileName.style.display = "block";
+      fileArea.classList.add("has-file");
+    } else {
+      fileName.style.display = "none";
+      fileArea.classList.remove("has-file");
+    }
+  });
+
+  // ── 폼 제출 ───────────────────────────────────
+  document.getElementById("orderForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    const errBox = document.getElementById("errorMsg");
+    errBox.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "처리 중...";
+
+    const fd = new FormData(e.target);
+
+    try {
+      const res = await fetch(`${API_URL}/order`, { method: "POST", body: fd });
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.detail || "서버 오류가 발생했습니다.");
+      }
+
+      // 성공: 입금 정보 표시
+      document.getElementById("resBank").textContent    = data.bank_name    || "—";
+      document.getElementById("resAccount").textContent = data.bank_account || "—";
+      document.getElementById("resHolder").textContent  = data.bank_holder  || "—";
+      document.getElementById("resAmount").textContent  = "₩" + (data.amount || "—") + "원";
+      document.getElementById("resName").textContent    = document.getElementById("buyer_name").value;
+
+      document.getElementById("orderForm").style.display   = "none";
+      document.getElementById("successScreen").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+    } catch (err) {
+      errBox.textContent = "⚠️ " + err.message;
+      errBox.style.display = "block";
+      btn.disabled = false;
+      btn.textContent = "신청서 제출하기 →";
+    }
+  });
+
+  // ── 계좌번호 복사 ─────────────────────────────
+  function copyText(id) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      btn.textContent = "복사됨!";
+      setTimeout(() => { btn.textContent = "복사"; }, 2000);
+    });
+  }
+
+  // ── 전화번호 자동 하이픈 ──────────────────────
+  document.getElementById("phone").addEventListener("input", (e) => {
+    let v = e.target.value.replace(/\D/g, "");
+    if (v.length <= 3) e.target.value = v;
+    else if (v.length <= 7) e.target.value = v.slice(0,3) + "-" + v.slice(3);
+    else e.target.value = v.slice(0,3) + "-" + v.slice(3,7) + "-" + v.slice(7,11);
+  });
+</script>
+</body>
+</html>
