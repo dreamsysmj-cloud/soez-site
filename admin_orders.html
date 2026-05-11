@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 — 주문 관리 | SOEZ</title>
+  <style>
+:root {
+  --navy: #0F1B3A;
+  --navy2: #1B2B4B;
+  --blue: #3B6FD4;
+  --blue2: #2C5BB8;
+  --text: #0F172A;
+  --text2: #64748B;
+  --border: #E2E8F0;
+  --bg: #F8FAFC;
+  --green: #16A34A;
+  --green-bg: #DCFCE7;
+  --red: #DC2626;
+  --red-bg: #FEE2E2;
+  --yellow-bg: #FEF9C3;
+  --yellow: #D97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+       background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* LOGIN */
+.login-wrap {
+  min-height: 100vh; display: flex; align-items: center;
+  justify-content: center; background: var(--navy);
+}
+.login-card {
+  background: #fff; border-radius: 16px; padding: 40px 44px;
+  width: 100%; max-width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  text-align: center;
+}
+.login-logo { font-size: 2rem; font-weight: 900; color: var(--navy2); letter-spacing: 4px; margin-bottom: 4px; }
+.login-sub { font-size: .8rem; color: var(--text2); margin-bottom: 28px; }
+.login-card input {
+  width: 100%; padding: 13px 16px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: .95rem; outline: none; margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.login-card input:focus { border-color: var(--blue); }
+.login-btn {
+  width: 100%; padding: 13px; background: var(--blue); color: #fff;
+  border: none; border-radius: 8px; font-size: 1rem; font-weight: 800;
+  cursor: pointer; transition: background .2s;
+}
+.login-btn:hover { background: var(--blue2); }
+.login-err { font-size: .83rem; color: var(--red); margin-top: 8px; display: none; }
+
+/* ADMIN PANEL */
+.panel { display: none; }
+.topbar {
+  background: var(--navy2); color: #fff; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 60px;
+}
+.topbar h1 { font-size: 1rem; font-weight: 800; }
+.topbar-right { display: flex; align-items: center; gap: 16px; font-size: .85rem; color: #A8BFDB; }
+.logout-btn {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  font-size: .82rem; transition: background .2s;
+}
+.logout-btn:hover { background: rgba(255,255,255,.2); }
+
+.main { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+/* 상태 탭 */
+.tab-bar { display: flex; gap: 8px; margin-bottom: 24px; }
+.tab-btn {
+  padding: 8px 18px; border-radius: 8px; border: 1.5px solid var(--border);
+  background: #fff; font-size: .88rem; font-weight: 700; cursor: pointer;
+  transition: all .15s; color: var(--text2);
+}
+.tab-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.tab-btn .cnt {
+  display: inline-block; background: rgba(0,0,0,.12); border-radius: 99px;
+  font-size: .75rem; padding: 1px 7px; margin-left: 4px;
+}
+.tab-btn.active .cnt { background: rgba(255,255,255,.25); }
+
+/* 리프레시 */
+.actions-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.actions-bar h2 { font-size: 1rem; font-weight: 800; color: var(--navy2); }
+.refresh-btn {
+  padding: 8px 16px; background: #fff; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: .85rem; font-weight: 600; cursor: pointer;
+  transition: all .15s; color: var(--text2);
+}
+.refresh-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* 주문 카드 */
+.orders-grid { display: grid; gap: 16px; }
+.order-card {
+  background: #fff; border-radius: 12px; border: 1px solid var(--border);
+  padding: 22px 24px; box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  transition: box-shadow .15s;
+}
+.order-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,.08); }
+.order-card-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.order-id { font-size: .78rem; color: var(--text2); font-weight: 600; }
+.order-company { font-size: 1.1rem; font-weight: 800; color: var(--navy2); margin-top: 2px; }
+.status-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 99px;
+  font-size: .78rem; font-weight: 700; white-space: nowrap;
+}
+.status-pending  { background: var(--yellow-bg); color: var(--yellow); }
+.status-approved { background: var(--green-bg);  color: var(--green); }
+.status-rejected { background: var(--red-bg);    color: var(--red); }
+
+.order-info {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px 24px; font-size: .86rem; margin-bottom: 18px;
+}
+.info-item .label { color: var(--text2); font-size: .78rem; margin-bottom: 2px; }
+.info-item .val { font-weight: 600; color: var(--text); }
+
+.order-card-foot { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.btn-approve {
+  padding: 9px 20px; background: var(--green); color: #fff;
+  border: none; border-radius: 8px; font-size: .88rem; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+}
+.btn-approve:hover { background: #15803D; }
+.btn-reject {
+  padding: 9px 20px; background: #fff; color: var(--red);
+  border: 1.5px solid var(--red); border-radius: 8px; font-size: .88rem;
+  font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.btn-reject:hover { background: var(--red); color: #fff; }
+.btn-disabled { opacity: .4; cursor: not-allowed; }
+.biz-link {
+  font-size: .82rem; color: var(--blue); cursor: pointer; text-decoration: underline; margin-left: auto;
+}
+.voucher-code { font-family: monospace; font-size: .95rem; font-weight: 700;
+                color: var(--blue); background: #EBF0FB; padding: 3px 10px; border-radius: 6px; }
+.created-at { font-size: .78rem; color: var(--text2); }
+
+/* 빈 상태 */
+.empty-state { text-align: center; padding: 60px 24px; color: var(--text2); }
+.empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state p { font-size: .95rem; }
+
+/* 로딩 */
+.loading { text-align: center; padding: 48px; color: var(--text2); font-size: .95rem; }
+
+/* 모달 */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999; display: none;
+}
+.modal {
+  background: #fff; border-radius: 14px; padding: 32px; width: 100%;
+  max-width: 440px; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+}
+.modal h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; color: var(--navy2); }
+.modal p  { font-size: .9rem; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+.modal textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: .9rem; height: 80px; resize: none; outline: none;
+  transition: border-color .2s;
+}
+.modal textarea:focus { border-color: var(--blue); }
+.modal-btns { display: flex; gap: 10px; margin-top: 16px; }
+.modal-btns button { flex: 1; padding: 11px; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; border: none; }
+.modal-confirm { background: var(--red); color: #fff; }
+.modal-confirm:hover { background: #B91C1C; }
+.modal-cancel  { background: var(--bg); color: var(--text2); }
+.modal-cancel:hover  { background: var(--border); }
+
+/* 스낵바 */
+.snackbar {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #1E293B; color: #fff; padding: 12px 24px;
+  border-radius: 10px; font-size: .9rem; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 9999;
+  opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.snackbar.show { opacity: 1; }
+
+@media (max-width: 600px) {
+  .order-info { grid-template-columns: 1fr 1fr; }
+  .topbar h1 { font-size: .88rem; }
+}
+  </style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">SOEZ</div>
+    <div class="login-sub">관리자 주문 관리 페이지</div>
+    <input type="password" id="adminKeyInput" placeholder="관리자 키를 입력하세요"
+           onkeydown="if(event.key==='Enter') doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <div class="login-err" id="loginErr">관리자 키가 올바르지 않습니다.</div>
+  </div>
+</div>
+
+<!-- 어드민 패널 -->
+<div class="panel" id="adminPanel">
+
+  <div class="topbar">
+    <h1>📋 SOEZ 주문 관리</h1>
+    <div class="topbar-right">
+      <span id="adminKeyDisplay"></span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-status=""         onclick="switchTab(this, '')">전체 <span class="cnt" id="cnt-all">—</span></button>
+      <button class="tab-btn"        data-status="pending"  onclick="switchTab(this, 'pending')">입금 대기 <span class="cnt" id="cnt-pending">—</span></button>
+      <button class="tab-btn"        data-status="approved" onclick="switchTab(this, 'approved')">승인 완료 <span class="cnt" id="cnt-approved">—</span></button>
+      <button class="tab-btn"        data-status="rejected" onclick="switchTab(this, 'rejected')">반려 <span class="cnt" id="cnt-rejected">—</span></button>
+    </div>
+
+    <div class="actions-bar">
+      <h2 id="listTitle">전체 주문</h2>
+      <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
+    </div>
+
+    <div id="ordersList">
+      <div class="loading">주문을 불러오는 중...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 반려 확인 모달 -->
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal">
+    <h3>⚠️ 주문 반려</h3>
+    <p>주문 <strong id="rejectOrderId"></strong>을 반려하시겠습니까?</p>
+    <textarea id="rejectMemo" placeholder="반려 사유 (선택)"></textarea>
+    <div class="modal-btns">
+      <button class="modal-cancel"  onclick="closeModal()">취소</button>
+      <button class="modal-confirm" onclick="confirmReject()">반려 확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 스낵바 -->
+<div class="snackbar" id="snackbar"></div>
+
+<script>
+  const API_URL = "https://soez-license-server-production.up.railway.app";
+  let adminKey = "";
+  let currentStatus = "";
+  let allOrders = [];
+  let pendingRejectId = null;
+
+  // ── 로그인 ──────────────────────────────────
+  function doLogin() {
+    const key = document.getElementById("adminKeyInput").value.trim();
+    if (!key) return;
+    adminKey = key;
+    document.getElementById("adminKeyDisplay").textContent = "키: " + key.slice(0, 4) + "****";
+    document.getElementById("loginWrap").style.display  = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    loadOrders();
+  }
+
+  function doLogout() {
+    adminKey = "";
+    allOrders = [];
+    document.getElementById("loginWrap").style.display  = "flex";
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("adminKeyInput").value = "";
+    document.getElementById("loginErr").style.display = "none";
+  }
+
+  // ── 탭 전환 ─────────────────────────────────
+  function switchTab(el, status) {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+    currentStatus = status;
+    const titles = { "": "전체 주문", pending: "입금 대기", approved: "승인 완료", rejected: "반려" };
+    document.getElementById("listTitle").textContent = titles[status] || "주문";
+    renderOrders();
+  }
+
+  // ── 주문 로드 ────────────────────────────────
+  async function loadOrders() {
+    document.getElementById("ordersList").innerHTML = '<div class="loading">주문을 불러오는 중...</div>';
+    try {
+      const res = await fetch(`${API_URL}/admin/orders`, {
+        headers: { "X-Admin-Key": adminKey }
+      });
+      if (res.status === 403) {
+        document.getElementById("loginWrap").style.display  = "flex";
+        document.getElementById("adminPanel").style.display = "none";
+        document.getElementById("loginErr").style.display   = "block";
+        document.getElementById("adminPanel").style.display = "none";
+        return;
+      }
+      const data = await res.json();
+      allOrders = data.data || [];
+      updateCounts();
+      renderOrders();
+    } catch (e) {
+      document.getElementById("ordersList").innerHTML =
+        '<div class="empty-state"><div class="icon">⚠️</div><p>서버 연결 오류: ' + e.message + '</p></div>';
+    }
+  }
+
+  function updateCounts() {
+    const cnt = (s) => s ? allOrders.filter(o => o.status === s).length : allOrders.length;
+    document.getElementById("cnt-all").textContent      = cnt("");
+    document.getElementById("cnt-pending").textContent  = cnt("pending");
+    document.getElementById("cnt-approved").textContent = cnt("approved");
+    document.getElementById("cnt-rejected").textContent = cnt("rejected");
+  }
+
+  // ── 주문 렌더 ────────────────────────────────
+  function renderOrders() {
+    const list = currentStatus ? allOrders.filter(o => o.status === currentStatus) : allOrders;
+    const el = document.getElementById("ordersList");
+    if (list.length === 0) {
+      el.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>주문이 없습니다.</p></div>';
+      return;
+    }
+
+    el.innerHTML = '<div class="orders-grid">' +
+      list.map(o => orderCard(o)).join("") + '</div>';
+  }
+
+  function orderCard(o) {
+    const statusLabel = { pending: "입금 대기", approved: "승인 완료", rejected: "반려" }[o.status] || o.status;
+    const statusClass = "status-" + o.status;
+    const isPending   = o.status === "pending";
+    const dt = o.created_at ? o.created_at.replace("T", " ").substring(0, 16) : "—";
+    const approvedDt = o.approved_at ? o.approved_at.replace("T", " ").substring(0, 16) : null;
+
+    return `<div class="order-card" id="card-${o.id}">
+      <div class="order-card-head">
+        <div>
+          <div class="order-id">주문번호 #${o.id}</div>
+          <div class="order-company">${esc(o.company_name)}</div>
+        </div>
+        <span class="status-badge ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="order-info">
+        <div class="info-item"><div class="label">구매자</div><div class="val">${esc(o.buyer_name)}</div></div>
+        <div class="info-item"><div class="label">연락처</div><div class="val">${esc(o.phone)}</div></div>
+        <div class="info-item"><div class="label">이메일</div><div class="val" style="word-break:break-all;">${esc(o.email)}</div></div>
+        <div class="info-item"><div class="label">신청일시</div><div class="val">${dt}</div></div>
+        ${approvedDt ? `<div class="info-item"><div class="label">승인일시</div><div class="val">${approvedDt}</div></div>` : ""}
+        ${o.voucher_code ? `<div class="info-item"><div class="label">바우처</div><div class="val"><span class="voucher-code">${esc(o.voucher_code)}</span></div></div>` : ""}
+        ${o.memo ? `<div class="info-item"><div class="label">반려 사유</div><div class="val" style="color:#DC2626;">${esc(o.memo)}</div></div>` : ""}
+      </div>
+      <div class="order-card-foot">
+        ${isPending ? `
+          <button class="btn-approve" onclick="approveOrder(${o.id}, this)">✅ 승인 (바우처 발급)</button>
+          <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
+        ` : ""}
+        ${o.biz_reg_name ? `<span class="biz-link" onclick="viewBizReg(${o.id})">📄 ${esc(o.biz_reg_name)}</span>` : ""}
+      </div>
+    </div>`;
+  }
+
+  // ── 승인 ─────────────────────────────────────
+  async function approveOrder(orderId, btn) {
+    if (!confirm(`주문 #${orderId}를 승인하고 바우처를 발급하시겠습니까?\n고객에게 이메일이 자동 발송됩니다.`)) return;
+    btn.disabled = true;
+    btn.textContent = "처리 중...";
+
+    try {
+      const res = await fetch(`${API_URL}/admin/orders/${orderId}/approve`, {
+        method: "POST",
+        headers: { "X-Admin-Key": adminKey }
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || "오류");
+
+      showSnack(`✅ 주문 #${orderId} 승인 완료! 바우처: ${data.voucher_code}`);
+      await loadOrders();
+    } catch (e) {
+      showSnack("⚠️ 오류: " + e.message);
+      btn.disabled = false;
+      btn.textContent = "✅ 승인 (바우처 발급)";
+    }
+  }
+
+  // ── 반려 모달 ────────────────────────────────
+  function openRejectModal(orderId) {
+    pendingRejectId = orderId;
+    document.getElementById("rejectOrderId").textContent = "#" + orderId;
+    document.getElementById("rejectMemo").value = "";
+    document.getElementById("rejectModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("rejectModal").style.display = "none";
+    pendingRejectId = null;
+  }
+
+  async function confirmReject() {
+    const memo = document.getElementById("rejectMemo").value.trim();
+    try {
+      const res = await fetch(`${API_URL}/admin/orders/${pendingRejectId}/reject`, {
+        method: "POST",
+        headers: { "X-Admin-Key": adminKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ memo })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || "오류");
+      showSnack(`주문 #${pendingRejectId} 반려 처리 완료`);
+      closeModal();
+      await loadOrders();
+    } catch (e) {
+      showSnack("⚠️ 오류: " + e.message);
+    }
+  }
+
+  // ── 사업자등록증 보기 ─────────────────────────
+  async function viewBizReg(orderId) {
+    try {
+      const res = await fetch(`${API_URL}/admin/orders`, {
+        headers: { "X-Admin-Key": adminKey }
+      });
+      const data = await res.json();
+      const order = (data.data || []).find(o => o.id === orderId);
+      if (!order || !order.biz_reg_data) { showSnack("파일을 찾을 수 없습니다."); return; }
+      // base64 → blob → 새 탭
+      const ext  = (order.biz_reg_name || "file").split(".").pop().toLowerCase();
+      const mime = ext === "pdf" ? "application/pdf" : "image/" + ext;
+      const blob = base64ToBlob(order.biz_reg_data, mime);
+      const url  = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } catch (e) { showSnack("⚠️ " + e.message); }
+  }
+
+  function base64ToBlob(b64, mime) {
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+
+  // ── 유틸 ─────────────────────────────────────
+  function esc(str) {
+    if (!str) return "";
+    return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  let snackTimer;
+  function showSnack(msg) {
+    const el = document.getElementById("snackbar");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(snackTimer);
+    snackTimer = setTimeout(() => el.classList.remove("show"), 3500);
+  }
+
+  // ESC 로 모달 닫기
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  // 30초마다 자동 새로고침 (관리자 패널 열린 경우)
+  setInterval(() => {
+    if (document.getElementById("adminPanel").style.display !== "none" && adminKey) {
+      loadOrders();
+    }
+  }, 30000);
+</script>
+</body>
+</html>
