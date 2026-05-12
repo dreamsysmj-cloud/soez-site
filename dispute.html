@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분쟁처리절차 — SOEZ</title>
+  <style>
+    :root { --navy:#0F1B3A; --blue:#3B6FD4; --text:#0F172A; --text2:#64748B; --border:#E2E8F0; --bg:#F8FAFC; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+           color:var(--text); background:#fff; line-height:1.8; }
+    a { color:var(--blue); text-decoration:none; }
+    .nav { background:var(--navy); padding:0 24px; display:flex; align-items:center; height:60px; }
+    .nav a { color:#fff; font-weight:800; font-size:1.1rem; letter-spacing:2px; }
+    .nav span { color:#A8BFDB; font-size:.8rem; margin-left:10px; }
+    .wrap { max-width:800px; margin:0 auto; padding:48px 24px 80px; }
+    .page-title { font-size:1.8rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+    .updated { font-size:.85rem; color:var(--text2); margin-bottom:40px; }
+    h2 { font-size:1.1rem; font-weight:800; color:var(--navy); margin:36px 0 12px;
+         padding-bottom:8px; border-bottom:2px solid var(--border); }
+    p, li { font-size:.93rem; color:#374151; margin-bottom:8px; }
+    ul, ol { padding-left:20px; margin-bottom:12px; }
+    li { margin-bottom:4px; }
+    table { width:100%; border-collapse:collapse; font-size:.88rem; margin:12px 0; }
+    th, td { border:1px solid var(--border); padding:10px 14px; text-align:left; }
+    th { background:var(--bg); font-weight:700; color:var(--navy); }
+    .step-box { display:flex; gap:0; margin:20px 0; flex-wrap:wrap; }
+    .step { flex:1; min-width:140px; background:var(--bg); border:1px solid var(--border);
+            padding:18px 16px; text-align:center; position:relative; }
+    .step:not(:last-child)::after { content:'→'; position:absolute; right:-14px; top:50%;
+                                    transform:translateY(-50%); font-size:1.2rem; color:var(--blue);
+                                    z-index:1; }
+    .step-num { font-size:.75rem; color:var(--blue); font-weight:800; margin-bottom:6px; }
+    .step-title { font-size:.88rem; font-weight:700; color:var(--navy); margin-bottom:4px; }
+    .step-desc { font-size:.78rem; color:var(--text2); }
+    .agency-card { background:#fff; border:1px solid var(--border); border-radius:10px;
+                   padding:18px 22px; margin:10px 0; display:flex; gap:16px; align-items:flex-start; }
+    .agency-icon { font-size:1.8rem; flex-shrink:0; }
+    .agency-name { font-weight:700; color:var(--navy); font-size:.95rem; margin-bottom:4px; }
+    .agency-info { font-size:.85rem; color:var(--text2); line-height:1.6; }
+    .agency-info a { color:var(--blue); }
+    .highlight { background:#EBF0FB; border-left:4px solid var(--blue);
+                 padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:.9rem; }
+    .footer { background:var(--navy); color:#94A3B8; text-align:center; padding:24px;
+              font-size:.83rem; margin-top:60px; }
+    .footer a { color:#94A3B8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;">
+    <svg viewBox="0 0 76 34" height="26" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#ffffff" letter-spacing="-0.5">Soez</text></svg>
+    쏘이지
+  </a>
+  <span>스마트 업무 자동화 솔루션</span>
+</nav>
+
+<div class="wrap">
+  <div class="page-title">분쟁처리절차</div>
+  <div class="updated">시행일: 2026년 05월 11일 &nbsp;|&nbsp; 최종 수정: 2026년 05월 11일</div>
+
+  <p>쏘이지(SOEZ)는 소비자의 불만이나 분쟁을 신속하고 공정하게 처리하기 위한 절차를 운영합니다.
+  소비자기본법 및 전자상거래 등에서의 소비자보호에 관한 법률에 따라 다음과 같이 처리합니다.</p>
+
+  <h2>1. 불만 접수 및 처리 절차</h2>
+  <div class="step-box">
+    <div class="step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-title">불만 접수</div>
+      <div class="step-desc">카카오톡 또는 이메일로 불만 내용 접수</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 2</div>
+      <div class="step-title">접수 확인</div>
+      <div class="step-desc">1영업일 이내 접수 확인 및 담당자 배정</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 3</div>
+      <div class="step-title">사실 확인</div>
+      <div class="step-desc">내용 검토 및 원인 파악 (3영업일)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 4</div>
+      <div class="step-title">처리 결과</div>
+      <div class="step-desc">해결책 제시 및 처리 결과 통보</div>
+    </div>
+  </div>
+
+  <h2>2. 회사 고객 지원 연락처</h2>
+  <table>
+    <tr><th>구분</th><th>연락처</th><th>운영 시간</th></tr>
+    <tr><td>카카오톡 채널</td><td><a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">채널명: SOEZ</a></td><td>평일 09:00~18:00 (평균 30분 내 응답)</td></tr>
+    <tr><td>이메일</td><td>dreamsysmj@gmail.com</td><td>24시간 접수, 1영업일 내 답변</td></tr>
+  </table>
+
+  <h2>3. 분쟁 유형별 처리 기준</h2>
+  <table>
+    <tr><th>분쟁 유형</th><th>처리 기준</th><th>처리 기간</th></tr>
+    <tr><td>바우처 코드 미수신</td><td>재발송 또는 전액 환불</td><td>1영업일</td></tr>
+    <tr><td>소프트웨어 설치 오류</td><td>원격 지원 또는 재설치 안내</td><td>2영업일</td></tr>
+    <tr><td>라이선스 중복 활성화 문제</td><td>초기화 후 재발급</td><td>1영업일</td></tr>
+    <tr><td>환불 요청 (바우처 미발급)</td><td>전액 환불</td><td>3영업일</td></tr>
+    <tr><td>기타 불만 사항</td><td>개별 검토 후 처리</td><td>5영업일</td></tr>
+  </table>
+
+  <h2>4. 외부 분쟁조정 기관</h2>
+  <p>회사와의 직접 협의로 해결되지 않는 경우, 다음 기관에 도움을 요청하실 수 있습니다.</p>
+
+  <div class="agency-card">
+    <div class="agency-icon">⚖️</div>
+    <div>
+      <div class="agency-name">공정거래위원회 전자상거래 분쟁조정위원회</div>
+      <div class="agency-info">
+        홈페이지: <a href="https://www.ftc.go.kr" target="_blank">www.ftc.go.kr</a> &nbsp;|&nbsp; 전화: 1372<br>
+        전자상거래 관련 불공정 행위, 사기 거래 신고
+      </div>
+    </div>
+  </div>
+
+  <div class="agency-card">
+    <div class="agency-icon">🏛️</div>
+    <div>
+      <div class="agency-name">한국소비자원 소비자분쟁조정위원회</div>
+      <div class="agency-info">
+        홈페이지: <a href="https://www.kca.go.kr" target="_blank">www.kca.go.kr</a> &nbsp;|&nbsp; 전화: 1372<br>
+        소비자 피해 구제 신청 및 분쟁 조정
+      </div>
+    </div>
+  </div>
+
+  <div class="agency-card">
+    <div class="agency-icon">🔒</div>
+    <div>
+      <div class="agency-name">개인정보보호위원회 / 한국인터넷진흥원</div>
+      <div class="agency-info">
+        홈페이지: <a href="https://privacy.kisa.or.kr" target="_blank">privacy.kisa.or.kr</a> &nbsp;|&nbsp; 전화: 118<br>
+        개인정보 침해 관련 신고 및 상담
+      </div>
+    </div>
+  </div>
+
+  <div class="agency-card">
+    <div class="agency-icon">🌐</div>
+    <div>
+      <div class="agency-name">ODR(온라인 분쟁해결) 플랫폼</div>
+      <div class="agency-info">
+        홈페이지: <a href="https://www.econsumer.gov" target="_blank">www.econsumer.gov</a><br>
+        국제 전자상거래 분쟁 해결 지원
+      </div>
+    </div>
+  </div>
+
+  <h2>5. 소비자 분쟁 해결 기준</h2>
+  <p>회사는 공정거래위원회가 고시한 <strong>「소비자분쟁해결기준」</strong>을 준수합니다.
+  위 기준에 규정되지 않은 사항에 대해서는 일반적인 거래관행 및 관련 법령에 따릅니다.</p>
+
+  <div class="highlight">
+    💡 분쟁 발생 시 먼저 카카오톡 채널 SOEZ로 연락 주시면 신속하게 처리해 드립니다.<br>
+    대부분의 문제는 1~2영업일 내에 원만하게 해결됩니다.
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© 2026 쏘이지(SOEZ) · 사업자등록번호: 759-03-03828 · 간이과세자</p>
+  <p style="margin-top:8px;">
+    <a href="privacy.html">개인정보처리방침</a> &nbsp;|&nbsp;
+    <a href="terms.html">이용약관</a> &nbsp;|&nbsp;
+    <a href="dispute.html">분쟁처리절차</a> &nbsp;|&nbsp;
+    <a href="youth.html">청소년보호정책</a>
+  </p>
+</footer>
+</body>
+</html>
