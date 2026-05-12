@@ -431,7 +431,8 @@ ul { list-style: none; }
       document.getElementById("resBank").textContent    = data.bank_name    || "—";
       document.getElementById("resAccount").textContent = data.bank_account || "—";
       document.getElementById("resHolder").textContent  = data.bank_holder  || "—";
-      document.getElementById("resAmount").textContent  = "₩" + (data.amount || "—") + "원";
+      const amtNum = parseInt(String(data.amount || "0").replace(/,/g, ""));
+      document.getElementById("resAmount").textContent  = "₩" + (amtNum ? amtNum.toLocaleString("ko-KR") : "—") + "원";
       document.getElementById("resName").textContent    = document.getElementById("buyer_name").value;
 
       document.getElementById("orderForm").style.display   = "none";
