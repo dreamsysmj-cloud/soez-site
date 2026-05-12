@@ -76,9 +76,10 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
                 table-layout:fixed; }
 .orders-table thead tr { background:var(--navy2); color:#fff; }
 .orders-table thead th { padding:9px 10px; font-weight:700; text-align:center;
-                          font-size:calc(var(--tbl-fs) - .05rem); white-space:nowrap;
+                          font-size:calc(var(--tbl-fs) - .05rem); white-space:normal;
+                          word-break:keep-all; line-height:1.3;
                           border-right:1px solid rgba(255,255,255,.1);
-                          position:relative; overflow:hidden; }
+                          position:relative; }
 .orders-table thead th:last-child { border-right:none; }
 /* 열 너비 드래그 핸들 */
 .col-resize-handle {
@@ -96,8 +97,9 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   background:rgba(255,255,255,.5);
   border-right-color:#fff;
 }
-/* td는 overflow hidden으로 잘라냄 */
-.orders-table td { overflow:hidden; text-overflow:ellipsis; }
+/* td — 엑셀처럼 자동 줄 바꿈 */
+.orders-table td { white-space:normal; word-break:break-word; overflow:visible; }
+.orders-table td .tb-btn { white-space:nowrap; }   /* 버튼 텍스트만 줄바꿈 방지 */
 .orders-table tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 .orders-table tbody tr:hover { background:#F8FAFF; }
 .orders-table tbody tr.is-new { background:#FFFDF5; }
@@ -666,15 +668,15 @@ function orderRow(o) {
     <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
     <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
     <td>${esc(o.buyer_name)}</td>
-    <td style="white-space:nowrap;">${esc(o.phone)}</td>
-    <td style="font-size:.74rem;word-break:break-all;">${esc(o.email)}</td>
+    <td>${esc(o.phone)}</td>
+    <td style="font-size:.74rem;">${esc(o.email)}</td>
     <td>${bizTd}</td>
     <td style="font-size:.74rem;color:var(--text2);">SOEZ B2B<br>택배 송장</td>
-    <td style="color:var(--red);font-weight:800;white-space:nowrap;">${amtFmt}</td>
+    <td style="color:var(--red);font-weight:800;">${amtFmt}</td>
     <td>${statusBadge}</td>
-    <td style="font-size:.74rem;white-space:nowrap;">${approvedDt || "—"}</td>
+    <td style="font-size:.74rem;">${approvedDt || "—"}</td>
     <td style="text-align:left;">${voucherTd}</td>
-    <td style="white-space:nowrap;">${actionTd}</td>
+    <td>${actionTd}</td>
   </tr>`;
 }
 
@@ -846,11 +848,11 @@ function renderDeletedTable() {
       <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
       <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
       <td>${esc(o.buyer_name)}</td>
-      <td style="font-size:.74rem;word-break:break-all;">${esc(o.email)}</td>
+      <td style="font-size:.74rem;">${esc(o.email)}</td>
       <td><span class="status-badge status-${o.status}">${slabel}</span></td>
-      <td style="color:var(--red);font-weight:700;white-space:nowrap;">${amtFmt}</td>
+      <td style="color:var(--red);font-weight:700;">${amtFmt}</td>
       <td>${vc}</td>
-      <td style="font-size:.74rem;color:var(--red);white-space:nowrap;">${delDt}</td>
+      <td style="font-size:.74rem;color:var(--red);">${delDt}</td>
       <td><button class="tb-btn tb-btn-green" onclick="restoreOrder(${o.id})">↩ 복구</button></td>
     </tr>`;
   }).join("") + "</tbody>";
