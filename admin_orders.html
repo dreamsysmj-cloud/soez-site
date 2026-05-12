@@ -331,14 +331,15 @@ function doLogout() {
 // 자동 새로고침 (30초)
 // ────────────────────────────────────────────────────
 function startAutoRefresh() {
-  let secs = 30;
+  let secs = 600;
   clearInterval(refreshTimer); clearInterval(countdownTimer);
   const cdEl = document.getElementById("refreshCountdown");
   countdownTimer = setInterval(() => {
     secs--;
-    cdEl.textContent = `🔄 ${secs}초 후 자동 갱신`;
+    const m = Math.floor(secs / 60), s = secs % 60;
+    cdEl.textContent = `🔄 ${m}분 ${String(s).padStart(2,'0')}초 후 자동 갱신`;
     if (secs <= 0) {
-      secs = 30;
+      secs = 600;
       loadOrders();
     }
   }, 1000);
@@ -416,7 +417,26 @@ function orderCard(o) {
   const dt = (o.created_at||"").replace("T"," ").substring(0,16);
   const approvedDt = (o.approved_at||"").replace("T"," ").substring(0,16);
   const isPending = o.status === "pending";
-  const amtFmt = o.amount ? "₩" + Number(o.amount).toLocaleString("ko-KR") + "원" : "—";
+  const isApproved = o.status === "approved";
+  const amtFmt = o.amount ? "₩" + Number(o.amount).toLocaleString("ko-KR") + "원" : "₩495,000원";
+
+  // 바우처 코드 강조 박스 (승인 완료 시)
+  const voucherBlock = isApproved && o.voucher_code ? `
+    <div style="background:#EBF5FF;border:2px solid var(--blue);border-radius:10px;padding:14px 18px;margin:12px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div style="font-size:.72rem;color:var(--text2);margin-bottom:4px;">🔑 라이선스 바우처 코드</div>
+        <div style="font-family:monospace;font-size:1.4rem;font-weight:900;color:var(--navy2);letter-spacing:3px;">${esc(o.voucher_code)}</div>
+      </div>
+      <button class="copy-btn" onclick="quickCopy('${esc(o.voucher_code)}')">📋 복사</button>
+    </div>` : "";
+
+  // 첨부파일 (사업자등록증)
+  const bizBlock = o.biz_reg_name ? `
+    <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin:8px 0;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:.8rem;color:#15803D;">📎 첨부파일:</span>
+      <span style="font-size:.82rem;font-weight:600;color:var(--text);flex:1;">${esc(o.biz_reg_name)}</span>
+      <button class="copy-btn" style="background:#15803D;padding:6px 12px;font-size:.78rem;" onclick="viewBizReg(${o.id})">⬇️ 다운로드</button>
+    </div>` : "";
 
   return `<div class="order-card${isPending?' is-new':''}" id="card-${o.id}">
     <div class="order-card-head">
@@ -425,26 +445,29 @@ function orderCard(o) {
         <div class="order-company">${esc(o.company_name)}</div>
         <div class="order-product">📦 ${PRODUCT_NAME}</div>
       </div>
-      <span class="status-badge status-${o.status}">${statusLabel}</span>
+      <div style="text-align:right;">
+        <span class="status-badge status-${o.status}">${statusLabel}</span>
+        <div style="font-size:.9rem;font-weight:800;color:var(--navy2);margin-top:6px;">${amtFmt}</div>
+      </div>
     </div>
     <div class="order-info">
       <div class="info-item"><div class="label">구매자</div><div class="val">${esc(o.buyer_name)}</div></div>
       <div class="info-item"><div class="label">연락처</div><div class="val">${esc(o.phone)}</div></div>
       <div class="info-item"><div class="label">이메일</div><div class="val">${esc(o.email)}</div></div>
-      <div class="info-item"><div class="label">금액</div><div class="val">${amtFmt}</div></div>
+      <div class="info-item"><div class="label">결제 금액</div><div class="val" style="color:var(--red);font-weight:800;">${amtFmt}</div></div>
       ${approvedDt ? `<div class="info-item"><div class="label">승인일시</div><div class="val">${approvedDt}</div></div>` : ""}
-      ${o.voucher_code ? `<div class="info-item"><div class="label">바우처</div><div class="val"><span class="voucher-inline">${esc(o.voucher_code)}</span></div></div>` : ""}
       ${o.memo ? `<div class="info-item"><div class="label">반려 사유</div><div class="val" style="color:var(--red)">${esc(o.memo)}</div></div>` : ""}
     </div>
+    ${voucherBlock}
+    ${bizBlock}
     <div class="order-card-foot">
       ${isPending ? `
         <button class="btn-approve" onclick="approveOrder(${o.id},${JSON.stringify(o)})">✅ 승인 (바우처 발급)</button>
         <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
       ` : ""}
-      ${o.voucher_code && o.status==="approved" ? `
-        <button class="btn-approve" style="background:var(--blue);" onclick="showResendModal(${JSON.stringify(o)})">📤 전달 내용 다시 보기</button>
+      ${isApproved ? `
+        <button class="btn-approve" style="background:var(--blue);" onclick="showResendModal(${JSON.stringify(o)})">📤 전달 메시지 보기</button>
       ` : ""}
-      ${o.biz_reg_name ? `<span class="biz-link" onclick="viewBizReg(${o.id})">📄 ${esc(o.biz_reg_name)}</span>` : ""}
     </div>
   </div>`;
 }
@@ -558,6 +581,16 @@ function closeApproveModal() {
 // ────────────────────────────────────────────────────
 // 복사 기능
 // ────────────────────────────────────────────────────
+function quickCopy(text) {
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy");
+    document.body.removeChild(ta);
+  });
+  showSnack("✅ 바우처 코드 복사 완료!");
+}
+
 function copyText(type) {
   let text = "";
   if (type === "voucherOnly") text = approveData.voucherCode || "";
