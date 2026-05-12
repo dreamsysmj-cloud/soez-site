@@ -81,9 +81,21 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
                           position:relative; overflow:hidden; }
 .orders-table thead th:last-child { border-right:none; }
 /* 열 너비 드래그 핸들 */
-.col-resize-handle { position:absolute; right:0; top:0; bottom:0; width:6px;
-                     cursor:col-resize; z-index:10; user-select:none; }
-.col-resize-handle:hover, .col-resize-handle.dragging { background:rgba(255,255,255,.4); }
+.col-resize-handle {
+  position:absolute; right:0; top:15%; bottom:15%; width:5px;
+  cursor:col-resize; z-index:10; user-select:none;
+  border-right:2px solid rgba(255,255,255,.25);
+  border-radius:2px;
+  transition:border-color .15s, background .15s;
+}
+.col-resize-handle:hover {
+  background:rgba(255,255,255,.3);
+  border-right-color:rgba(255,255,255,.8);
+}
+.col-resize-handle.dragging {
+  background:rgba(255,255,255,.5);
+  border-right-color:#fff;
+}
 /* td는 overflow hidden으로 잘라냄 */
 .orders-table td { overflow:hidden; text-overflow:ellipsis; }
 .orders-table tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
@@ -406,36 +418,28 @@ function changeZoom(delta) {
 applyZoom(); // 페이지 로드 시 적용
 
 // ── 열 너비 드래그 조절 ────────────────────────────
-// key: 'main' | 'deleted'
-const COL_DEF_MAIN    = [90,110,70,105,135,62,80,82,72,88,175,74];  // 12열 기본 px
-const COL_DEF_DELETED = [90,110,70,135,72,82,110,90,68];             // 9열 기본 px
+const COL_DEF_MAIN    = [88,108,68,108,132,60,78,80,70,86,172,72];
+const COL_DEF_DELETED = [88,108,68,132,70,80,108,88,66];
 
-function applyColResize(table, key) {
-  if (!table) return;
-  const ths = Array.from(table.querySelectorAll('thead th'));
-  if (!ths.length) return;
-
-  // colgroup 생성 or 재사용
-  let cg = table.querySelector('colgroup');
-  if (!cg) {
-    cg = document.createElement('colgroup');
-    ths.forEach(() => cg.appendChild(document.createElement('col')));
-    table.insertBefore(cg, table.firstChild);
-  }
-  const cols = Array.from(cg.querySelectorAll('col'));
-  const defaults = key === 'deleted' ? COL_DEF_DELETED : COL_DEF_MAIN;
+/** 저장된 너비(없으면 기본값)로 colgroup HTML 생성 */
+function colGroupHtml(key) {
   const saved = JSON.parse(localStorage.getItem('soez_col_' + key) || '{}');
+  const defs  = key === 'deleted' ? COL_DEF_DELETED : COL_DEF_MAIN;
+  const cols  = defs.map((d, i) => `<col style="width:${saved[i] || d}px">`).join('');
+  return `<colgroup>${cols}</colgroup>`;
+}
 
-  // 초기 너비 적용
-  cols.forEach((col, i) => {
-    col.style.width = (saved[i] || defaults[i] || 90) + 'px';
-  });
+/** 테이블 렌더 후 호출 — 드래그 핸들 부착 + 저장 */
+function setupColResize(table, key) {
+  if (!table) return;
+  const ths  = Array.from(table.querySelectorAll('thead th'));
+  const cols = Array.from(table.querySelectorAll('col'));
+  if (!ths.length || !cols.length) return;
 
-  // 드래그 핸들 추가
   ths.forEach((th, i) => {
+    if (!cols[i]) return;
     // 기존 핸들 제거
-    const old = th.querySelector('.col-resize-handle');
-    if (old) old.remove();
+    th.querySelectorAll('.col-resize-handle').forEach(h => h.remove());
 
     const handle = document.createElement('div');
     handle.className = 'col-resize-handle';
@@ -445,20 +449,21 @@ function applyColResize(table, key) {
 
     handle.addEventListener('mousedown', e => {
       startX = e.clientX;
-      startW = parseInt(cols[i].style.width) || defaults[i] || 90;
+      startW = parseInt(cols[i].style.width) || COL_DEF_MAIN[i] || 88;
       handle.classList.add('dragging');
-      e.preventDefault();
-      e.stopPropagation();
+      document.body.style.cursor = 'col-resize';
+      e.preventDefault(); e.stopPropagation();
 
-      const onMove = e => {
-        const w = Math.max(40, startW + (e.clientX - startX));
+      const onMove = ev => {
+        const w = Math.max(36, startW + (ev.clientX - startX));
         cols[i].style.width = w + 'px';
       };
       const onUp = () => {
         handle.classList.remove('dragging');
-        // 저장
-        const obj = JSON.parse(localStorage.getItem('soez_col_' + key) || '{}');
-        cols.forEach((c, idx) => { obj[idx] = parseInt(c.style.width) || defaults[idx]; });
+        document.body.style.cursor = '';
+        // localStorage 저장
+        const obj = {};
+        cols.forEach((c, idx) => { obj[idx] = parseInt(c.style.width) || 88; });
         localStorage.setItem('soez_col_' + key, JSON.stringify(obj));
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onUp);
@@ -471,12 +476,8 @@ function applyColResize(table, key) {
 
 function resetColWidths() {
   ['main','deleted'].forEach(k => localStorage.removeItem('soez_col_' + k));
-  const table = document.querySelector('.orders-table');
-  if (table) {
-    const key = currentStatus === 'deleted' ? 'deleted' : 'main';
-    applyColResize(table, key);
-  }
-  showSnack('↔ 열 너비를 기본값으로 초기화했습니다.');
+  renderOrders();
+  showSnack('↔ 열 너비가 기본값으로 초기화되었습니다.');
 }
 
 // ────────────────────────────────────────────────────
@@ -592,6 +593,7 @@ function renderOrders() {
     return;
   }
 
+  const cg = colGroupHtml('main');
   const thead = `<thead><tr>
     <th>주문번호<br><span style="font-weight:400;opacity:.75;">구매일시</span></th>
     <th>상호명</th>
@@ -608,8 +610,8 @@ function renderOrders() {
   </tr></thead>`;
 
   const tbody = "<tbody>" + list.map(orderRow).join("") + "</tbody>";
-  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${thead}${tbody}</table></div>`;
-  requestAnimationFrame(() => applyColResize(el.querySelector('.orders-table'), 'main'));
+  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${cg}${thead}${tbody}</table></div>`;
+  setupColResize(el.querySelector('.orders-table'), 'main');
 }
 
 function orderRow(o) {
@@ -820,6 +822,7 @@ function renderDeletedTable() {
     el.innerHTML = '<div class="empty-state"><div class="icon">🗑️</div><p>삭제된 주문이 없습니다.</p></div>';
     return;
   }
+  const cgDel = colGroupHtml('deleted');
   const thead = `<thead><tr>
     <th>주문번호<br><span style="font-weight:400;opacity:.75;">구매일시</span></th>
     <th>상호명</th>
@@ -851,8 +854,8 @@ function renderDeletedTable() {
       <td><button class="tb-btn tb-btn-green" onclick="restoreOrder(${o.id})">↩ 복구</button></td>
     </tr>`;
   }).join("") + "</tbody>";
-  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${thead}${tbody}</table></div>`;
-  requestAnimationFrame(() => applyColResize(el.querySelector('.orders-table'), 'deleted'));
+  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${cgDel}${thead}${tbody}</table></div>`;
+  setupColResize(el.querySelector('.orders-table'), 'deleted');
 }
 
 async function restoreOrder(orderId) {
