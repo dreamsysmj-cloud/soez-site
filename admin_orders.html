@@ -10,6 +10,7 @@
   --text: #0F172A; --text2: #64748B; --border: #E2E8F0; --bg: #F8FAFC;
   --green: #16A34A; --green-bg: #DCFCE7; --red: #DC2626; --red-bg: #FEE2E2;
   --yellow-bg: #FEF9C3; --yellow: #D97706; --kakao: #FEE500;
+  --tbl-fs: .78rem;   /* 테이블 글씨 크기 — JS에서 localStorage로 제어 */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -70,11 +71,11 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 
 /* ── 주문 테이블 ── */
 .orders-wrap { width:100%; overflow-x:auto; }
-.orders-table { width:100%; border-collapse:collapse; font-size:.78rem; background:#fff;
+.orders-table { width:100%; border-collapse:collapse; font-size:var(--tbl-fs); background:#fff;
                 border-radius:10px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,.06); }
 .orders-table thead tr { background:var(--navy2); color:#fff; }
 .orders-table thead th { padding:9px 10px; font-weight:700; text-align:center;
-                          font-size:.73rem; white-space:nowrap; border-right:1px solid rgba(255,255,255,.1); }
+                          font-size:calc(var(--tbl-fs) - .05rem); white-space:nowrap; border-right:1px solid rgba(255,255,255,.1); }
 .orders-table thead th:last-child { border-right:none; }
 .orders-table tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 .orders-table tbody tr:hover { background:#F8FAFF; }
@@ -174,6 +175,14 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
             z-index:9999; opacity:0; transition:opacity .3s; pointer-events:none; white-space:nowrap; }
 .snackbar.show { opacity:1; }
 
+/* 글씨 크기 조절 */
+.zoom-ctrl { display:flex; align-items:center; gap:4px; background:#fff;
+             border:1.5px solid var(--border); border-radius:8px; padding:3px 8px; }
+.zoom-ctrl span { font-size:.78rem; color:var(--text2); min-width:36px; text-align:center; }
+.zoom-btn { background:none; border:none; cursor:pointer; font-size:.9rem; font-weight:800;
+            color:var(--navy2); padding:2px 6px; border-radius:4px; transition:background .1s; }
+.zoom-btn:hover { background:var(--border); }
+
 @media (max-width:768px) {
   .topbar h1 { font-size:.85rem; }
   .voucher-big { font-size:1.5rem; }
@@ -231,9 +240,18 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       <button class="tab-btn" data-status="rejected" onclick="switchTab(this,'rejected')">
         반려 <span class="cnt" id="cnt-rejected">—</span>
       </button>
+      <button class="tab-btn" data-status="deleted" onclick="switchTab(this,'deleted')"
+              style="border-color:#e2e8f0;color:#94a3b8;">
+        🗑️ 삭제됨 <span class="cnt" id="cnt-deleted">—</span>
+      </button>
       <input type="search" class="search-input" id="searchInput"
              placeholder="🔍 업체명·이름·이메일 검색" oninput="renderOrders()">
-      <button class="refresh-btn" onclick="downloadExcel()" style="border-color:#15803D;color:#15803D;">📊 엑셀 다운로드</button>
+      <div class="zoom-ctrl" title="테이블 글씨 크기 조절">
+        <button class="zoom-btn" onclick="changeZoom(-1)">A−</button>
+        <span id="zoomLabel">기본</span>
+        <button class="zoom-btn" onclick="changeZoom(1)">A+</button>
+      </div>
+      <button class="refresh-btn" onclick="downloadExcel()" style="border-color:#15803D;color:#15803D;">📊 엑셀</button>
       <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
     </div>
 
@@ -284,13 +302,21 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 
 <!-- ── 바우처 초기화 모달 ── -->
 <div class="modal-overlay" id="revokeModal">
-  <div class="modal reject-modal">
+  <div class="modal reject-modal" style="max-width:480px;">
     <div class="modal-title">🔄 바우처 초기화 (PC 교체)</div>
     <p style="font-size:.88rem;color:var(--text2);line-height:1.7;">
-      주문 <strong id="revokeOrderLabel"></strong>의 바우처를 초기화하시겠습니까?<br><br>
-      초기화하면 기존 PC에서 라이선스가 해제되고,<br>
-      고객이 <strong>새 PC에서 같은 코드로 재활성화</strong>할 수 있습니다.
+      주문 <strong id="revokeOrderLabel"></strong>의 바우처를 초기화합니다.<br>
+      초기화 후 고객이 <strong>새 PC에서 같은 코드로 재활성화</strong>할 수 있습니다.
     </p>
+
+    <!-- 초기화 이력 -->
+    <div style="background:#FFFDF0;border:1px solid #FDE68A;border-radius:10px;padding:14px 16px;margin:14px 0;">
+      <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:8px;">📋 이 주문의 초기화 이력</div>
+      <div id="revokeHistoryContent" style="font-size:.81rem;">
+        <span style="color:var(--text2);">불러오는 중...</span>
+      </div>
+    </div>
+
     <div class="modal-btns">
       <button class="modal-close" onclick="closeRevokeModal()">취소</button>
       <button style="flex:1;padding:11px;border-radius:8px;font-size:.9rem;font-weight:700;
@@ -344,6 +370,7 @@ const KAKAO_CH    = "http://pf.kakao.com/_ACvjX/chat";
 let adminKey = "";
 let currentStatus = "";
 let allOrders = [];
+let deletedOrders = [];
 const orderMap = new Map();   // id → order 객체 (onclick에서 JSON 대신 사용)
 let prevPendingCount = -1;
 let refreshTimer = null;
@@ -351,6 +378,22 @@ let countdownTimer = null;
 let pendingRejectId = null;
 let pendingDeleteId = null;
 let approveData = {};
+
+// ── 글씨 크기 조절 ──────────────────────────────
+const ZOOM_SIZES = ['.65rem','.70rem','.75rem','.78rem','.83rem','.88rem','.94rem'];
+const ZOOM_LABELS = ['극소','소','작게','기본','크게','더크게','최대'];
+let zoomIdx = parseInt(localStorage.getItem('soez_zoom') || '3');
+function applyZoom() {
+  document.documentElement.style.setProperty('--tbl-fs', ZOOM_SIZES[zoomIdx]);
+  const lbl = document.getElementById("zoomLabel");
+  if (lbl) lbl.textContent = ZOOM_LABELS[zoomIdx];
+  localStorage.setItem('soez_zoom', zoomIdx);
+}
+function changeZoom(delta) {
+  zoomIdx = Math.max(0, Math.min(ZOOM_SIZES.length - 1, zoomIdx + delta));
+  applyZoom();
+}
+applyZoom(); // 페이지 로드 시 적용
 
 // ────────────────────────────────────────────────────
 // 로그인 / 로그아웃
@@ -399,7 +442,11 @@ function switchTab(el, status) {
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   el.classList.add("active");
   currentStatus = status;
-  renderOrders();
+  if (status === 'deleted') {
+    loadDeletedOrders();
+  } else {
+    renderOrders();
+  }
 }
 
 // ────────────────────────────────────────────────────
@@ -430,6 +477,7 @@ async function loadOrders() {
     orders.forEach(o => orderMap.set(o.id, o));
     updateCounts();
     renderOrders();
+    fetchDeletedCount(); // 삭제됨 탭 카운트 업데이트
   } catch (e) {
     document.getElementById("ordersList").innerHTML =
       `<div class="empty-state"><div class="icon">⚠️</div><p>서버 연결 오류: ${e.message}</p></div>`;
@@ -447,6 +495,7 @@ function updateCounts() {
 // 주문 렌더 (테이블)
 // ────────────────────────────────────────────────────
 function renderOrders() {
+  if (currentStatus === 'deleted') { renderDeletedTable(); return; }
   const q = (document.getElementById("searchInput").value || "").toLowerCase();
   let list = currentStatus ? allOrders.filter(o => o.status === currentStatus) : allOrders;
   if (q) list = list.filter(o =>
@@ -509,19 +558,21 @@ function orderRow(o) {
     voucherTd = `<span style="color:var(--red);font-size:.75rem;">${esc(o.memo)}</span>`;
   }
 
-  // 액션 버튼
+  // 액션 버튼 (세로 배치)
   let actionTd = "";
   if (isPending) {
-    actionTd = `
+    actionTd = `<div style="display:flex;flex-direction:column;gap:3px;align-items:stretch;">
       <button class="tb-btn tb-btn-green" id="btn-approve-${o.id}" onclick="approveOrder(${o.id})">✅ 승인</button>
       <button class="tb-btn tb-btn-red"   onclick="openRejectModal(${o.id})">❌ 반려</button>
-      <button class="tb-btn tb-btn-gray"  onclick="openDeleteModal(${o.id})">🗑️</button>`;
+      <button class="tb-btn tb-btn-gray"  onclick="openDeleteModal(${o.id})">🗑️ 삭제</button>
+    </div>`;
   } else if (isApproved) {
-    actionTd = `
+    actionTd = `<div style="display:flex;flex-direction:column;gap:3px;align-items:stretch;">
       <button class="tb-btn tb-btn-yellow" onclick="openRevokeModal(${o.id})">🔄 초기화</button>
-      <button class="tb-btn tb-btn-gray"   onclick="openDeleteModal(${o.id})">🗑️</button>`;
+      <button class="tb-btn tb-btn-gray"   onclick="openDeleteModal(${o.id})">🗑️ 삭제</button>
+    </div>`;
   } else {
-    actionTd = `<button class="tb-btn tb-btn-gray" onclick="openDeleteModal(${o.id})">🗑️</button>`;
+    actionTd = `<button class="tb-btn tb-btn-gray" onclick="openDeleteModal(${o.id})">🗑️ 삭제</button>`;
   }
 
   return `<tr id="row-${o.id}"${isPending?' class="is-new"':''}>
@@ -576,12 +627,40 @@ function showResendModal(orderId) {
 // 바우처 초기화 (PC 교체)
 // ────────────────────────────────────────────────────
 let pendingRevokeId = null;
-function openRevokeModal(orderId) {
+async function openRevokeModal(orderId) {
   pendingRevokeId = orderId;
   const o = orderMap.get(orderId);
   document.getElementById("revokeOrderLabel").textContent =
     `#${orderId} (${o ? o.company_name : ""})`;
+  document.getElementById("revokeHistoryContent").innerHTML =
+    '<span style="color:var(--text2);">이력 조회 중...</span>';
   document.getElementById("revokeModal").classList.add("open");
+
+  // 초기화 이력 API 조회
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${orderId}/revoke-history`, {
+      headers: {"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    const hist = data.history || [];
+    const cnt  = hist.length;
+    if (cnt === 0) {
+      document.getElementById("revokeHistoryContent").innerHTML =
+        '<span style="color:var(--text2);font-size:.82rem;">초기화 이력 없음 — 첫 번째 초기화입니다.</span>';
+    } else {
+      const rows = hist.map((h, i) =>
+        `<div style="padding:5px 0;border-bottom:1px solid #FDE68A;">
+          <span style="font-weight:700;color:var(--yellow);">${i + 1}회차</span>
+          <span style="color:var(--text2);margin-left:8px;">${h.revoked_at}</span>
+        </div>`
+      ).join('');
+      document.getElementById("revokeHistoryContent").innerHTML =
+        `<div style="font-weight:700;color:var(--red);margin-bottom:8px;">누적 ${cnt}회 초기화됨</div>${rows}`;
+    }
+  } catch(e) {
+    document.getElementById("revokeHistoryContent").innerHTML =
+      '<span style="color:var(--text2);font-size:.82rem;">이력 조회 실패</span>';
+  }
 }
 function closeRevokeModal() {
   document.getElementById("revokeModal").classList.remove("open");
@@ -625,6 +704,80 @@ async function confirmDelete() {
     if (!res.ok) throw new Error(data.detail || "오류");
     showSnack(`🗑️ 주문 #${pendingDeleteId} 삭제 완료`);
     closeDeleteModal();
+    await loadOrders();
+  } catch(e) { showSnack("⚠️ " + e.message); }
+}
+
+// ────────────────────────────────────────────────────
+// 삭제됨 탭 — 로드 / 렌더 / 복구
+// ────────────────────────────────────────────────────
+async function fetchDeletedCount() {
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/deleted`, {
+      headers: {"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    deletedOrders = data.data || [];
+    const el = document.getElementById("cnt-deleted");
+    if (el) el.textContent = deletedOrders.length;
+    if (currentStatus === 'deleted') renderDeletedTable();
+  } catch(e) {}
+}
+
+async function loadDeletedOrders() {
+  document.getElementById("ordersList").innerHTML = '<div class="loading">삭제된 주문을 불러오는 중...</div>';
+  await fetchDeletedCount();
+}
+
+function renderDeletedTable() {
+  const el = document.getElementById("ordersList");
+  if (!deletedOrders.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">🗑️</div><p>삭제된 주문이 없습니다.</p></div>';
+    return;
+  }
+  const thead = `<thead><tr>
+    <th>주문번호<br><span style="font-weight:400;opacity:.75;">구매일시</span></th>
+    <th>상호명</th>
+    <th>구매자</th>
+    <th>이메일</th>
+    <th>입금현황</th>
+    <th>결제금액</th>
+    <th>바우처코드</th>
+    <th>삭제일시</th>
+    <th>복구</th>
+  </tr></thead>`;
+  const tbody = "<tbody>" + deletedOrders.map(o => {
+    const dt    = (o.created_at||"").replace("T"," ").substring(0,16);
+    const delDt = (o.deleted_at||"").replace("T"," ").substring(0,16);
+    const slabel = {pending:"입금 대기", approved:"승인 완료", rejected:"반려"}[o.status] || o.status;
+    const amtFmt = "₩" + Number(o.amount||495000).toLocaleString("ko-KR");
+    const vc = o.voucher_code
+      ? `<span class="voucher-inline">${esc(o.voucher_code)}</span>`
+      : `<span style="color:#bbb;">—</span>`;
+    return `<tr style="opacity:.72;background:#fafafa;">
+      <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
+      <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
+      <td>${esc(o.buyer_name)}</td>
+      <td style="font-size:.74rem;word-break:break-all;">${esc(o.email)}</td>
+      <td><span class="status-badge status-${o.status}">${slabel}</span></td>
+      <td style="color:var(--red);font-weight:700;white-space:nowrap;">${amtFmt}</td>
+      <td>${vc}</td>
+      <td style="font-size:.74rem;color:var(--red);white-space:nowrap;">${delDt}</td>
+      <td><button class="tb-btn tb-btn-green" onclick="restoreOrder(${o.id})">↩ 복구</button></td>
+    </tr>`;
+  }).join("") + "</tbody>";
+  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${thead}${tbody}</table></div>`;
+}
+
+async function restoreOrder(orderId) {
+  if (!confirm(`주문 #${orderId}을 복구하시겠습니까?\n주문이 기존 상태로 복원됩니다.`)) return;
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${orderId}/restore`, {
+      method: "POST", headers: {"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    showSnack(`✅ 주문 #${orderId} 복구 완료!`);
     await loadOrders();
   } catch(e) { showSnack("⚠️ " + e.message); }
 }
@@ -865,7 +1018,9 @@ function showSnack(msg) {
   snackTimer = setTimeout(() => el.classList.remove("show"), 3500);
 }
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") { closeApproveModal(); closeRejectModal(); }
+  if (e.key === "Escape") {
+    closeApproveModal(); closeRejectModal(); closeRevokeModal(); closeDeleteModal();
+  }
 });
 </script>
 </body>
