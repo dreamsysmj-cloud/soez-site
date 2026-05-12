@@ -164,11 +164,12 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
             z-index:9999; opacity:0; transition:opacity .3s; pointer-events:none; white-space:nowrap; }
 .snackbar.show { opacity:1; }
 
-@media (max-width:600px) {
-  .order-info { grid-template-columns:1fr 1fr; }
+@media (max-width:768px) {
   .topbar h1 { font-size:.85rem; }
   .voucher-big { font-size:1.5rem; }
   .modal { padding:22px 18px; }
+  /* 모바일에서 정보 행을 2열로 */
+  .order-info-grid { grid-template-columns:1fr 1fr !important; }
 }
   </style>
 </head>
@@ -416,59 +417,75 @@ function orderCard(o) {
   const statusLabel = {pending:"입금 대기", approved:"승인 완료", rejected:"반려"}[o.status] || o.status;
   const dt = (o.created_at||"").replace("T"," ").substring(0,16);
   const approvedDt = (o.approved_at||"").replace("T"," ").substring(0,16);
-  const isPending = o.status === "pending";
+  const isPending  = o.status === "pending";
   const isApproved = o.status === "approved";
   const amtFmt = o.amount ? "₩" + Number(o.amount).toLocaleString("ko-KR") + "원" : "₩495,000원";
 
-  // 바우처 코드 강조 박스 (승인 완료 시)
+  // 첨부파일 셀
+  const bizCell = o.biz_reg_name
+    ? `<button onclick="viewBizReg(${o.id})" style="background:#15803D;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;">⬇️ ${esc(o.biz_reg_name)}</button>`
+    : `<span style="color:var(--text2);font-size:.8rem;">없음</span>`;
+
+  // 전달메시지 버튼 (승인일시 옆)
+  const msgBtn = isApproved
+    ? `<button onclick="showResendModal(${JSON.stringify(o)})" style="background:var(--blue);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📤 전달 메시지</button>`
+    : "";
+
+  // 바우처 코드 박스 (승인 완료 시 카드 하단에 크게)
   const voucherBlock = isApproved && o.voucher_code ? `
-    <div style="background:#EBF5FF;border:2px solid var(--blue);border-radius:10px;padding:14px 18px;margin:12px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <div style="background:#EBF5FF;border:2px solid var(--blue);border-radius:10px;padding:14px 20px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
       <div>
         <div style="font-size:.72rem;color:var(--text2);margin-bottom:4px;">🔑 라이선스 바우처 코드</div>
-        <div style="font-family:monospace;font-size:1.4rem;font-weight:900;color:var(--navy2);letter-spacing:3px;">${esc(o.voucher_code)}</div>
+        <div style="font-family:monospace;font-size:1.5rem;font-weight:900;color:var(--navy2);letter-spacing:4px;">${esc(o.voucher_code)}</div>
       </div>
-      <button class="copy-btn" onclick="quickCopy('${esc(o.voucher_code)}')">📋 복사</button>
-    </div>` : "";
-
-  // 첨부파일 (사업자등록증)
-  const bizBlock = o.biz_reg_name ? `
-    <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin:8px 0;display:flex;align-items:center;gap:10px;">
-      <span style="font-size:.8rem;color:#15803D;">📎 첨부파일:</span>
-      <span style="font-size:.82rem;font-weight:600;color:var(--text);flex:1;">${esc(o.biz_reg_name)}</span>
-      <button class="copy-btn" style="background:#15803D;padding:6px 12px;font-size:.78rem;" onclick="viewBizReg(${o.id})">⬇️ 다운로드</button>
+      <button class="copy-btn" onclick="quickCopy('${esc(o.voucher_code)}')">📋 코드 복사</button>
     </div>` : "";
 
   return `<div class="order-card${isPending?' is-new':''}" id="card-${o.id}">
-    <div class="order-card-head">
+
+    <!-- 헤더 -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
       <div>
         <div class="order-id">주문번호 #${o.id} · ${dt}</div>
         <div class="order-company">${esc(o.company_name)}</div>
         <div class="order-product">📦 ${PRODUCT_NAME}</div>
       </div>
-      <div style="text-align:right;">
-        <span class="status-badge status-${o.status}">${statusLabel}</span>
-        <div style="font-size:.9rem;font-weight:800;color:var(--navy2);margin-top:6px;">${amtFmt}</div>
+      <span class="status-badge status-${o.status}">${statusLabel}</span>
+    </div>
+
+    <!-- 정보 행 (균등 간격) -->
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:.82rem;">
+      ${infoCell("구매자", esc(o.buyer_name))}
+      ${infoCell("연락처", esc(o.phone))}
+      ${infoCell("이메일", esc(o.email), true)}
+      <div style="padding:10px 12px;border-left:1px solid var(--border);border-right:1px solid var(--border);">
+        <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">첨부파일</div>
+        ${bizCell}
+      </div>
+      ${infoCell("결제 금액", `<span style="color:var(--red);font-weight:800;">${amtFmt}</span>`)}
+      <div style="padding:10px 12px;">
+        <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">승인일시</div>
+        <div style="font-weight:600;">${approvedDt || "—"}</div>
+        ${msgBtn ? `<div style="margin-top:6px;">${msgBtn}</div>` : ""}
       </div>
     </div>
-    <div class="order-info">
-      <div class="info-item"><div class="label">구매자</div><div class="val">${esc(o.buyer_name)}</div></div>
-      <div class="info-item"><div class="label">연락처</div><div class="val">${esc(o.phone)}</div></div>
-      <div class="info-item"><div class="label">이메일</div><div class="val">${esc(o.email)}</div></div>
-      <div class="info-item"><div class="label">결제 금액</div><div class="val" style="color:var(--red);font-weight:800;">${amtFmt}</div></div>
-      ${approvedDt ? `<div class="info-item"><div class="label">승인일시</div><div class="val">${approvedDt}</div></div>` : ""}
-      ${o.memo ? `<div class="info-item"><div class="label">반려 사유</div><div class="val" style="color:var(--red)">${esc(o.memo)}</div></div>` : ""}
-    </div>
+
+    ${o.memo ? `<div style="margin-top:10px;font-size:.82rem;color:var(--red);">반려 사유: ${esc(o.memo)}</div>` : ""}
     ${voucherBlock}
-    ${bizBlock}
-    <div class="order-card-foot">
-      ${isPending ? `
-        <button class="btn-approve" onclick="approveOrder(${o.id},${JSON.stringify(o)})">✅ 승인 (바우처 발급)</button>
-        <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
-      ` : ""}
-      ${isApproved ? `
-        <button class="btn-approve" style="background:var(--blue);" onclick="showResendModal(${JSON.stringify(o)})">📤 전달 메시지 보기</button>
-      ` : ""}
-    </div>
+
+    <!-- 하단 버튼 -->
+    ${isPending ? `
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn-approve" onclick="approveOrder(${o.id},${JSON.stringify(o)})">✅ 승인 (바우처 발급)</button>
+      <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
+    </div>` : ""}
+  </div>`;
+}
+
+function infoCell(label, val, small=false) {
+  return `<div style="padding:10px 12px;border-right:1px solid var(--border);">
+    <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">${label}</div>
+    <div style="font-weight:600;${small?'font-size:.78rem;word-break:break-all;':''}">${val}</div>
   </div>`;
 }
 
