@@ -68,37 +68,47 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
                color:var(--text2); transition:all .15s; white-space:nowrap; }
 .refresh-btn:hover { border-color:var(--blue); color:var(--blue); }
 
-/* ── 주문 카드 ── */
-.orders-grid { display:grid; gap:14px; }
-.order-card { background:#fff; border-radius:12px; border:1.5px solid var(--border);
-              padding:20px 22px; box-shadow:0 1px 4px rgba(0,0,0,.04); transition:box-shadow .15s; }
-.order-card:hover { box-shadow:0 3px 14px rgba(0,0,0,.08); }
-.order-card.is-new { border-color:#F59E0B; background:#FFFDF5; }
+/* ── 주문 테이블 ── */
+.orders-wrap { width:100%; overflow-x:auto; }
+.orders-table { width:100%; border-collapse:collapse; font-size:.78rem; background:#fff;
+                border-radius:10px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,.06); }
+.orders-table thead tr { background:var(--navy2); color:#fff; }
+.orders-table thead th { padding:9px 10px; font-weight:700; text-align:center;
+                          font-size:.73rem; white-space:nowrap; border-right:1px solid rgba(255,255,255,.1); }
+.orders-table thead th:last-child { border-right:none; }
+.orders-table tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
+.orders-table tbody tr:hover { background:#F8FAFF; }
+.orders-table tbody tr.is-new { background:#FFFDF5; }
+.orders-table tbody tr.is-new:hover { background:#FFF9E8; }
+.orders-table td { padding:8px 10px; vertical-align:middle; text-align:center;
+                   border-right:1px solid var(--border); }
+.orders-table td:last-child { border-right:none; }
+.orders-table td.td-left { text-align:left; }
 
-.order-card-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px; }
-.order-id { font-size:.75rem; color:var(--text2); font-weight:600; }
-.order-company { font-size:1.05rem; font-weight:800; color:var(--navy2); margin-top:2px; }
-.order-product { font-size:.78rem; color:var(--blue); font-weight:600; margin-top:2px; }
-.status-badge { display:inline-block; padding:4px 12px; border-radius:99px; font-size:.76rem; font-weight:700; white-space:nowrap; }
+/* 상태 뱃지 */
+.status-badge { display:inline-block; padding:3px 8px; border-radius:99px; font-size:.72rem; font-weight:700; white-space:nowrap; }
 .status-pending  { background:var(--yellow-bg); color:var(--yellow); }
 .status-approved { background:var(--green-bg);  color:var(--green); }
 .status-rejected { background:var(--red-bg);    color:var(--red); }
 
-.order-info { display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
-              gap:8px 20px; font-size:.84rem; margin-bottom:14px; }
-.info-item .label { color:var(--text2); font-size:.75rem; margin-bottom:2px; }
-.info-item .val { font-weight:600; color:var(--text); word-break:break-all; }
+/* 액션 버튼 */
+.tb-btn { display:inline-block; padding:3px 8px; border-radius:5px; font-size:.72rem;
+          font-weight:700; cursor:pointer; border:none; white-space:nowrap; margin:1px; }
+.tb-btn-green  { background:var(--green); color:#fff; }
+.tb-btn-green:hover { background:#15803D; }
+.tb-btn-red    { background:none; color:var(--red); border:1px solid var(--red); }
+.tb-btn-red:hover { background:var(--red); color:#fff; }
+.tb-btn-blue   { background:var(--blue); color:#fff; }
+.tb-btn-blue:hover { background:var(--blue2); }
+.tb-btn-yellow { background:none; color:var(--yellow); border:1px solid var(--yellow); }
+.tb-btn-yellow:hover { background:var(--yellow); color:#fff; }
+.tb-btn-gray   { background:none; color:#888; border:1px solid #ccc; }
+.tb-btn-gray:hover { background:#eee; }
 
-.order-card-foot { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-.btn-approve { padding:9px 18px; background:var(--green); color:#fff;
-               border:none; border-radius:8px; font-size:.85rem; font-weight:700; cursor:pointer; }
-.btn-approve:hover { background:#15803D; }
-.btn-reject  { padding:9px 18px; background:#fff; color:var(--red);
-               border:1.5px solid var(--red); border-radius:8px; font-size:.85rem; font-weight:700; cursor:pointer; }
-.btn-reject:hover { background:var(--red); color:#fff; }
-.biz-link { font-size:.8rem; color:var(--blue); cursor:pointer; text-decoration:underline; margin-left:auto; }
-.voucher-inline { font-family:monospace; font-size:.9rem; font-weight:700;
-                  color:var(--blue); background:#EBF0FB; padding:3px 9px; border-radius:5px; }
+/* 바우처 인라인 */
+.voucher-inline { font-family:monospace; font-size:.8rem; font-weight:800;
+                  color:var(--blue); background:#EBF0FB; padding:2px 7px; border-radius:4px;
+                  letter-spacing:1px; }
 
 /* ── 빈 상태 / 로딩 ── */
 .empty-state { text-align:center; padding:60px 24px; color:var(--text2); }
@@ -272,6 +282,24 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   </div>
 </div>
 
+<!-- ── 바우처 초기화 모달 ── -->
+<div class="modal-overlay" id="revokeModal">
+  <div class="modal reject-modal">
+    <div class="modal-title">🔄 바우처 초기화 (PC 교체)</div>
+    <p style="font-size:.88rem;color:var(--text2);line-height:1.7;">
+      주문 <strong id="revokeOrderLabel"></strong>의 바우처를 초기화하시겠습니까?<br><br>
+      초기화하면 기존 PC에서 라이선스가 해제되고,<br>
+      고객이 <strong>새 PC에서 같은 코드로 재활성화</strong>할 수 있습니다.
+    </p>
+    <div class="modal-btns">
+      <button class="modal-close" onclick="closeRevokeModal()">취소</button>
+      <button style="flex:1;padding:11px;border-radius:8px;font-size:.9rem;font-weight:700;
+                     cursor:pointer;border:none;background:var(--yellow);color:#000;"
+              onclick="confirmRevoke()">초기화 확인</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── 삭제 확인 모달 ── -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal reject-modal">
@@ -416,7 +444,7 @@ function updateCounts() {
 }
 
 // ────────────────────────────────────────────────────
-// 주문 렌더
+// 주문 렌더 (테이블)
 // ────────────────────────────────────────────────────
 function renderOrders() {
   const q = (document.getElementById("searchInput").value || "").toLowerCase();
@@ -430,87 +458,86 @@ function renderOrders() {
     el.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>주문이 없습니다.</p></div>';
     return;
   }
-  el.innerHTML = '<div class="orders-grid">' + list.map(orderCard).join("") + '</div>';
+
+  const thead = `<thead><tr>
+    <th>주문번호<br><span style="font-weight:400;opacity:.75;">구매일시</span></th>
+    <th>상호명</th>
+    <th>구매자</th>
+    <th>연락처</th>
+    <th>이메일</th>
+    <th>첨부파일</th>
+    <th>구매 프로그램</th>
+    <th>결제금액</th>
+    <th>입금현황</th>
+    <th>승인일시</th>
+    <th>바우처 코드 / 전달메시지</th>
+    <th>액션</th>
+  </tr></thead>`;
+
+  const tbody = "<tbody>" + list.map(orderRow).join("") + "</tbody>";
+  el.innerHTML = `<div class="orders-wrap"><table class="orders-table">${thead}${tbody}</table></div>`;
 }
 
-function orderCard(o) {
+function orderRow(o) {
   const statusLabel = {pending:"입금 대기", approved:"승인 완료", rejected:"반려"}[o.status] || o.status;
-  const dt = (o.created_at||"").replace("T"," ").substring(0,16);
+  const dt         = (o.created_at||"").replace("T"," ").substring(0,16);
   const approvedDt = (o.approved_at||"").replace("T"," ").substring(0,16);
   const isPending  = o.status === "pending";
   const isApproved = o.status === "approved";
-  const amtFmt = o.amount ? "₩" + Number(o.amount).toLocaleString("ko-KR") + "원" : "₩495,000원";
+  const isRejected = o.status === "rejected";
+  const amtFmt     = "₩" + Number(o.amount || 495000).toLocaleString("ko-KR");
 
-  // 첨부파일 셀
-  const bizCell = o.biz_reg_name
-    ? `<button onclick="viewBizReg(${o.id})" style="background:#15803D;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;">⬇️ ${esc(o.biz_reg_name)}</button>`
-    : `<span style="color:var(--text2);font-size:.8rem;">없음</span>`;
+  // 첨부파일
+  const bizTd = o.biz_reg_name
+    ? `<button class="tb-btn tb-btn-green" onclick="viewBizReg(${o.id})">⬇️ 보기</button>`
+    : `<span style="color:#bbb;">없음</span>`;
 
-  // 전달메시지 버튼 (승인일시 옆)
-  const msgBtn = isApproved
-    ? `<button onclick="showResendModal(${o.id})" style="background:var(--blue);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📤 전달 메시지</button>`
-    : "";
+  // 입금현황 뱃지
+  const statusBadge = `<span class="status-badge status-${o.status}">${statusLabel}</span>`;
 
-  // 바우처 코드 박스 (승인 완료 시 카드 하단에 크게)
-  const voucherBlock = isApproved && o.voucher_code ? `
-    <div style="background:#EBF5FF;border:2px solid var(--blue);border-radius:10px;padding:14px 20px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-      <div>
-        <div style="font-size:.72rem;color:var(--text2);margin-bottom:4px;">🔑 라이선스 바우처 코드</div>
-        <div style="font-family:monospace;font-size:1.5rem;font-weight:900;color:var(--navy2);letter-spacing:4px;">${esc(o.voucher_code)}</div>
-      </div>
-      <button class="copy-btn" onclick="quickCopy('${esc(o.voucher_code)}')">📋 코드 복사</button>
-    </div>` : "";
+  // 바우처 + 전달메시지 셀
+  let voucherTd = `<span style="color:#bbb;font-size:.75rem;">—</span>`;
+  if (isApproved && o.voucher_code) {
+    voucherTd = `
+      <span class="voucher-inline">${esc(o.voucher_code)}</span>
+      <button class="tb-btn tb-btn-blue" style="margin-top:3px;" onclick="quickCopy('${esc(o.voucher_code)}')">📋</button>
+      <button class="tb-btn tb-btn-gray" style="margin-top:3px;" onclick="showResendModal(${o.id})">📤 전달</button>`;
+  } else if (isApproved) {
+    voucherTd = `<span style="color:#bbb;font-size:.75rem;">코드 없음</span>`;
+  }
+  if (o.memo && isRejected) {
+    voucherTd = `<span style="color:var(--red);font-size:.75rem;">${esc(o.memo)}</span>`;
+  }
 
-  return `<div class="order-card${isPending?' is-new':''}" id="card-${o.id}">
+  // 액션 버튼
+  let actionTd = "";
+  if (isPending) {
+    actionTd = `
+      <button class="tb-btn tb-btn-green" id="btn-approve-${o.id}" onclick="approveOrder(${o.id})">✅ 승인</button>
+      <button class="tb-btn tb-btn-red"   onclick="openRejectModal(${o.id})">❌ 반려</button>
+      <button class="tb-btn tb-btn-gray"  onclick="openDeleteModal(${o.id})">🗑️</button>`;
+  } else if (isApproved) {
+    actionTd = `
+      <button class="tb-btn tb-btn-yellow" onclick="openRevokeModal(${o.id})">🔄 초기화</button>
+      <button class="tb-btn tb-btn-gray"   onclick="openDeleteModal(${o.id})">🗑️</button>`;
+  } else {
+    actionTd = `<button class="tb-btn tb-btn-gray" onclick="openDeleteModal(${o.id})">🗑️</button>`;
+  }
 
-    <!-- 헤더 -->
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
-      <div>
-        <div class="order-id">주문번호 #${o.id} · ${dt}</div>
-        <div class="order-company">${esc(o.company_name)}</div>
-        <div class="order-product">📦 ${PRODUCT_NAME}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span class="status-badge status-${o.status}">${statusLabel}</span>
-        <button onclick="openDeleteModal(${o.id})" title="삭제"
-          style="background:none;border:1px solid #ccc;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:.78rem;color:var(--text2);">🗑️</button>
-      </div>
-    </div>
-
-    <!-- 정보 행 (균등 간격) -->
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:.82rem;">
-      ${infoCell("구매자", esc(o.buyer_name))}
-      ${infoCell("연락처", esc(o.phone))}
-      ${infoCell("이메일", esc(o.email), true)}
-      <div style="padding:10px 12px;border-left:1px solid var(--border);border-right:1px solid var(--border);">
-        <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">첨부파일</div>
-        ${bizCell}
-      </div>
-      ${infoCell("결제 금액", `<span style="color:var(--red);font-weight:800;">${amtFmt}</span>`)}
-      <div style="padding:10px 12px;">
-        <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">승인일시</div>
-        <div style="font-weight:600;">${approvedDt || "—"}</div>
-        ${msgBtn ? `<div style="margin-top:6px;">${msgBtn}</div>` : ""}
-      </div>
-    </div>
-
-    ${o.memo ? `<div style="margin-top:10px;font-size:.82rem;color:var(--red);">반려 사유: ${esc(o.memo)}</div>` : ""}
-    ${voucherBlock}
-
-    <!-- 하단 버튼 -->
-    ${isPending ? `
-    <div style="display:flex;gap:8px;margin-top:14px;">
-      <button class="btn-approve" onclick="approveOrder(${o.id})">✅ 승인 (바우처 발급)</button>
-      <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
-    </div>` : ""}
-  </div>`;
-}
-
-function infoCell(label, val, small=false) {
-  return `<div style="padding:10px 12px;border-right:1px solid var(--border);">
-    <div style="color:var(--text2);font-size:.72rem;margin-bottom:4px;">${label}</div>
-    <div style="font-weight:600;${small?'font-size:.78rem;word-break:break-all;':''}">${val}</div>
-  </div>`;
+  return `<tr id="row-${o.id}"${isPending?' class="is-new"':''}>
+    <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
+    <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
+    <td>${esc(o.buyer_name)}</td>
+    <td style="white-space:nowrap;">${esc(o.phone)}</td>
+    <td style="font-size:.74rem;word-break:break-all;">${esc(o.email)}</td>
+    <td>${bizTd}</td>
+    <td style="font-size:.74rem;color:var(--text2);">SOEZ B2B<br>택배 송장</td>
+    <td style="color:var(--red);font-weight:800;white-space:nowrap;">${amtFmt}</td>
+    <td>${statusBadge}</td>
+    <td style="font-size:.74rem;white-space:nowrap;">${approvedDt || "—"}</td>
+    <td style="text-align:left;">${voucherTd}</td>
+    <td style="white-space:nowrap;">${actionTd}</td>
+  </tr>`;
 }
 
 // ────────────────────────────────────────────────────
@@ -520,7 +547,7 @@ async function approveOrder(orderId) {
   const o = orderMap.get(orderId);
   if (!o) return;
   if (!confirm(`주문 #${orderId} (${o.company_name})을 승인하시겠습니까?\n바우처 코드가 발급됩니다.`)) return;
-  const btn = document.querySelector(`#card-${orderId} .btn-approve`);
+  const btn = document.getElementById(`btn-approve-${orderId}`);
   if (btn) { btn.disabled = true; btn.textContent = "처리 중..."; }
 
   try {
@@ -543,6 +570,35 @@ async function approveOrder(orderId) {
 function showResendModal(orderId) {
   const o = orderMap.get(orderId);
   if (o) openApproveModal(o.voucher_code, o);
+}
+
+// ────────────────────────────────────────────────────
+// 바우처 초기화 (PC 교체)
+// ────────────────────────────────────────────────────
+let pendingRevokeId = null;
+function openRevokeModal(orderId) {
+  pendingRevokeId = orderId;
+  const o = orderMap.get(orderId);
+  document.getElementById("revokeOrderLabel").textContent =
+    `#${orderId} (${o ? o.company_name : ""})`;
+  document.getElementById("revokeModal").classList.add("open");
+}
+function closeRevokeModal() {
+  document.getElementById("revokeModal").classList.remove("open");
+  pendingRevokeId = null;
+}
+async function confirmRevoke() {
+  if (!pendingRevokeId) return;
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${pendingRevokeId}/revoke`, {
+      method:"POST", headers:{"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    showSnack("✅ 바우처 초기화 완료! 고객이 새 PC에서 재활성화할 수 있습니다.");
+    closeRevokeModal();
+    await loadOrders();
+  } catch(e) { showSnack("⚠️ " + e.message); }
 }
 
 // ────────────────────────────────────────────────────
