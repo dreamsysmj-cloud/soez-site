@@ -223,6 +223,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       </button>
       <input type="search" class="search-input" id="searchInput"
              placeholder="🔍 업체명·이름·이메일 검색" oninput="renderOrders()">
+      <button class="refresh-btn" onclick="downloadExcel()" style="border-color:#15803D;color:#15803D;">📊 엑셀 다운로드</button>
       <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
     </div>
 
@@ -271,6 +272,21 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   </div>
 </div>
 
+<!-- ── 삭제 확인 모달 ── -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal reject-modal">
+    <div class="modal-title">🗑️ 주문 삭제</div>
+    <p style="font-size:.88rem;color:var(--text2);">
+      주문 <strong id="deleteOrderLabel"></strong>을 삭제하시겠습니까?<br>
+      <span style="color:var(--red);font-weight:700;">삭제된 데이터는 복구할 수 없습니다.</span>
+    </p>
+    <div class="modal-btns">
+      <button class="modal-close" onclick="closeDeleteModal()">취소</button>
+      <button class="modal-confirm-red" onclick="confirmDelete()">삭제 확인</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── 반려 모달 ── -->
 <div class="modal-overlay" id="rejectModal">
   <div class="modal reject-modal">
@@ -300,10 +316,12 @@ const KAKAO_CH    = "http://pf.kakao.com/_ACvjX/chat";
 let adminKey = "";
 let currentStatus = "";
 let allOrders = [];
+const orderMap = new Map();   // id → order 객체 (onclick에서 JSON 대신 사용)
 let prevPendingCount = -1;
 let refreshTimer = null;
 let countdownTimer = null;
 let pendingRejectId = null;
+let pendingDeleteId = null;
 let approveData = {};
 
 // ────────────────────────────────────────────────────
@@ -380,6 +398,8 @@ async function loadOrders() {
     prevPendingCount = newPending;
 
     allOrders = orders;
+    orderMap.clear();
+    orders.forEach(o => orderMap.set(o.id, o));
     updateCounts();
     renderOrders();
   } catch (e) {
@@ -428,7 +448,7 @@ function orderCard(o) {
 
   // 전달메시지 버튼 (승인일시 옆)
   const msgBtn = isApproved
-    ? `<button onclick="showResendModal(${JSON.stringify(o)})" style="background:var(--blue);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📤 전달 메시지</button>`
+    ? `<button onclick="showResendModal(${o.id})" style="background:var(--blue);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">📤 전달 메시지</button>`
     : "";
 
   // 바우처 코드 박스 (승인 완료 시 카드 하단에 크게)
@@ -450,7 +470,11 @@ function orderCard(o) {
         <div class="order-company">${esc(o.company_name)}</div>
         <div class="order-product">📦 ${PRODUCT_NAME}</div>
       </div>
-      <span class="status-badge status-${o.status}">${statusLabel}</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="status-badge status-${o.status}">${statusLabel}</span>
+        <button onclick="openDeleteModal(${o.id})" title="삭제"
+          style="background:none;border:1px solid #ccc;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:.78rem;color:var(--text2);">🗑️</button>
+      </div>
     </div>
 
     <!-- 정보 행 (균등 간격) -->
@@ -476,7 +500,7 @@ function orderCard(o) {
     <!-- 하단 버튼 -->
     ${isPending ? `
     <div style="display:flex;gap:8px;margin-top:14px;">
-      <button class="btn-approve" onclick="approveOrder(${o.id},${JSON.stringify(o)})">✅ 승인 (바우처 발급)</button>
+      <button class="btn-approve" onclick="approveOrder(${o.id})">✅ 승인 (바우처 발급)</button>
       <button class="btn-reject"  onclick="openRejectModal(${o.id})">❌ 반려</button>
     </div>` : ""}
   </div>`;
@@ -492,8 +516,10 @@ function infoCell(label, val, small=false) {
 // ────────────────────────────────────────────────────
 // 승인
 // ────────────────────────────────────────────────────
-async function approveOrder(orderId, orderObj) {
-  if (!confirm(`주문 #${orderId} (${orderObj.company_name})을 승인하시겠습니까?\n바우처 코드가 발급됩니다.`)) return;
+async function approveOrder(orderId) {
+  const o = orderMap.get(orderId);
+  if (!o) return;
+  if (!confirm(`주문 #${orderId} (${o.company_name})을 승인하시겠습니까?\n바우처 코드가 발급됩니다.`)) return;
   const btn = document.querySelector(`#card-${orderId} .btn-approve`);
   if (btn) { btn.disabled = true; btn.textContent = "처리 중..."; }
 
@@ -505,15 +531,78 @@ async function approveOrder(orderId, orderObj) {
     if (!res.ok) throw new Error(data.detail || "오류");
 
     await loadOrders();
-    openApproveModal(data.voucher_code, orderObj);
+    // 갱신된 데이터로 모달 열기
+    const updated = orderMap.get(orderId) || o;
+    openApproveModal(data.voucher_code, updated);
   } catch (e) {
     showSnack("⚠️ 오류: " + e.message);
     if (btn) { btn.disabled = false; btn.textContent = "✅ 승인 (바우처 발급)"; }
   }
 }
 
-function showResendModal(orderObj) {
-  openApproveModal(orderObj.voucher_code, orderObj);
+function showResendModal(orderId) {
+  const o = orderMap.get(orderId);
+  if (o) openApproveModal(o.voucher_code, o);
+}
+
+// ────────────────────────────────────────────────────
+// 삭제
+// ────────────────────────────────────────────────────
+function openDeleteModal(orderId) {
+  pendingDeleteId = orderId;
+  const o = orderMap.get(orderId);
+  const name = o ? o.company_name : "#" + orderId;
+  document.getElementById("deleteOrderLabel").textContent = `#${orderId} (${name})`;
+  document.getElementById("deleteModal").classList.add("open");
+}
+function closeDeleteModal() {
+  document.getElementById("deleteModal").classList.remove("open");
+  pendingDeleteId = null;
+}
+async function confirmDelete() {
+  if (!pendingDeleteId) return;
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${pendingDeleteId}`, {
+      method:"DELETE", headers:{"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    showSnack(`🗑️ 주문 #${pendingDeleteId} 삭제 완료`);
+    closeDeleteModal();
+    await loadOrders();
+  } catch(e) { showSnack("⚠️ " + e.message); }
+}
+
+// ────────────────────────────────────────────────────
+// 엑셀(CSV) 다운로드
+// ────────────────────────────────────────────────────
+function downloadExcel() {
+  const headers = ["주문번호","신청일시","업체명","구매자","연락처","이메일","제품","금액","상태","승인일시","바우처코드","첨부파일"];
+  const rows = allOrders.map(o => [
+    o.id,
+    (o.created_at||"").replace("T"," ").substring(0,16),
+    o.company_name, o.buyer_name, o.phone, o.email,
+    PRODUCT_NAME,
+    o.amount ? o.amount : 495000,
+    {pending:"입금대기", approved:"승인완료", rejected:"반려"}[o.status] || o.status,
+    (o.approved_at||"").replace("T"," ").substring(0,16),
+    o.voucher_code || "",
+    o.biz_reg_name || ""
+  ]);
+
+  const BOM = "﻿";
+  const csv = BOM + [headers, ...rows]
+    .map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(","))
+    .join("\r\n");
+
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  const now = new Date();
+  const stamp = now.getFullYear() + String(now.getMonth()+1).padStart(2,"0") + String(now.getDate()).padStart(2,"0");
+  a.download = `SOEZ_주문내역_${stamp}.csv`;
+  a.click();
+  showSnack("✅ 엑셀 파일 다운로드 완료!");
 }
 
 function openApproveModal(voucherCode, o) {
