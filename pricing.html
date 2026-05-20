@@ -21,7 +21,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">홈</a></li>
-      <li><a href="features.html">기능 소개</a></li>
+      <li><a href="features.html">제품 소개</a></li>
       <li><a href="pricing.html" class="active">가격 및 구매</a></li>
       <li><a href="download.html">설치 파일 다운로드</a></li>
       <li><a href="order.html" class="nav-cta">구매 신청</a></li>
@@ -43,11 +43,13 @@
     <h2 class="section-title">요금제</h2>
     <p class="section-sub">구독료 없이 한 번만 결제하세요. PC 1대 영구 라이선스.</p>
 
-    <!-- 단일 플랜 카드 (중앙 정렬) -->
-    <div style="max-width:460px;margin:0 auto;">
-      <div class="price-card featured" style="text-align:center;">
-        <div class="price-popular">⭐ 단일 플랜</div>
-        <div class="price-name">B2B 택배 송장 만들기</div>
+    <!-- 두 제품 가격 카드 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto;">
+
+      <!-- 택배파일 자동화 -->
+      <div class="price-card featured" style="text-align:center;border-color:#3B6FD4;">
+        <div class="price-popular" style="background:#3B6FD4;">📦 B2B 물류 · 대리점</div>
+        <div class="price-name">택배파일 자동화</div>
         <div class="price-amount">₩ 495,000<small> / 영구</small></div>
         <div class="price-desc">부가세(VAT) 포함 · PC 1대 평생 사용</div>
         <ul class="price-features" style="text-align:left;margin:20px 0;">
@@ -55,21 +57,47 @@
           <li>✅ 대리점·거래처 무제한 등록</li>
           <li>✅ 엑셀 송장 자동 생성</li>
           <li>✅ 5개 택배사 프리셋 기본 제공</li>
-          <li>✅ 자동 폴더/파일명 저장</li>
+          <li>✅ 날짜별 폴더 자동 분류 · 저장</li>
           <li>✅ 오프라인 사용 가능</li>
           <li>✅ 무료 업데이트 (영구)</li>
           <li>✅ 카카오톡 설치 지원</li>
         </ul>
         <a href="order.html" class="btn btn-primary"
-           style="width:100%;text-align:center;display:block;padding:16px;font-size:1rem;margin-bottom:10px;">
+           style="width:100%;text-align:center;display:block;padding:14px;font-size:.95rem;margin-bottom:10px;">
           📋 구매 신청하기
         </a>
-        <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener"
-           class="btn btn-outline"
-           style="width:100%;text-align:center;display:block;font-size:.88rem;">
-          💬 구매 전 카카오톡 문의
+        <a href="features.html#taekbae" class="btn btn-outline"
+           style="width:100%;text-align:center;display:block;font-size:.85rem;">
+          자세히 보기 →
         </a>
       </div>
+
+      <!-- 모던하우스 발주서 자동화 -->
+      <div class="price-card featured" style="text-align:center;border-color:#7C3AED;">
+        <div class="price-popular" style="background:#7C3AED;">🏪 물류센터 · 납품 업무</div>
+        <div class="price-name">모던하우스 발주서 자동화</div>
+        <div class="price-amount">₩ 495,000<small> / 영구</small></div>
+        <div class="price-desc">부가세(VAT) 포함 · PC 1대 평생 사용</div>
+        <ul class="price-features" style="text-align:left;margin:20px 0;">
+          <li>✅ PC 1대 영구 라이선스</li>
+          <li>✅ 업체별 독립 프로필 설정</li>
+          <li>✅ 납품 서류 열/행 자동 숨김</li>
+          <li>✅ 엑셀 드래그&amp;드롭 파일 첨부</li>
+          <li>✅ 원클릭 처리 · 인쇄</li>
+          <li>✅ 오프라인 사용 가능</li>
+          <li>✅ 무료 업데이트 (영구)</li>
+          <li>✅ 카카오톡 설치 지원</li>
+        </ul>
+        <a href="order.html?program=modern" class="btn"
+           style="background:#7C3AED;color:#fff;width:100%;text-align:center;display:block;padding:14px;font-size:.95rem;margin-bottom:10px;border-radius:8px;font-weight:700;">
+          📋 구매 신청하기
+        </a>
+        <a href="features_modern.html" class="btn btn-outline"
+           style="width:100%;text-align:center;display:block;font-size:.85rem;">
+          자세히 보기 →
+        </a>
+      </div>
+
     </div>
 
     <!-- 추가 PC 안내 -->
@@ -312,7 +340,7 @@
         <h4>메뉴</h4>
         <ul>
           <li><a href="index.html">홈</a></li>
-          <li><a href="features.html">기능 소개</a></li>
+          <li><a href="features.html">제품 소개</a></li>
           <li><a href="pricing.html">가격 및 구매</a></li>
         </ul>
       </div>
