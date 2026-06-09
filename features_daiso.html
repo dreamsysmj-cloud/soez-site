@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다이소 발주서 자동화 기능 소개 — SOEZ 쏘이지</title>
+  <meta name="description" content="다이소(아성다이소) 발주 엑셀 자동 분석부터 제품·재고 DB 관리, FEFO 선출고 판정, 품질 체크리스트·안전확인서 자동 생성, 엑셀·PDF 출력까지. SOEZ 다이소 발주서 자동화의 모든 기능을 확인하세요.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cp-hero { background: linear-gradient(135deg, #0D2D6B 0%, #1565C0 50%, #1E88E5 100%); }
+    .feat-card {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: all .25s ease;
+    }
+    .feat-card:hover {
+      border-color: #1565C0;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -8px rgba(21,101,192,.18);
+    }
+    .feat-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+    }
+    .feat-card h3 { font-size: 1.1rem; font-weight: 800; color: #0F1B3A; margin-bottom: 8px; }
+    .feat-card p { font-size: .88rem; color: #64748B; line-height: 1.65; margin-bottom: 14px; }
+    .feat-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+    .feat-card ul li { font-size: .84rem; color: #334155; display: flex; gap: 8px; align-items: flex-start; }
+    .feat-card ul li::before { content: '✓'; color: #1565C0; font-weight: 700; flex-shrink: 0; }
+    .flow-step {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-num {
+      width: 36px; height: 36px;
+      background: #1565C0;
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .9rem;
+      margin: 0 auto 12px;
+    }
+  </style>
+</head>
+<body class="page-body">
+
+<!-- ── 네비게이션 ── -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
+      <div>
+        쏘이지
+        <span style="display:block;font-size:.7rem;font-weight:500;color:#64748B;">스마트 업무 자동화 솔루션</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html" class="active">제품 소개</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="download.html">설치 파일 다운로드</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── 히어로 ── -->
+<section class="page-hero cp-hero">
+  <div class="container" style="text-align:center;">
+    <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:18px;">🏬 다이소 납품 · 출고 전용</div>
+    <h1 style="font-size:2.6rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">다이소 발주서 자동화</h1>
+    <p style="font-size:1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto 28px;">다이소 발주 엑셀 자동 분석 · 재고 DB(입출고 원장) · FEFO 선출고 판정 · 품질 체크리스트·안전확인서 자동 생성<br>한국사료의 다이소(아성다이소) 안성·남사·부산 센터 납품 출고 업무를 한 번에 끝냅니다</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="pricing.html" class="btn" style="background:#fff;color:#1565C0;font-weight:800;padding:14px 28px;border-radius:10px;">🛒 지금 구매하기</a>
+      <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 28px;border-radius:10px;">⬇ 다운로드</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 다른 제품 바로가기 ── -->
+<div style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;padding:14px 0;">
+  <div class="container" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <span style="font-size:.83rem;color:#64748B;">다른 제품 보기:</span>
+    <a href="features.html#taekbae" style="display:inline-flex;align-items:center;gap:6px;background:#EBF0FB;color:#3B6FD4;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">📦 택배파일 자동화 →</a>
+    <a href="features_modern.html" style="display:inline-flex;align-items:center;gap:6px;background:#EDE9FE;color:#6D28D9;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🏪 모던하우스 발주서 자동화 →</a>
+    <a href="features_coupang.html" style="display:inline-flex;align-items:center;gap:6px;background:#CFFAFE;color:#0E7490;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🚚 쿠팡 출고 관리 →</a>
+  </div>
+</div>
+
+<!-- ── 사용 흐름 ── -->
+<section class="section" style="padding:70px 0 50px;background:#F8FAFC;">
+  <div class="container">
+    <h2 class="section-title">사용 방법</h2>
+    <p class="section-sub">4단계로 다이소 출고 서류 완성</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;">
+
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">🏢</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">업체 선택 · 발주 불러오기</h4>
+        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">거래처를 선택하고 다이소 발주 엑셀을 드래그&amp;드롭하거나 파일 선택으로 불러옵니다</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">⚙️</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">자동 분석 · 출고 판정</h4>
+        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">헤더 자동 인식 · 제품 DB 매핑 · FEFO 선출고 판정 · 부족 시 다음 배치 자동 혼입</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">📋</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">발주분석 · 첨부 미리보기</h4>
+        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">카톤/파렛트 단위 변환 결과와 품질 체크리스트·생산로트 안전확인서를 화면에서 확인합니다</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">🖨️</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">인쇄 · 저장</h4>
+        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">엑셀·PDF로 거래처별 지정 폴더에 자동 저장하고 출고 확정 시 재고를 자동 차감</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 주요 기능 상세 ── -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">주요 기능</h2>
+    <p class="section-sub">다이소 납품 출고 업무의 모든 반복 작업을 자동화합니다</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+      <!-- 발주 엑셀 자동 분석 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E3F2FD;">📥</div>
+        <h3>다이소 발주 엑셀 자동 분석</h3>
+        <p>다이소 발주서를 자동으로 읽어들입니다. 헤더 행을 자동 인식하고 거래처마다 양식이 다르면 열 위치를 개별 매핑해 그대로 처리할 수 있습니다.</p>
+        <ul>
+          <li>발주서 헤더 행 자동 인식</li>
+          <li>거래처별 발주 엑셀 열 위치 매핑 설정</li>
+          <li>안성 · 남사 · 부산 센터 동적 인식</li>
+          <li>.xlsx 드래그&amp;드롭 · 파일 선택 지원</li>
+        </ul>
+      </div>
+
+      <!-- 제품 DB -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E1F5FE;">🗃️</div>
+        <h3>업체별 제품 DB 관리</h3>
+        <p>업체별 제품 DB를 동적 센터 구성으로 관리합니다. 카톤·파렛트 입수, 유통기한/제조일자 기준 등 출고에 필요한 정보를 함께 관리합니다.</p>
+        <ul>
+          <li>업체별 제품 DB · 동적 센터 구성</li>
+          <li>카톤입수 · 파렛트입수 관리</li>
+          <li>유통기한 / 제조일자 기준 관리</li>
+          <li>커스텀 열 추가 · 엑셀 일괄 가져오기</li>
+        </ul>
+      </div>
+
+      <!-- 재고 DB -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E8EAF6;">📦</div>
+        <h3>재고 DB (입출고 원장)</h3>
+        <p>품번 + 유통기한 로트 단위로 입출고를 장부에 기록합니다. 기준일 재고와 입출고 이력을 한눈에 관리합니다.</p>
+        <ul>
+          <li>품번 + 유통기한 로트 단위 관리</li>
+          <li>기준일 재고 산출 · 입출고 이력 장부</li>
+          <li>입고 · 출고 원장 기록</li>
+          <li>출고 확정 시 재고 자동 차감</li>
+        </ul>
+      </div>
+
+      <!-- FEFO 출고 판정 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E0F2F1;">🔄</div>
+        <h3>FEFO 선출고 판정</h3>
+        <p>유통기한이 가까운 로트부터 먼저 출고하도록 자동 판정합니다. 재고가 부족하면 다음 배치를 자동으로 혼입해 분할합니다.</p>
+        <ul>
+          <li>FEFO(선입선출) 기준 출고 가능 판정</li>
+          <li>부족 시 다음 배치 자동 혼입 분할</li>
+          <li>로트별 출고 수량 자동 배분</li>
+          <li>출고 가능 / 부족 품목 표시</li>
+        </ul>
+      </div>
+
+      <!-- 단위 변환 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#FCE4EC;">📐</div>
+        <h3>카톤 · 파렛트 단위 변환</h3>
+        <p>발주 수량을 카톤·파렛트 단위로 자동 변환해 출고 수량을 산출합니다. 출고 확정과 동시에 재고가 자동으로 차감됩니다.</p>
+        <ul>
+          <li>카톤 / 파렛트 단위 자동 변환</li>
+          <li>입수 기준 출고 수량 산출</li>
+          <li>출고 확정 시 재고 자동 차감</li>
+          <li>발주분석 결과 화면 미리보기</li>
+        </ul>
+      </div>
+
+      <!-- 첨부파일 자동 생성 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#FFF3E0;">📄</div>
+        <h3>첨부파일 자동 생성</h3>
+        <p>납품에 필요한 첨부 서류를 자동으로 만들어 줍니다. 생산로트별 안전확인서는 별지 다중 페이지로 자동 구성됩니다.</p>
+        <ul>
+          <li>상품 품질 체크리스트 자동 생성</li>
+          <li>생산로트 상품안전확인서 (별지 다중 페이지)</li>
+          <li>발주 데이터 기반 자동 채움</li>
+          <li>엑셀 · PDF 동시 지원</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 세부 설정 ── -->
+<section class="section" style="background:#F8FAFC;padding:70px 0;">
+  <div class="container">
+    <h2 class="section-title">세부 설정 옵션</h2>
+    <p class="section-sub">거래처별로 독립 저장되는 세밀한 설정</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto;">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">📊 발주 · 제품 설정</h4>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">발주 엑셀 열 매핑</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">거래처별 열 위치 지정</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">센터 구성</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">안성·남사·부산 동적</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">출고 기준</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">유통기한 / 제조일 기준</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+            <span style="font-size:.88rem;color:#334155;">단위 변환 기준</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">카톤·파렛트 입수</span>
+          </li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">🖥️ 인쇄 · 저장 설정</h4>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">인쇄 · 방향</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">선택 후 영구 적용</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">거래처별 저장 폴더</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">거래처별 개별 지정</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">출력 형식</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">엑셀 · PDF</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+            <span style="font-size:.88rem;color:#334155;">창 · 열 너비</span>
+            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">재실행 시 자동 복원</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section style="background:linear-gradient(135deg,#0D2D6B 0%,#1E88E5 100%);padding:80px 0;text-align:center;color:#fff;">
+  <div class="container">
+    <h2 style="font-size:2rem;font-weight:900;margin-bottom:12px;letter-spacing:-.02em;">지금 바로 시작하세요</h2>
+    <p style="font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:28px;">PC 1대 영구 라이선스 · ₩3,300,000 (VAT 포함)</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="order.html?program=daiso" class="btn" style="background:#fff;color:#1565C0;font-weight:800;padding:14px 32px;border-radius:10px;font-size:1rem;">🛒 구매 신청하기</a>
+      <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 32px;border-radius:10px;font-size:1rem;">⬇ 다운로드</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">SOEZ</div>
+        <p>쏘이지(SOEZ)는 B2B 물류·납품 업무를 위한<br>스마트 자동화 솔루션 브랜드입니다.</p>
+        <p style="margin-top:12px;font-size:.82rem;">사업자등록번호: 759-03-03828<br>간이과세자 · 2026년 개업</p>
+      </div>
+      <div class="footer-col">
+        <h4>제품</h4>
+        <ul>
+          <li><a href="features.html#taekbae">택배파일 자동화</a></li>
+          <li><a href="features_modern.html">모던하우스 발주서 자동화</a></li>
+          <li><a href="features_coupang.html">쿠팡 출고 관리</a></li>
+          <li><a href="features_daiso.html">다이소 발주서 자동화</a></li>
+          <li><a href="pricing.html">가격 및 구매</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>고객 지원</h4>
+        <ul>
+          <li><a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">카카오톡 채널 문의</a></li>
+          <li><a href="order.html">구매 신청</a></li>
+          <li><a href="terms.html">이용약관</a></li>
+          <li><a href="privacy.html">개인정보처리방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SOEZ 쏘이지. All rights reserved.</span>
+      <div style="display:flex;gap:16px;">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+        <a href="dispute.html">분쟁해결기준</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
