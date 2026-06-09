@@ -273,6 +273,13 @@
           <div style="font-size:.95rem;font-weight:800;color:#1B2B4B;">쿠팡 출고 관리</div>
         </div>
       </div>
+      <div style="background:#E3F2FD;border:2px solid #1565C0;border-radius:14px;padding:20px 18px;display:flex;gap:14px;align-items:center;">
+        <span style="font-size:2rem;flex-shrink:0;">🏬</span>
+        <div>
+          <div style="font-size:.75rem;color:#1565C0;font-weight:700;margin-bottom:2px;">다이소 납품 · 출고</div>
+          <div style="font-size:.95rem;font-weight:800;color:#1B2B4B;">다이소 발주서 자동화</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -422,7 +429,7 @@
           </div>
           <div style="background:#EBF1FF;border-radius:12px;padding:20px;text-align:center;margin-top:8px;">
             <div style="font-size:32px;margin-bottom:8px;">💾</div>
-            <p style="font-size:13px;color:#444;margin-bottom:12px;"><strong>${item.program_id === 'MODERN' ? '모던하우스 발주서 자동화' : 'B2B 택배파일 자동화'}</strong> · Windows 10/11</p>
+            <p style="font-size:13px;color:#444;margin-bottom:12px;"><strong>${item.program_id === 'MODERN' ? '모던하우스 발주서 자동화' : item.program_id === 'COUPANG' ? '쿠팡 출고 관리' : item.program_id === 'DAISO' ? '다이소 발주서 자동화' : 'B2B 택배파일 자동화'}</strong> · Windows 10/11</p>
             <p style="font-size:11px;color:#888;margin-bottom:12px;">최신 버전 v${item.app_version}</p>
             <a href="${item.download_url}" style="display:inline-block;padding:12px 28px;background:#1B2B4B;color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;">📥 설치 파일 다운로드</a>
             <p style="font-size:11px;color:#888;margin-top:8px;">파일 크기 약 50~80MB</p>
