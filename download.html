@@ -9,7 +9,7 @@
 
     body {
       font-family: 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', sans-serif;
-      background: #F0F4FF;
+      background: #F8FAFC;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -17,19 +17,23 @@
 
     /* ── 헤더 ── */
     header {
-      background: #1B2B4B;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #fff;
       padding: 16px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid #E2E8F0;
     }
-    .logo { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 5px; text-decoration: none; }
+    .logo { color: #1B2B4B; font-size: 22px; font-weight: 900; letter-spacing: 5px; text-decoration: none; }
     .logo span { color: #F5A623; }
     nav a {
-      color: #A8BFDB; text-decoration: none; font-size: 13px;
+      color: #475569; text-decoration: none; font-size: 13px;
       margin-left: 20px; transition: color .2s;
     }
-    nav a:hover { color: #fff; }
+    nav a:hover { color: #1B2B4B; }
 
     /* ── 메인 카드 ── */
     main {
@@ -152,7 +156,7 @@
     .btn-download {
       display: inline-block;
       padding: 14px 32px;
-      background: #1B2B4B;
+      background: #3B6FD4;
       color: #fff;
       border-radius: 10px;
       font-size: 15px;
@@ -161,7 +165,7 @@
       letter-spacing: .3px;
       transition: background .2s;
     }
-    .btn-download:hover { background: #273F6E; }
+    .btn-download:hover { background: #2F5BB5; }
 
     .dl-note {
       margin-top: 12px;
@@ -222,21 +226,22 @@
 
     /* ── 푸터 ── */
     footer {
-      background: #1B2B4B;
-      color: #A8BFDB;
+      background: #F1F5F9;
+      color: #475569;
       text-align: center;
       padding: 18px;
       font-size: 12px;
+      border-top: 1px solid #E2E8F0;
     }
-    footer a { color: #A8BFDB; text-decoration: none; }
-    footer a:hover { color: #fff; }
+    footer a { color: #475569; text-decoration: none; }
+    footer a:hover { color: #3B6FD4; }
   </style>
 </head>
 <body>
 
 <header>
   <a class="logo" href="index.html" style="display:flex;align-items:center;gap:10px;letter-spacing:normal;">
-    <svg viewBox="0 0 76 34" height="28" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#ffffff" letter-spacing="-0.5">Soez</text></svg>
+    <svg viewBox="0 0 76 34" height="28" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#1B2B4B" letter-spacing="-0.5">Soez</text></svg>
     쏘이지
   </a>
   <nav>
@@ -250,7 +255,7 @@
 
   <!-- 제품 선택 안내 -->
   <div style="width:100%;max-width:860px;">
-    <p style="text-align:center;font-size:14px;color:#64748B;margin-bottom:14px;font-weight:600;">📦 구매하신 제품을 확인해 주세요</p>
+    <p style="text-align:center;font-size:14px;color:#334155;margin-bottom:14px;font-weight:600;">📦 구매하신 제품을 확인해 주세요</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
       <div style="background:#EBF1FF;border:2px solid #3B6FD4;border-radius:14px;padding:20px 18px;display:flex;gap:14px;align-items:center;">
         <span style="font-size:2rem;flex-shrink:0;">📦</span>
@@ -431,7 +436,7 @@
             <div style="font-size:32px;margin-bottom:8px;">💾</div>
             <p style="font-size:13px;color:#444;margin-bottom:12px;"><strong>${item.program_id === 'MODERN' ? '모던하우스 발주서 자동화' : item.program_id === 'COUPANG' ? '쿠팡 출고 관리' : item.program_id === 'DAISO' ? '다이소 발주서 자동화' : 'B2B 택배파일 자동화'}</strong> · Windows 10/11</p>
             <p style="font-size:11px;color:#888;margin-bottom:12px;">최신 버전 v${item.app_version}</p>
-            <a href="${item.download_url}" style="display:inline-block;padding:12px 28px;background:#1B2B4B;color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;">📥 설치 파일 다운로드</a>
+            <a href="${item.download_url}" style="display:inline-block;padding:12px 28px;background:#3B6FD4;color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;">📥 설치 파일 다운로드</a>
             <p style="font-size:11px;color:#888;margin-top:8px;">파일 크기 약 50~80MB</p>
           </div>`;
       } else {
