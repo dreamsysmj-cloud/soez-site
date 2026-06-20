@@ -387,9 +387,21 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 
 <script>
 const API_URL = "https://web-production-7913d.up.railway.app";
-const DOWNLOAD_URL = "https://github.com/dreamsysmj-cloud/soez-site/releases/download/v1.2.9/B2B%ED%83%9D%EB%B0%B0%EC%86%A1%EC%9E%A5%EB%A7%8C%EB%93%A4%EA%B8%B0_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8_v1.2.9.exe";
-const PRODUCT_NAME = "SOEZ B2B 택배 송장 만들기 v1.2.9";
+// 다운로드는 제품별 버전이 바뀌므로 다운로드 페이지로 안내(이메일 입력 후 제품별 설치파일 제공)
+const DOWNLOAD_URL = "https://dreamsysmj-cloud.github.io/soez-site/download.html";
 const KAKAO_CH    = "http://pf.kakao.com/_ACvjX/chat";
+
+// ── 제품(program_id) → 한글 제품명 ───────────────
+const PROGRAM_NAMES = {
+  TAEKBAE: "택배 파일 자동화",
+  MODERN:  "모던하우스 발주서 자동화",
+  DAISO:   "다이소 발주서 자동화",
+  COUPANG: "쿠팡 출고 관리",
+};
+function progName(o) {
+  const pid = (o && o.program_id ? String(o.program_id).toUpperCase() : "TAEKBAE");
+  return PROGRAM_NAMES[pid] || "SOEZ 프로그램";
+}
 
 let adminKey = "";
 let currentStatus = "";
@@ -671,7 +683,7 @@ function orderRow(o) {
     <td>${esc(o.phone)}</td>
     <td style="font-size:.74rem;">${esc(o.email)}</td>
     <td>${bizTd}</td>
-    <td style="font-size:.74rem;color:var(--text2);">SOEZ B2B<br>택배 송장</td>
+    <td style="font-size:.74rem;color:var(--text2);">${esc(progName(o))}</td>
     <td style="color:var(--red);font-weight:800;">${amtFmt}</td>
     <td>${statusBadge}</td>
     <td style="font-size:.74rem;">${approvedDt || "—"}</td>
@@ -882,7 +894,7 @@ function downloadExcel() {
     o.id,
     (o.created_at||"").replace("T"," ").substring(0,16),
     o.company_name, o.buyer_name, o.phone, o.email,
-    PRODUCT_NAME,
+    progName(o),
     o.amount ? o.amount : 495000,
     {pending:"입금대기", approved:"승인완료", rejected:"반려"}[o.status] || o.status,
     (o.approved_at||"").replace("T"," ").substring(0,16),
@@ -916,7 +928,7 @@ function openApproveModal(voucherCode, o) {
     <div class="ci-row"><span class="ci-label">연락처</span><span class="ci-val">${esc(o.phone)}</span></div>
     <div class="ci-row"><span class="ci-label">이메일</span><span class="ci-val">${esc(o.email)}</span></div>
     <div class="ci-row"><span class="ci-label">금액</span><span class="ci-val">${amtFmt}</span></div>
-    <div class="ci-row"><span class="ci-label">제품</span><span class="ci-val">${PRODUCT_NAME}</span></div>
+    <div class="ci-row"><span class="ci-label">제품</span><span class="ci-val">${progName(o)}</span></div>
   `;
 
   // 바우처 코드
@@ -926,9 +938,9 @@ function openApproveModal(voucherCode, o) {
   const kakaoMsg = `[SOEZ] ✅ 구매 승인 안내
 
 안녕하세요, ${o.buyer_name}님!
-SOEZ B2B 택배 송장 만들기 구매가 승인되었습니다.
+${progName(o)} 구매가 승인되었습니다.
 
-📦 제품: ${PRODUCT_NAME}
+📦 제품: ${progName(o)}
 🏢 업체명: ${o.company_name}
 🔑 라이선스 코드: ${voucherCode}
 
@@ -953,10 +965,10 @@ SOEZ 고객지원`;
 ${o.buyer_name}님, 안녕하세요.
 SOEZ 고객지원팀입니다.
 
-구매해 주신 ${PRODUCT_NAME} 승인이 완료되었습니다.
+구매해 주신 ${progName(o)} 승인이 완료되었습니다.
 
 ■ 라이선스 코드: ${voucherCode}
-■ 제품: ${PRODUCT_NAME}
+■ 제품: ${progName(o)}
 ■ 업체명: ${o.company_name}
 
 ■ 설치 파일 다운로드:
