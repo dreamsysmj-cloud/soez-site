@@ -7,7 +7,7 @@
   <meta name="description" content="쿠팡 발주 엑셀 자동 파싱부터 제품 DB 관리, 택배·밀크런 자동 분류, 적재리스트·피킹리스트 PDF·엑셀 출력까지. SOEZ 쿠팡 출고 관리의 모든 기능을 확인하세요.">
   <link rel="stylesheet" href="style.css">
   <style>
-    .cp-hero { background: linear-gradient(135deg, #0C4A6E 0%, #0E7490 50%, #0891B2 100%); }
+    .cp-hero { background: linear-gradient(135deg, #0D9488, #0F766E); }
     .feat-card {
       background: #fff;
       border: 1px solid #E2E8F0;
@@ -16,9 +16,9 @@
       transition: all .25s ease;
     }
     .feat-card:hover {
-      border-color: #0E7490;
+      border-color: #0D9488;
       transform: translateY(-3px);
-      box-shadow: 0 14px 30px -8px rgba(14,116,144,.18);
+      box-shadow: 0 14px 30px -8px rgba(13,148,136,.18);
     }
     .feat-icon-wrap {
       width: 56px; height: 56px;
@@ -28,10 +28,10 @@
       margin-bottom: 18px;
     }
     .feat-card h3 { font-size: 1.1rem; font-weight: 800; color: #0F1B3A; margin-bottom: 8px; }
-    .feat-card p { font-size: .88rem; color: #64748B; line-height: 1.65; margin-bottom: 14px; }
+    .feat-card p { font-size: .88rem; color: #334155; line-height: 1.65; margin-bottom: 14px; }
     .feat-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
     .feat-card ul li { font-size: .84rem; color: #334155; display: flex; gap: 8px; align-items: flex-start; }
-    .feat-card ul li::before { content: '✓'; color: #0E7490; font-weight: 700; flex-shrink: 0; }
+    .feat-card ul li::before { content: '✓'; color: #0D9488; font-weight: 700; flex-shrink: 0; }
     .flow-step {
       background: #fff;
       border: 1px solid #E2E8F0;
@@ -42,13 +42,16 @@
     }
     .flow-num {
       width: 36px; height: 36px;
-      background: #0E7490;
+      background: #0D9488;
       color: #fff;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: .9rem;
       margin: 0 auto 12px;
     }
+    .shot-tab { background:#fff;border:1px solid #E2E8F0;border-radius:999px;padding:8px 16px;font-size:.85rem;font-weight:700;color:#334155;cursor:pointer;transition:all .2s; }
+    .shot-tab:hover { border-color:#0D9488;color:#0D9488; }
+    .shot-tab.active { background:#0D9488;color:#fff;border-color:#0D9488; }
   </style>
 </head>
 <body class="page-body">
@@ -60,7 +63,7 @@
       <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
       <div>
         쏘이지
-        <span style="display:block;font-size:.7rem;font-weight:500;color:#64748B;">스마트 업무 자동화 솔루션</span>
+        <span style="display:block;font-size:.7rem;font-weight:500;color:#334155;">스마트 업무 자동화 솔루션</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -78,9 +81,9 @@
   <div class="container" style="text-align:center;">
     <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:18px;">🚚 쿠팡 출고 · 물류 전용</div>
     <h1 style="font-size:2.6rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">쿠팡 출고 관리</h1>
-    <p style="font-size:1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto 28px;">쿠팡 발주 엑셀 자동 파싱 · 택배/밀크런 자동 분류 · 적재리스트 · 피킹리스트 출력<br>쿠팡 납품 출고 업무의 반복 작업을 한 번에 끝냅니다</p>
+    <p style="font-size:1rem;color:rgba(255,255,255,.8);max-width:620px;margin:0 auto 28px;">쿠팡 발주서부터 출고 분류·피킹 리스트까지, 한 번에 끝내세요.<br>발주 엑셀을 올리면 제품 DB 매칭과 택배·밀크런 분류가 자동으로 처리됩니다.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="pricing.html" class="btn" style="background:#fff;color:#0E7490;font-weight:800;padding:14px 28px;border-radius:10px;">🛒 지금 구매하기</a>
+      <a href="pricing.html" class="btn" style="background:#fff;color:#0D9488;font-weight:800;padding:14px 28px;border-radius:10px;">🛒 지금 구매하기</a>
       <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 28px;border-radius:10px;">⬇ 다운로드</a>
     </div>
   </div>
@@ -89,9 +92,10 @@
 <!-- ── 다른 제품 바로가기 ── -->
 <div style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;padding:14px 0;">
   <div class="container" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <span style="font-size:.83rem;color:#64748B;">다른 제품 보기:</span>
+    <span style="font-size:.83rem;color:#334155;">다른 제품 보기:</span>
     <a href="features.html#taekbae" style="display:inline-flex;align-items:center;gap:6px;background:#EBF0FB;color:#3B6FD4;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">📦 택배파일 자동화 →</a>
     <a href="features_modern.html" style="display:inline-flex;align-items:center;gap:6px;background:#EDE9FE;color:#6D28D9;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🏪 모던하우스 발주서 자동화 →</a>
+    <a href="features_daiso.html" style="display:inline-flex;align-items:center;gap:6px;background:#FFE4E6;color:#E11D48;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🏬 다이소 발주서 자동화 →</a>
   </div>
 </div>
 
@@ -106,36 +110,56 @@
         <div class="flow-num">1</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">🏢</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">업체 선택 · 발주 불러오기</h4>
-        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">업체를 선택하고 쿠팡 발주 엑셀을 드래그&amp;드롭하거나 파일 선택으로 불러옵니다</p>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">업체를 선택하고 쿠팡 발주 엑셀을 드래그&amp;드롭하거나 파일 선택으로 불러옵니다</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">2</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">⚙️</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">자동 처리</h4>
-        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">제품 DB 매핑 · 박스수 기준 택배/밀크런 분류 · 파렛트 번호 자동 산출</p>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">제품 DB 매핑 · 박스수 기준 택배/밀크런 분류 · 파렛트 번호 자동 산출</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">3</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">📋</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">리스트 미리보기</h4>
-        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">적재(파렛트)리스트 · 피킹리스트를 화면에서 확인하고 센터별로 필터링합니다</p>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">적재(파렛트)리스트 · 피킹리스트를 화면에서 확인하고 센터별로 필터링합니다</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">4</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">🖨️</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">인쇄 · 저장</h4>
-        <p style="font-size:.82rem;color:#64748B;line-height:1.55;">설정한 프린터로 바로 인쇄하고 PDF·엑셀로 지정 폴더에 자동 저장</p>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">설정한 프린터로 바로 인쇄하고 PDF·엑셀로 지정 폴더에 자동 저장</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ── 주요 기능 상세 ── -->
+<!-- ── 실제 화면 ── -->
 <section class="section">
+  <div class="container">
+    <h2 class="section-title">실제 화면</h2>
+    <p class="section-sub">쿠팡 출고 관리의 주요 화면을 직접 확인하세요</p>
+    <div id="shots-tabs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
+      <button class="shot-tab active" data-img="images/screens/coupang-home.png" data-cap="홈 — 발주 엑셀을 넣고 처리 시작, 제품 매칭·분류 자동">🏠 홈</button>
+      <button class="shot-tab" data-img="images/screens/coupang-orders.png" data-cap="발주 내역 — 센터·배송방식 필터, 적재·피킹 리스트 출력">📋 발주 내역</button>
+      <button class="shot-tab" data-img="images/screens/coupang-products.png" data-cap="제품 DB — 바코드·SKU 이중 식별, 출고중지·임박 경고 자동 표시">🗃️ 제품 DB</button>
+      <button class="shot-tab" data-img="images/screens/coupang-vendors.png" data-cap="거래처 DB — 업체별 저장 경로·발주 엑셀 매핑·적재리스트 양식 관리">🏢 거래처 DB</button>
+    </div>
+    <div style="max-width:980px;margin:0 auto;">
+      <div style="background:#0F1B3A;border-radius:14px;padding:10px;box-shadow:0 20px 50px -20px rgba(15,27,58,.4);">
+        <img id="shot-img" src="images/screens/coupang-home.png" alt="쿠팡 출고 관리 화면" style="max-width:100%;max-height:600px;width:auto;border-radius:8px;display:block;margin:0 auto;">
+      </div>
+      <p id="shot-cap" style="text-align:center;font-size:.9rem;color:#334155;margin-top:14px;">홈 — 발주 엑셀을 넣고 처리 시작, 제품 매칭·분류 자동</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 주요 기능 상세 ── -->
+<section class="section" style="background:#F8FAFC;">
   <div class="container">
     <h2 class="section-title">주요 기능</h2>
     <p class="section-sub">쿠팡 출고 업무의 모든 반복 작업을 자동화합니다</p>
@@ -225,7 +249,7 @@
 </section>
 
 <!-- ── 세부 설정 ── -->
-<section class="section" style="background:#F8FAFC;padding:70px 0;">
+<section class="section" style="padding:70px 0;">
   <div class="container">
     <h2 class="section-title">세부 설정 옵션</h2>
     <p class="section-sub">업체별로 독립 저장되는 세밀한 설정</p>
@@ -236,19 +260,19 @@
         <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">발주 엑셀 열 매핑</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 열 위치 지정</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 열 위치 지정</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">택배 기준 박스 수</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 분류 기준</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 분류 기준</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">출고가능일 계산</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">유통기한 / 제조일 기준</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">유통기한 / 제조일 기준</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
             <span style="font-size:.88rem;color:#334155;">출력 양식 템플릿</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 색상·열 구성</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 색상·열 구성</span>
           </li>
         </ul>
       </div>
@@ -257,19 +281,19 @@
         <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">인쇄 프린터 · 방향</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">선택 후 영구 적용</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">선택 후 영구 적용</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">저장 폴더 (5종)</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">출력물별 개별 지정</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">출력물별 개별 지정</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#334155;">파일명 · 날짜 폴더</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">접두어 + 년/월/일</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">접두어 + 년/월/일</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
             <span style="font-size:.88rem;color:#334155;">창 · 열 너비</span>
-            <span style="font-size:.82rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:6px;">재실행 시 자동 복원</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">재실행 시 자동 복원</span>
           </li>
         </ul>
       </div>
@@ -278,12 +302,12 @@
 </section>
 
 <!-- ── CTA ── -->
-<section style="background:linear-gradient(135deg,#0C4A6E 0%,#0891B2 100%);padding:80px 0;text-align:center;color:#fff;">
+<section style="background:linear-gradient(135deg,#0D9488,#0F766E);padding:80px 0;text-align:center;color:#fff;">
   <div class="container">
     <h2 style="font-size:2rem;font-weight:900;margin-bottom:12px;letter-spacing:-.02em;">지금 바로 시작하세요</h2>
     <p style="font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:28px;">PC 1대 영구 라이선스 · ₩3,300,000 (VAT 포함)</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="order.html?program=coupang" class="btn" style="background:#fff;color:#0E7490;font-weight:800;padding:14px 32px;border-radius:10px;font-size:1rem;">🛒 구매 신청하기</a>
+      <a href="order.html?program=coupang" class="btn" style="background:#fff;color:#0D9488;font-weight:800;padding:14px 32px;border-radius:10px;font-size:1rem;">🛒 구매 신청하기</a>
       <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 32px;border-radius:10px;font-size:1rem;">⬇ 다운로드</a>
     </div>
   </div>
@@ -328,6 +352,10 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function(){var t=document.querySelectorAll('#shots-tabs .shot-tab'),i=document.getElementById('shot-img'),c=document.getElementById('shot-cap');if(!t.length||!i)return;t.forEach(function(b){b.addEventListener('click',function(){t.forEach(function(x){x.classList.remove('active');});b.classList.add('active');i.src=b.getAttribute('data-img');c.textContent=b.getAttribute('data-cap');});});})();
+</script>
 
 </body>
 </html>
