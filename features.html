@@ -3,9 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>기능 소개 — SOEZ B2B 택배 송장 만들기</title>
-  <meta name="description" content="SOEZ B2B 택배 송장 만들기의 모든 기능을 자세히 알아보세요.">
+  <title>택배 파일 자동화 기능 소개 — SOEZ 쏘이지</title>
+  <meta name="description" content="거래처·출고처 2단계 관리부터 원클릭 송장 자동 생성, 택배사 양식 자동 매칭, 엑셀 저장·생성 이력까지. SOEZ 택배 파일 자동화의 모든 기능을 확인하세요.">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .tb-hero { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+    .feat-card {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: all .25s ease;
+    }
+    .feat-card:hover {
+      border-color: #2563EB;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -8px rgba(37,99,235,.18);
+    }
+    .feat-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+    }
+    .feat-card h3 { font-size: 1.1rem; font-weight: 800; color: #0F1B3A; margin-bottom: 8px; }
+    .feat-card p { font-size: .88rem; color: #334155; line-height: 1.65; margin-bottom: 14px; }
+    .feat-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+    .feat-card ul li { font-size: .84rem; color: #334155; display: flex; gap: 8px; align-items: flex-start; }
+    .feat-card ul li::before { content: '✓'; color: #2563EB; font-weight: 700; flex-shrink: 0; }
+    .flow-step {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-num {
+      width: 36px; height: 36px;
+      background: #2563EB;
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .9rem;
+      margin: 0 auto 12px;
+    }
+    .tb-shot-tab {
+      background: #fff; border: 1px solid #E2E8F0; border-radius: 999px;
+      padding: 8px 16px; font-size: .85rem; font-weight: 700; color: #334155;
+      cursor: pointer; transition: all .2s;
+    }
+    .tb-shot-tab:hover { border-color: #2563EB; color: #2563EB; }
+    .tb-shot-tab.active { background: #2563EB; color: #fff; border-color: #2563EB; }
+  </style>
 </head>
 <body class="page-body">
 
@@ -16,7 +67,7 @@
       <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
       <div>
         쏘이지
-        <span style="display:block;font-size:.7rem;font-weight:500;color:#64748B;">스마트 업무 자동화 솔루션</span>
+        <span style="display:block;font-size:.7rem;font-weight:500;color:#334155;">스마트 업무 자동화 솔루션</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -29,287 +80,245 @@
   </div>
 </nav>
 
-<!-- ── 페이지 히어로 ── -->
-<section class="page-hero">
-  <div class="container">
-    <h1>📦 제품 소개</h1>
-    <p>SOEZ의 업무 자동화 솔루션을 확인하세요</p>
-  </div>
-</section>
-
-<!-- ── 제품 선택 카드 ── -->
-<section style="padding:60px 0 20px;background:#F8FAFC;border-bottom:1px solid #E2E8F0;">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:860px;margin:0 auto;">
-      <a href="#taekbae" style="text-decoration:none;">
-        <div style="background:#fff;border:2px solid #3B6FD4;border-radius:14px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:all .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(59,111,212,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-          <span style="font-size:2rem;line-height:1;">📦</span>
-          <div>
-            <div style="font-size:.75rem;color:#3B6FD4;font-weight:700;margin-bottom:4px;">B2B 물류 · 대리점</div>
-            <div style="font-size:1.05rem;font-weight:900;color:#0F1B3A;margin-bottom:6px;">택배파일 자동화</div>
-            <div style="font-size:.83rem;color:#64748B;">거래처 관리 · 송장 등록파일 자동 생성</div>
-          </div>
-        </div>
-      </a>
-      <a href="features_modern.html" style="text-decoration:none;">
-        <div style="background:#fff;border:2px solid #7C3AED;border-radius:14px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:all .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(124,58,237,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-          <span style="font-size:2rem;line-height:1;">🏪</span>
-          <div>
-            <div style="font-size:.75rem;color:#7C3AED;font-weight:700;margin-bottom:4px;">물류센터 · 납품 업무</div>
-            <div style="font-size:1.05rem;font-weight:900;color:#0F1B3A;margin-bottom:6px;">모던하우스 발주서 자동화</div>
-            <div style="font-size:.83rem;color:#64748B;">납품 서류 처리 · 업체별 프로필 · 인쇄 자동화</div>
-          </div>
-        </div>
-      </a>
-      <a href="features_coupang.html" style="text-decoration:none;">
-        <div style="background:#fff;border:2px solid #0E7490;border-radius:14px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:all .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(14,116,144,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-          <span style="font-size:2rem;line-height:1;">🚚</span>
-          <div>
-            <div style="font-size:.75rem;color:#0E7490;font-weight:700;margin-bottom:4px;">쿠팡 출고 · 물류</div>
-            <div style="font-size:1.05rem;font-weight:900;color:#0F1B3A;margin-bottom:6px;">쿠팡 출고 관리</div>
-            <div style="font-size:.83rem;color:#64748B;">발주 엑셀 자동 파싱 · 택배/밀크런 분류 · 리스트 출력</div>
-          </div>
-        </div>
-      </a>
-      <a href="features_daiso.html" style="text-decoration:none;">
-        <div style="background:#fff;border:2px solid #1565C0;border-radius:14px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:all .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(21,101,192,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-          <span style="font-size:2rem;line-height:1;">🏬</span>
-          <div>
-            <div style="font-size:.75rem;color:#1565C0;font-weight:700;margin-bottom:4px;">다이소 납품 · 출고</div>
-            <div style="font-size:1.05rem;font-weight:900;color:#0F1B3A;margin-bottom:6px;">다이소 발주서 자동화</div>
-            <div style="font-size:.83rem;color:#64748B;">발주 엑셀 자동 분석 · 재고 DB · FEFO 선출고 판정</div>
-          </div>
-        </div>
-      </a>
+<!-- ── 히어로 ── -->
+<section class="page-hero tb-hero" id="taekbae">
+  <div class="container" style="text-align:center;">
+    <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:18px;">📦 B2B 택배 송장 전용</div>
+    <h1 style="font-size:2.6rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">택배 파일 자동화</h1>
+    <p style="font-size:1rem;color:rgba(255,255,255,.85);max-width:640px;margin:0 auto 28px;">거래처와 출고처를 2단계로 관리하고, 택배 송장 파일을 거래처별로 한 번에 만드세요.<br>거래처를 고르면 저장 설정과 옵션이 자동으로 따라옵니다.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="pricing.html" class="btn" style="background:#fff;color:#2563EB;font-weight:800;padding:14px 28px;border-radius:10px;">🛒 지금 구매하기</a>
+      <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 28px;border-radius:10px;">⬇ 다운로드</a>
     </div>
   </div>
 </section>
 
-<!-- ── 기능 상세 (택배파일 자동화) ── -->
-<section class="section" id="taekbae">
+<!-- ── 다른 제품 바로가기 ── -->
+<div style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;padding:14px 0;">
+  <div class="container" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <span style="font-size:.83rem;color:#334155;">다른 제품 보기:</span>
+    <a href="features_coupang.html" style="display:inline-flex;align-items:center;gap:6px;background:#CCFBF1;color:#0F766E;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🚚 쿠팡 출고 관리 →</a>
+    <a href="features_modern.html" style="display:inline-flex;align-items:center;gap:6px;background:#EDE9FE;color:#6D28D9;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🏪 모던하우스 발주서 자동화 →</a>
+    <a href="features_daiso.html" style="display:inline-flex;align-items:center;gap:6px;background:#FFE4E6;color:#E11D48;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">🏬 다이소 발주서 자동화 →</a>
+  </div>
+</div>
+
+<!-- ── 사용 흐름 ── -->
+<section class="section" style="padding:70px 0 50px;background:#F8FAFC;">
   <div class="container">
-    <div style="text-align:center;margin-bottom:16px;"><span style="background:#EBF0FB;color:#3B6FD4;padding:5px 18px;border-radius:999px;font-size:.82rem;font-weight:700;">📦 택배파일 자동화 — 기능 상세</span></div>
+    <h2 class="section-title">사용 방법</h2>
+    <p class="section-sub">4단계로 택배 송장 파일 완성</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;">
 
-    <!-- 1. 거래처 관리 -->
-    <div class="feature-detail">
-      <div class="feature-detail-text">
-        <h3>📋 거래처 통합 관리</h3>
-        <p>수십, 수백 개의 거래처를 한 곳에서 관리하세요. 그룹별로 분류하고 즐겨찾기로 자주 사용하는 거래처를 빠르게 찾을 수 있습니다.</p>
-        <ul>
-          <li>거래처 이름, 주소, 연락처, 그룹 등록</li>
-          <li>⭐ 즐겨찾기 기능으로 자주 쓰는 거래처 빠른 접근</li>
-          <li>일반, 쿠팡, 수출 등 그룹별 분류 및 색상 구분</li>
-          <li>엑셀 파일로 거래처 대량 등록 · 수정 가능</li>
-          <li>거래처 검색으로 빠른 조회</li>
-        </ul>
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">🏢</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">거래처 선택</h4>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">거래처를 고르면 그 거래처의 저장 설정·옵션이 자동으로 불러와지고, 하위 출고처 목록이 표시됩니다</p>
       </div>
-      <div class="feature-detail-visual">
-        <div class="fdv-bar">
-          <span style="width:10px;height:10px;border-radius:50%;background:#EF4444;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#10B981;display:inline-block;"></span>
-          &nbsp; 거래처 관리
-        </div>
-        <div class="fdv-body">
-          <div style="display:flex;gap:8px;margin-bottom:4px;">
-            <div style="background:#3B6FD4;color:#fff;font-size:.72rem;padding:4px 10px;border-radius:4px;">전체</div>
-            <div style="background:#D97706;color:#fff;font-size:.72rem;padding:4px 10px;border-radius:4px;">⭐ 즐겨찾기</div>
-            <div style="background:#0369A1;color:#fff;font-size:.72rem;padding:4px 10px;border-radius:4px;">일반</div>
-            <div style="background:#B91C1C;color:#fff;font-size:.72rem;padding:4px 10px;border-radius:4px;">쿠팡</div>
-          </div>
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;overflow:hidden;">
-            <div style="background:#1B2B4B;display:flex;gap:1px;padding:8px 12px;">
-              <div style="background:rgba(255,255,255,.3);height:9px;border-radius:2px;flex:1;"></div>
-              <div style="background:rgba(255,255,255,.3);height:9px;border-radius:2px;flex:2;"></div>
-              <div style="background:rgba(255,255,255,.3);height:9px;border-radius:2px;flex:2;"></div>
-            </div>
-            <div style="padding:6px 12px;display:flex;flex-direction:column;gap:4px;">
-              <div style="display:flex;gap:6px;align-items:center;">
-                <div style="background:#FEF3C7;width:8px;height:8px;border-radius:50%;"></div>
-                <div style="background:#F1F5F9;height:9px;border-radius:2px;flex:1;"></div>
-                <div style="background:#F1F5F9;height:9px;border-radius:2px;flex:2;"></div>
-              </div>
-              <div style="display:flex;gap:6px;align-items:center;">
-                <div style="background:#DBEAFE;width:8px;height:8px;border-radius:50%;"></div>
-                <div style="background:#EBF0FB;height:9px;border-radius:2px;flex:1;"></div>
-                <div style="background:#EBF0FB;height:9px;border-radius:2px;flex:2;"></div>
-              </div>
-              <div style="display:flex;gap:6px;align-items:center;">
-                <div style="background:#F1F5F9;width:8px;height:8px;border-radius:50%;"></div>
-                <div style="background:#F1F5F9;height:9px;border-radius:2px;flex:1;"></div>
-                <div style="background:#F1F5F9;height:9px;border-radius:2px;flex:2;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">🚚</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">출고처 · 옵션 선택</h4>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">보낼 출고처를 고르고 택배사·운임·품목 등 송장 옵션을 지정합니다</p>
       </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">⚡</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">원클릭 생성</h4>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">버튼 한 번으로 택배사 양식에 맞춰 송장 파일이 자동 생성됩니다</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div style="font-size:1.5rem;margin-bottom:10px;">💾</div>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">저장 · 이력</h4>
+        <p style="font-size:.82rem;color:#334155;line-height:1.55;">지정 폴더에 날짜별로 엑셀이 자동 저장되고, 생성 이력에 기록됩니다</p>
+      </div>
+
     </div>
-
-    <!-- 2. 송장 생성 -->
-    <div class="feature-detail reverse">
-      <div class="feature-detail-text">
-        <h3>⚡ 원클릭 송장 자동 생성</h3>
-        <p>거래처를 선택하면 이름, 주소, 연락처, 운임 정보가 자동으로 채워집니다. 수량과 품목만 확인하고 생성 버튼 하나면 끝.</p>
-        <ul>
-          <li>등록된 거래처 정보 자동 불러오기</li>
-          <li>다수 거래처 한 번에 선택하여 일괄 생성</li>
-          <li>신용 · 현금 · 착불 운임 자동 적용</li>
-          <li>품목 프리셋으로 자주 쓰는 품목 빠른 선택</li>
-          <li>임시 거래처 추가 (DB 저장 없이 1회성 사용)</li>
-        </ul>
-      </div>
-      <div class="feature-detail-visual">
-        <div class="fdv-bar">
-          <span style="width:10px;height:10px;border-radius:50%;background:#EF4444;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>
-          <span style="width:10px;height:10px;border-radius:50%;background:#10B981;display:inline-block;"></span>
-          &nbsp; 송장 생성
-        </div>
-        <div class="fdv-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <div>
-              <div style="font-size:.7rem;color:#94A3B8;margin-bottom:4px;">발송처</div>
-              <div style="background:#fff;border:1px solid #E2E8F0;height:28px;border-radius:4px;padding:4px 8px;font-size:.72rem;color:#1B2B4B;">본사 (기본)</div>
-            </div>
-            <div>
-              <div style="font-size:.7rem;color:#94A3B8;margin-bottom:4px;">운임구분</div>
-              <div style="background:#EBF0FB;border:1px solid #3B6FD4;height:28px;border-radius:4px;padding:4px 8px;font-size:.72rem;color:#1B2B4B;">신용 (2,400원)</div>
-            </div>
-          </div>
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;overflow:hidden;">
-            <div style="background:#1B2B4B;padding:6px 10px;font-size:.7rem;color:rgba(255,255,255,.7);">거래처 목록</div>
-            <div style="padding:8px;display:flex;flex-direction:column;gap:4px;">
-              <div style="display:flex;align-items:center;gap:6px;background:#DCFCE7;padding:5px 8px;border-radius:4px;">
-                <div style="width:12px;height:12px;border-radius:2px;background:#16A34A;"></div>
-                <div style="background:#16A34A;height:8px;border-radius:2px;flex:1;opacity:.4;"></div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;background:#DCFCE7;padding:5px 8px;border-radius:4px;">
-                <div style="width:12px;height:12px;border-radius:2px;background:#16A34A;"></div>
-                <div style="background:#94A3B8;height:8px;border-radius:2px;flex:1;opacity:.4;"></div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:4px;">
-                <div style="width:12px;height:12px;border-radius:2px;background:#E2E8F0;"></div>
-                <div style="background:#E2E8F0;height:8px;border-radius:2px;flex:1;"></div>
-              </div>
-            </div>
-          </div>
-          <div style="background:#3B6FD4;color:#fff;text-align:center;padding:9px;border-radius:6px;font-size:.8rem;font-weight:700;">📦 송장 생성</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. 엑셀 저장 -->
-    <div class="feature-detail">
-      <div class="feature-detail-text">
-        <h3>📊 엑셀 자동 저장 & 폴더 정리</h3>
-        <p>생성된 송장은 택배사 양식에 맞는 엑셀 파일로 자동 저장됩니다. 연/월/일 폴더 구조로 정리되어 나중에 찾기도 쉽습니다.</p>
-        <ul>
-          <li>택배사 송장 양식에 맞는 엑셀 포맷 자동 생성</li>
-          <li>파일명: 접두어_날짜_시간.xlsx 자동 생성</li>
-          <li>연 → 월 → 일 하위 폴더 자동 생성</li>
-          <li>생성 즉시 엑셀 자동으로 열기 옵션</li>
-          <li>저장 폴더 자유롭게 변경 가능</li>
-        </ul>
-      </div>
-      <div class="feature-detail-visual">
-        <div class="fdv-bar">📁 자동 저장 구조</div>
-        <div class="fdv-body" style="font-family:Consolas,monospace;font-size:.78rem;color:#475569;">
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;padding:14px;">
-            <div>📁 Desktop/</div>
-            <div style="margin-left:16px;">📁 2026년/</div>
-            <div style="margin-left:32px;">📁 4월/</div>
-            <div style="margin-left:48px;">📁 20일/</div>
-            <div style="margin-left:64px;color:#3B6FD4;font-weight:700;">📊 택배송장_2026-04-20_0930.xlsx</div>
-            <div style="margin-left:64px;color:#3B6FD4;">📊 택배송장_2026-04-20_1445.xlsx</div>
-            <div style="margin-left:48px;">📁 21일/</div>
-            <div style="margin-left:64px;color:#94A3B8;">📊 택배송장_2026-04-21_...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. 생성 이력 -->
-    <div class="feature-detail reverse">
-      <div class="feature-detail-text">
-        <h3>📜 생성 이력 관리</h3>
-        <p>과거에 생성한 송장 내역을 모두 기록합니다. 날짜별로 어떤 거래처에 몇 개를 보냈는지 한눈에 확인할 수 있습니다.</p>
-        <ul>
-          <li>모든 송장 생성 이력 자동 저장</li>
-          <li>날짜 · 거래처 · 수량 · 운임 내역 조회</li>
-          <li>취소 거래처 등록 기능</li>
-          <li>이력 기반 재생성 지원</li>
-          <li>엑셀로 이력 내보내기</li>
-        </ul>
-      </div>
-      <div class="feature-detail-visual">
-        <div class="fdv-bar">📜 생성 이력</div>
-        <div class="fdv-body">
-          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:6px;overflow:hidden;">
-            <div style="background:#1B2B4B;display:flex;gap:4px;padding:7px 10px;">
-              <div style="background:rgba(255,255,255,.25);height:8px;border-radius:2px;width:80px;"></div>
-              <div style="background:rgba(255,255,255,.25);height:8px;border-radius:2px;width:60px;"></div>
-              <div style="background:rgba(255,255,255,.25);height:8px;border-radius:2px;width:50px;"></div>
-              <div style="background:rgba(255,255,255,.25);height:8px;border-radius:2px;width:40px;"></div>
-            </div>
-            <div style="padding:8px 10px;display:flex;flex-direction:column;gap:5px;">
-              <div style="display:flex;gap:6px;">
-                <div style="background:#EBF0FB;height:10px;border-radius:2px;width:80px;"></div>
-                <div style="background:#F1F5F9;height:10px;border-radius:2px;width:60px;"></div>
-                <div style="background:#DCFCE7;height:10px;border-radius:2px;width:50px;"></div>
-                <div style="background:#F1F5F9;height:10px;border-radius:2px;width:40px;"></div>
-              </div>
-              <div style="display:flex;gap:6px;">
-                <div style="background:#F8FAFC;height:10px;border-radius:2px;width:80px;"></div>
-                <div style="background:#F8FAFC;height:10px;border-radius:2px;width:60px;"></div>
-                <div style="background:#DCFCE7;height:10px;border-radius:2px;width:50px;"></div>
-                <div style="background:#F8FAFC;height:10px;border-radius:2px;width:40px;"></div>
-              </div>
-              <div style="display:flex;gap:6px;">
-                <div style="background:#EBF0FB;height:10px;border-radius:2px;width:80px;"></div>
-                <div style="background:#FEE2E2;height:10px;border-radius:2px;width:60px;"></div>
-                <div style="background:#F1F5F9;height:10px;border-radius:2px;width:50px;"></div>
-                <div style="background:#FEE2E2;height:10px;border-radius:2px;width:40px;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ── 시스템 요구사항 ── -->
-<section class="section-sm" style="background:var(--bg);">
+<!-- ── 실제 화면 ── -->
+<section class="section">
   <div class="container">
-    <h2 class="section-title" style="font-size:1.5rem;">💻 시스템 요구사항</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:760px;margin:28px auto 0;">
-      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:10px;">🪟</div>
-        <div style="font-weight:700;color:var(--navy);margin-bottom:6px;">운영체제</div>
-        <div style="font-size:.85rem;color:var(--text2);">Windows 10 / 11<br>(64비트)</div>
+    <h2 class="section-title">실제 화면</h2>
+    <p class="section-sub">택배 파일 자동화의 주요 화면을 직접 확인하세요</p>
+
+    <div id="tb-shots-tabs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
+      <button class="tb-shot-tab active" data-img="images/screens/home.png" data-cap="대시보드 — 기간·거래처별 택배 건수와 최근 생성 이력을 한눈에">🏠 홈 / 대시보드</button>
+      <button class="tb-shot-tab" data-img="images/screens/create.png" data-cap="파일 생성 — 거래처·출고처를 고르고 옵션을 정해 원클릭으로 송장 생성">📦 파일 생성</button>
+      <button class="tb-shot-tab" data-img="images/screens/history.png" data-cap="생성 이력 — 거래처별 필터로 기간별 생성 내역 조회">📊 생성 이력</button>
+      <button class="tb-shot-tab" data-img="images/screens/clients.png" data-cap="거래처 관리 — 상위 거래처와 대표자·연락처·메모 관리">🏢 거래처 관리</button>
+      <button class="tb-shot-tab" data-img="images/screens/shipto.png" data-cap="출고처 관리 — 거래처별 하위 출고처 등록·관리">🚚 출고처 관리</button>
+    </div>
+
+    <div style="max-width:980px;margin:0 auto;">
+      <div style="background:#0F1B3A;border-radius:14px;padding:10px;box-shadow:0 20px 50px -20px rgba(15,27,58,.4);">
+        <img id="tb-shot-img" src="images/screens/home.png" alt="택배 파일 자동화 화면"
+             style="width:100%;border-radius:8px;display:block;"
+             onerror="this.style.display='none';document.getElementById('tb-shot-ph').style.display='flex';">
+        <div id="tb-shot-ph" style="display:none;align-items:center;justify-content:center;height:420px;color:#94A3B8;font-size:.9rem;">화면 이미지 준비 중</div>
       </div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:10px;">💾</div>
-        <div style="font-weight:700;color:var(--navy);margin-bottom:6px;">저장 공간</div>
-        <div style="font-size:.85rem;color:var(--text2);">500MB 이상<br>(권장 1GB)</div>
+      <p id="tb-shot-cap" style="text-align:center;font-size:.9rem;color:#334155;margin-top:14px;">대시보드 — 기간·거래처별 택배 건수와 최근 생성 이력을 한눈에</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 주요 기능 상세 ── -->
+<section class="section" style="background:#F8FAFC;">
+  <div class="container">
+    <h2 class="section-title">주요 기능</h2>
+    <p class="section-sub">택배 송장 업무의 반복 작업을 거래처별로 자동화합니다</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+      <!-- 거래처/출고처 계층 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#DBEAFE;">🏢</div>
+        <h3>거래처 · 출고처 2단계 관리</h3>
+        <p>상위 '거래처' 아래에 여러 '출고처'를 두는 계층 구조로 관리합니다. 거래처마다 대표자·연락처·메모를 따로 기록할 수 있습니다.</p>
+        <ul>
+          <li>거래처(상위) — 출고처(하위) 2단계 구조</li>
+          <li>거래처 관리 · 출고처 관리 화면 분리</li>
+          <li>거래처별 대표자 · 연락처 · 메모</li>
+          <li>엑셀로 출고처 일괄 가져오기</li>
+        </ul>
       </div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:10px;">📊</div>
-        <div style="font-weight:700;color:var(--navy);margin-bottom:6px;">기타</div>
-        <div style="font-size:.85rem;color:var(--text2);">Excel 불필요<br>(자체 생성)</div>
+
+      <!-- 거래처별 설정 자동 전환 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E0F2FE;">🔄</div>
+        <h3>거래처별 설정 자동 전환</h3>
+        <p>거래처를 바꾸면 파일 저장 설정과 송장 옵션이 그 거래처 기준으로 자동 전환됩니다. 어느 화면에서 바꿔도 모든 화면이 함께 따라옵니다.</p>
+        <ul>
+          <li>거래처별 파일 저장 설정 · 옵션 저장/로드</li>
+          <li>전역 거래처 동기화 (전 화면 일괄 반영)</li>
+          <li>마지막 선택 거래처 재시작 후 복원</li>
+          <li>대시보드 · 생성 이력 거래처 필터</li>
+        </ul>
+      </div>
+
+      <!-- 원클릭 송장 생성 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#D1FAE5;">⚡</div>
+        <h3>원클릭 송장 자동 생성</h3>
+        <p>출고처와 옵션만 고르면 택배사 양식에 맞춰 송장 파일을 한 번에 만듭니다. 출고처마다 행이 자동으로 생성됩니다.</p>
+        <ul>
+          <li>버튼 한 번으로 송장 엑셀 생성</li>
+          <li>출고처 건수만큼 행 자동 생성</li>
+          <li>박스 수량 자동 처리</li>
+          <li>생성 후 엑셀 자동 열기 옵션</li>
+        </ul>
+      </div>
+
+      <!-- 택배사 양식 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#FEF3C7;">📋</div>
+        <h3>택배사 양식 자동 매칭</h3>
+        <p>주요 택배사 양식을 내장해, 택배사를 고르면 그 양식의 열 구성에 맞춰 송장을 만듭니다. 비표준 양식은 열 위치를 직접 지정할 수 있습니다.</p>
+        <ul>
+          <li>주요 택배사 프리셋 내장</li>
+          <li>헤더 이름 자동 인식 · 열 위치 매핑</li>
+          <li>택배사별 헤더 샘플 엑셀 다운로드</li>
+          <li>커스텀 필드 추가</li>
+        </ul>
+      </div>
+
+      <!-- 운임/품목 옵션 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#FCE7F3;">💰</div>
+        <h3>운임 · 품목 옵션</h3>
+        <p>운임 구분·금액과 품목명을 송장 생성 시 자유롭게 지정합니다. 표기하지 않을 항목은 '미표기'로 비워둘 수 있습니다.</p>
+        <ul>
+          <li>운임 구분 (신용 · 현금 · 착불) · 금액 프리셋</li>
+          <li>운임 구분 · 품목명 '미표기' 옵션</li>
+          <li>운임 가격 미표기 (금액 칸 비움)</li>
+          <li>출고처별 기본 운임 · 품목 지정</li>
+        </ul>
+      </div>
+
+      <!-- 대시보드/이력 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#EDE9FE;">📊</div>
+        <h3>대시보드 · 생성 이력</h3>
+        <p>처리 통계와 생성 이력을 한눈에 봅니다. 거래처별로 필터링해 기간별 송장 건수와 내역을 확인할 수 있습니다.</p>
+        <ul>
+          <li>대시보드 처리 통계 · 기간 조회</li>
+          <li>거래처별 필터 (전체 합산 보기 지원)</li>
+          <li>생성 이력 자동 기록 · 검색</li>
+          <li>좌측 메뉴 드래그로 순서 변경</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 세부 설정 ── -->
+<section class="section" style="padding:70px 0;">
+  <div class="container">
+    <h2 class="section-title">세부 설정 옵션</h2>
+    <p class="section-sub">거래처별로 독립 저장되는 세밀한 설정</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto;">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">🏢 거래처 · 파일 설정</h4>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">거래처 · 출고처 관리</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">2단계 계층</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">저장 폴더 · 파일명</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">거래처별 지정</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">날짜 폴더 자동 생성</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">년/월/일</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+            <span style="font-size:.88rem;color:#334155;">생성 후 엑셀 자동 열기</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">켜기/끄기</span>
+          </li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">📋 송장 · 표시 설정</h4>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">택배사 양식 · 열 매핑</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">프리셋 + 직접 지정</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">운임 구분 · 프리셋</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">신용/현금/착불</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#334155;">운임 · 품목 미표기</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">칸 비움</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+            <span style="font-size:.88rem;color:#334155;">좌측 메뉴 순서</span>
+            <span style="font-size:.82rem;color:#334155;background:#F1F5F9;padding:2px 10px;border-radius:6px;">드래그로 변경</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ── CTA ── -->
-<section class="cta-banner">
+<section style="background:linear-gradient(135deg,#2563EB,#1D4ED8);padding:80px 0;text-align:center;color:#fff;">
   <div class="container">
-    <h2>바로 시작할 준비가 됐나요?</h2>
-    <p>한 번 구매하면 평생 사용. 업데이트도 무료입니다.</p>
-    <div class="cta-btns">
-      <a href="pricing.html" class="btn btn-white btn-lg">🛒 지금 구매하기</a>
+    <h2 style="font-size:2rem;font-weight:900;margin-bottom:12px;letter-spacing:-.02em;">지금 바로 시작하세요</h2>
+    <p style="font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:28px;">PC 1대 영구 라이선스 · ₩880,000 (VAT 포함)</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="order.html?program=taekbae" class="btn" style="background:#fff;color:#2563EB;font-weight:800;padding:14px 32px;border-radius:10px;font-size:1rem;">🛒 구매 신청하기</a>
+      <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 32px;border-radius:10px;font-size:1rem;">⬇ 다운로드</a>
     </div>
   </div>
 </section>
@@ -320,39 +329,59 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo">SOEZ</div>
-        <p>B2B 택배 송장 만들기<br>대리점·도매업 전용 택배 송장 자동화 프로그램.<br>반복 업무를 자동화하여 소중한 시간을 절약하세요.</p>
+        <p>쏘이지(SOEZ)는 B2B 물류·납품 업무를 위한<br>스마트 자동화 솔루션 브랜드입니다.</p>
+        <p style="margin-top:12px;font-size:.82rem;">사업자등록번호: 759-03-03828<br>간이과세자 · 2026년 개업</p>
       </div>
       <div class="footer-col">
-        <h4>메뉴</h4>
+        <h4>제품</h4>
         <ul>
-          <li><a href="index.html">홈</a></li>
-          <li><a href="features.html">기능 소개</a></li>
+          <li><a href="features.html#taekbae">택배파일 자동화</a></li>
+          <li><a href="features_modern.html">모던하우스 발주서 자동화</a></li>
+          <li><a href="features_coupang.html">쿠팡 출고 관리</a></li>
+          <li><a href="features_daiso.html">다이소 발주서 자동화</a></li>
           <li><a href="pricing.html">가격 및 구매</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>고객 지원</h4>
         <ul>
-          <li><a href="pricing.html#faq">자주 묻는 질문</a></li>
-          <li><a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener">카카오톡 문의 (SOEZ)</a></li>
+          <li><a href="http://pf.kakao.com/_ACvjX/chat" target="_blank">카카오톡 채널 문의</a></li>
+          <li><a href="order.html">구매 신청</a></li>
+          <li><a href="terms.html">이용약관</a></li>
+          <li><a href="privacy.html">개인정보처리방침</a></li>
         </ul>
       </div>
     </div>
-        <div class="footer-bottom">
-      <p style="margin-bottom:10px;font-size:.82rem;">
-        © 2026 쏘이지(SOEZ) &nbsp;·&nbsp; 사업자등록번호: 759-03-03828 &nbsp;·&nbsp; 간이과세자<br>
-        이메일: dreamsysmj@gmail.com &nbsp;·&nbsp; 카카오톡: 채널 SOEZ
-      </p>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:.82rem;">
+    <div class="footer-bottom">
+      <span>© 2026 SOEZ 쏘이지. All rights reserved.</span>
+      <div style="display:flex;gap:16px;">
         <a href="privacy.html">개인정보처리방침</a>
         <a href="terms.html">이용약관</a>
-        <a href="dispute.html">분쟁처리절차</a>
-        <a href="youth.html">청소년보호정책</a>
-        <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=7590303828" target="_blank" rel="noopener">사업자정보확인</a>
+        <a href="dispute.html">분쟁해결기준</a>
       </div>
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var tabs = document.querySelectorAll('#tb-shots-tabs .tb-shot-tab');
+  var img = document.getElementById('tb-shot-img');
+  var ph  = document.getElementById('tb-shot-ph');
+  var cap = document.getElementById('tb-shot-cap');
+  if (!tabs.length || !img) return;
+  tabs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      ph.style.display = 'none';
+      img.style.display = 'block';
+      img.src = b.getAttribute('data-img');
+      cap.textContent = b.getAttribute('data-cap');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
