@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>이용약관 — SOEZ</title>
   <style>
-    :root { --navy:#0F1B3A; --blue:#3B6FD4; --text:#0F172A; --text2:#64748B; --border:#E2E8F0; --bg:#F8FAFC; }
+    :root { --navy:#0F1B3A; --blue:#3B6FD4; --text:#0F172A; --text2:#334155; --border:#E2E8F0; --bg:#F8FAFC; }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
            color:var(--text); background:#fff; line-height:1.8; }
     a { color:var(--blue); text-decoration:none; }
-    .nav { background:var(--navy); padding:0 24px; display:flex; align-items:center; height:60px; }
-    .nav a { color:#fff; font-weight:800; font-size:1.1rem; letter-spacing:2px; }
-    .nav span { color:#A8BFDB; font-size:.8rem; margin-left:10px; }
+    .nav { position:sticky; top:0; z-index:50; background:#fff; padding:0 24px; display:flex; align-items:center; height:60px; border-bottom:1px solid var(--border); }
+    .nav a { color:var(--navy); font-weight:800; font-size:1.1rem; letter-spacing:2px; }
+    .nav span { color:#475569; font-size:.8rem; margin-left:10px; }
     .wrap { max-width:800px; margin:0 auto; padding:48px 24px 80px; }
     .page-title { font-size:1.8rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
     .updated { font-size:.85rem; color:var(--text2); margin-bottom:40px; }
@@ -29,15 +29,15 @@
                  padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:.9rem; }
     .warn { background:#FFF7ED; border-left:4px solid #F59E0B;
             padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:.9rem; }
-    .footer { background:var(--navy); color:#94A3B8; text-align:center; padding:24px;
-              font-size:.83rem; margin-top:60px; }
-    .footer a { color:#94A3B8; }
+    .footer { background:#F1F5F9; color:#475569; text-align:center; padding:24px;
+              font-size:.83rem; margin-top:60px; border-top:1px solid var(--border); }
+    .footer a { color:#475569; }
   </style>
 </head>
 <body>
 <nav class="nav">
   <a href="index.html" style="display:flex;align-items:center;gap:8px;">
-    <svg viewBox="0 0 76 34" height="26" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#ffffff" letter-spacing="-0.5">Soez</text></svg>
+    <svg viewBox="0 0 76 34" height="26" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
     쏘이지
   </a>
   <span>스마트 업무 자동화 솔루션</span>
@@ -48,11 +48,11 @@
   <div class="updated">시행일: 2026년 05월 11일 &nbsp;|&nbsp; 최종 수정: 2026년 05월 11일</div>
 
   <h2>제1조 목적</h2>
-  <p>이 약관은 쏘이지(SOEZ, 이하 "회사")가 제공하는 'B2B 택배 송장 만들기' 소프트웨어(이하 "소프트웨어") 및 관련 서비스의 이용과 관련하여 회사와 이용자의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.</p>
+  <p>이 약관은 쏘이지(SOEZ, 이하 "회사")가 제공하는 업무 자동화 소프트웨어(이하 "소프트웨어") 및 관련 서비스의 이용과 관련하여 회사와 이용자의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.</p>
 
   <h2>제2조 용어 정의</h2>
   <ul>
-    <li><strong>소프트웨어:</strong> 회사가 개발·공급하는 'B2B 택배 송장 만들기' Windows 프로그램</li>
+    <li><strong>소프트웨어:</strong> 회사가 개발·공급하는 업무 자동화 Windows 프로그램(택배 파일 자동화, 모던하우스 발주서 자동화, 다이소 발주서 자동화, 쿠팡 출고 관리 등)</li>
     <li><strong>라이선스:</strong> 이용자가 소프트웨어를 사용할 수 있는 권리 (1 PC 영구)</li>
     <li><strong>바우처 코드:</strong> 라이선스 활성화에 사용하는 고유 코드 (형식: SOEZ-XXXX-XXXX-XXXX)</li>
     <li><strong>이용자:</strong> 소프트웨어를 구매하거나 이용하는 개인 또는 법인</li>
@@ -64,7 +64,7 @@
   <h2>제4조 서비스 내용</h2>
   <p>회사는 다음 서비스를 제공합니다.</p>
   <ul>
-    <li>B2B 택배 송장 만들기 소프트웨어 판매 및 라이선스 발급</li>
+    <li>업무 자동화 소프트웨어 판매 및 라이선스 발급</li>
     <li>소프트웨어 설치 파일 다운로드 링크 제공</li>
     <li>카카오톡 채널을 통한 설치 지원 및 고객 서비스</li>
     <li>무료 업데이트 (기능 개선, 버그 수정)</li>
@@ -75,14 +75,17 @@
   <ol>
     <li>웹사이트 구매 신청 폼 작성 및 제출</li>
     <li>이메일로 무통장 입금 계좌 안내 수신</li>
-    <li>안내된 계좌로 입금 (₩495,000 / 부가세 포함)</li>
+    <li>안내된 계좌로 입금 (구매 제품별 금액 / 부가세 포함)</li>
     <li>입금 확인 후 1영업일 이내 바우처 코드 + 설치파일 이메일 발송</li>
     <li>바우처 코드 입력 후 PC 라이선스 활성화</li>
   </ol>
   <h3>결제 금액</h3>
   <table>
-    <tr><th>상품</th><th>금액</th><th>비고</th></tr>
-    <tr><td>B2B 택배 송장 만들기 (1 PC 영구)</td><td>₩495,000</td><td>부가세(VAT) 포함</td></tr>
+    <tr><th>상품 (1 PC 영구 라이선스)</th><th>금액</th><th>비고</th></tr>
+    <tr><td>택배 파일 자동화</td><td>₩880,000</td><td>부가세(VAT) 포함</td></tr>
+    <tr><td>모던하우스 발주서 자동화</td><td>₩330,000</td><td>부가세(VAT) 포함</td></tr>
+    <tr><td>다이소 발주서 자동화</td><td>₩1,650,000</td><td>부가세(VAT) 포함</td></tr>
+    <tr><td>쿠팡 출고 관리</td><td>₩3,300,000</td><td>부가세(VAT) 포함</td></tr>
     <tr><td>추가 PC 라이선스</td><td>별도 문의</td><td>기존 구매자 할인 적용</td></tr>
   </table>
 
