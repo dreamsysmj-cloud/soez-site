@@ -13,12 +13,12 @@
   --blue2: #2C5BB8;
   --blue-light: #EBF0FB;
   --text: #0F172A;
-  --text2: #334155;
+  --text2: #1F2937;
   --border: #E2E8F0;
   --bg: #F8FAFC;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 18px; }
 body {
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   color: var(--text); background: var(--bg); line-height: 1.6;
@@ -35,7 +35,7 @@ ul { list-style: none; }
 .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
 .nav-logo-mark { display: block; flex-shrink: 0; }
 .nav-logo div { line-height: 1.15; }
-.nav-logo span { display: block; font-size: .7rem; font-weight: 500; color: var(--text2); }
+.nav-logo span { display: block; font-size: .82rem; font-weight: 500; color: var(--text2); }
 .nav-links { display: flex; align-items: center; gap: 24px; }
 .nav-links a { font-size: .92rem; font-weight: 600; color: var(--text2); transition: color .2s; }
 .nav-links a:hover { color: var(--text); }
@@ -134,6 +134,9 @@ ul { list-style: none; }
   padding: 24px 26px; box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
 .sidebar-card h3 { font-size: .95rem; font-weight: 800; color: var(--navy2); margin-bottom: 14px; }
+.sb-discount-row { display: flex; align-items: center; gap: 9px; margin-bottom: 4px; }
+.sb-badge { background: #E53E3E; color: #fff; font-weight: 800; font-size: .85rem; padding: 3px 10px; border-radius: 6px; white-space: nowrap; }
+.sb-original { color: #8A94A6; font-size: 1.05rem; text-decoration: line-through; }
 .price-tag { font-size: 2.2rem; font-weight: 900; color: var(--blue); line-height: 1; }
 .price-sub { font-size: .8rem; color: var(--text2); margin-top: 4px; }
 .feature-list li {
@@ -150,14 +153,14 @@ ul { list-style: none; }
 .step-num {
   width: 24px; height: 24px; background: var(--blue); color: #fff;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: .75rem; font-weight: 800; flex-shrink: 0;
+  font-size: .84rem; font-weight: 800; flex-shrink: 0;
 }
 .step-text { color: var(--text2); line-height: 1.5; }
 .step-text strong { color: var(--text); display: block; font-size: .88rem; }
 
 /* FOOTER */
-.footer { background: #F1F5F9; color: #475569; padding: 36px 0; margin-top: 64px; text-align: center; font-size: .85rem; border-top: 1px solid var(--border); }
-.footer a { color: #475569; }
+.footer { background: #F1F5F9; color: #374151; padding: 36px 0; margin-top: 64px; text-align: center; font-size: .85rem; border-top: 1px solid var(--border); }
+.footer a { color: #374151; }
 .footer a:hover { color: var(--blue); }
 
 /* 에러 메시지 */
@@ -188,6 +191,7 @@ ul { list-style: none; }
       <a href="features.html">기능</a>
       <a href="pricing.html">가격</a>
       <a href="download.html">다운로드</a>
+      <a href="support.html">문의</a>
       <a href="order.html" class="nav-cta" style="color:#fff;">구매 신청</a>
     </div>
   </div>
@@ -241,8 +245,8 @@ ul { list-style: none; }
         <label>이메일 <span class="required">*</span></label>
         <input type="email" name="email" id="email"
                placeholder="예: soez@example.com" required maxlength="100">
-        <p style="font-size:.8rem;color:var(--text2);margin-top:5px;">
-          📧 승인 후 다운로드 페이지에서 이 이메일로 바우처 코드를 확인할 수 있습니다.
+        <p style="font-size:.84rem;color:var(--text2);margin-top:5px;">
+          📧 승인 시 이 이메일로 바우처 코드와 설치파일 다운로드 링크를 보내드립니다.
         </p>
       </div>
       <div class="form-group">
@@ -250,11 +254,22 @@ ul { list-style: none; }
         <div class="file-upload-area" id="fileArea" onclick="document.getElementById('biz_reg_file').click()">
           <div class="icon">📄</div>
           <p>클릭하여 파일을 선택하세요</p>
-          <p style="font-size:.78rem;color:#B0BAC9;">JPG · PNG · PDF 지원 · 최대 10MB</p>
+          <p style="font-size:.86rem;color:#B0BAC9;">JPG · PNG · PDF 지원 · 최대 10MB</p>
           <div class="file-name" id="fileName"></div>
         </div>
         <input type="file" id="biz_reg_file" name="biz_reg_file"
                accept=".jpg,.jpeg,.png,.pdf">
+      </div>
+      <div class="form-group">
+        <label>세금계산서 발행 <span class="required">*</span></label>
+        <select name="tax_invoice" id="tax_invoice" required>
+          <option value="">선택해 주세요</option>
+          <option value="발행 필요">발행 필요</option>
+          <option value="발행 불필요">발행 불필요</option>
+        </select>
+        <p style="font-size:.84rem;color:var(--text2);margin-top:5px;">
+          🧾 세금계산서가 필요하시면 '발행 필요'를 선택해 주세요. (사업자등록증 첨부 권장)
+        </p>
       </div>
 
       <button type="submit" class="btn-submit" id="submitBtn">
@@ -266,7 +281,7 @@ ul { list-style: none; }
     <div class="success-screen" id="successScreen">
       <div class="success-icon">🎉</div>
       <h2>구매 신청이 접수되었습니다!</h2>
-      <p>아래 계좌로 입금해 주시면<br>입금 확인 후 <strong>1영업일 이내</strong>에 승인처리 되며<br>승인처리 시 <a href="download.html" style="color:var(--blue);font-weight:700;">다운로드 페이지</a>에서 구매자 메일을 입력하면<br>구매한 프로그램을 다운로드 가능합니다.</p>
+      <p>아래 계좌로 입금해 주시면<br>입금 확인 후 <strong>1영업일 이내</strong>에 승인처리 되며<br>승인 시 <strong>바우처 코드와 설치파일 다운로드 링크를 이메일로</strong> 보내드립니다.<br>(<a href="download.html" style="color:var(--blue);font-weight:700;">다운로드 페이지</a>에서 구매자 메일 입력으로도 확인 가능)</p>
 
       <div class="bank-info-box" id="bankInfoBox">
         <h3>💳 무통장 입금 계좌 정보</h3>
@@ -305,6 +320,10 @@ ul { list-style: none; }
     <!-- 가격 -->
     <div class="sidebar-card">
       <h3>💰 <span id="sbName">택배 파일 자동화</span></h3>
+      <div class="sb-discount-row">
+        <span class="sb-badge">30% 할인</span>
+        <s class="sb-original" id="sbOriginal">₩1,260,000</s>
+      </div>
       <div class="price-tag" id="sbPrice">₩880,000</div>
       <div class="price-sub">1 PC 영구 라이선스 · 부가세 포함</div>
       <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
@@ -314,7 +333,6 @@ ul { list-style: none; }
         <li><span class="check">✓</span> 자동 폴더/파일 저장</li>
         <li><span class="check">✓</span> 5개 택배사 프리셋</li>
         <li><span class="check">✓</span> 오프라인 PC 사용 가능</li>
-        <li><span class="check">✓</span> 업데이트 무상 제공</li>
         <li><span class="check">✓</span> 카카오톡 고객 지원</li>
       </ul>
     </div>
@@ -348,7 +366,7 @@ ul { list-style: none; }
           <div class="step-num">4</div>
           <div class="step-text">
             <strong>승인 완료</strong>
-            다운로드 페이지에서 이메일 입력 후 바우처 코드 + 설치파일 다운로드
+            승인 시 바우처 코드와 설치파일 다운로드 링크를 입력하신 이메일로 보내드립니다 (다운로드 페이지에서도 확인 가능)
           </div>
         </div>
         <div class="process-step">
@@ -400,25 +418,25 @@ ul { list-style: none; }
       id: "TAEKBAE", name: "택배 파일 자동화", price: 880000,
       features: ["무제한 대리점/거래처 등록", "엑셀 송장 자동 생성",
                  "자동 폴더/파일 저장", "5개 택배사 프리셋",
-                 "오프라인 PC 사용 가능", "업데이트 무상 제공"]
+                 "오프라인 PC 사용 가능", "카카오톡 고객 지원"]
     },
     modern: {
       id: "MODERN", name: "모던하우스 발주서 자동화", price: 330000,
       features: ["발주서 자동 변환", "엑셀 양식 자동 생성",
                  "자동 폴더/파일 저장", "오프라인 PC 사용 가능",
-                 "업데이트 무상 제공"]
+                 "카카오톡 고객 지원"]
     },
     daiso: {
       id: "DAISO", name: "다이소 발주서 자동화", price: 1650000,
       features: ["업체별 제품 DB 관리", "발주 분석·정렬·단위 변환",
                  "재고 DB·입출고 장부", "품질 체크리스트·확인서 생성",
-                 "엑셀/PDF 저장·인쇄", "업데이트 무상 제공"]
+                 "엑셀/PDF 저장·인쇄", "카카오톡 고객 지원"]
     },
     coupang: {
       id: "COUPANG", name: "쿠팡 출고 관리", price: 3300000,
       features: ["거래처별 제품 DB 관리", "출고 데이터 자동 처리",
                  "발주내역 관리", "엑셀 양식 자동 생성",
-                 "오프라인 PC 사용 가능", "업데이트 무상 제공"]
+                 "오프라인 PC 사용 가능", "카카오톡 고객 지원"]
     }
   };
 
@@ -429,6 +447,10 @@ ul { list-style: none; }
     document.getElementById("sbName").textContent  = p.name;
     document.getElementById("sbPrice").textContent =
       "₩" + p.price.toLocaleString("ko-KR");
+    // 30% 할인 기준 정가(만원 단위 반올림) = 판매가 / 0.7
+    const orig = Math.round(p.price / 0.7 / 10000) * 10000;
+    document.getElementById("sbOriginal").textContent =
+      "₩" + orig.toLocaleString("ko-KR");
     document.getElementById("sbFeatures").innerHTML =
       p.features.map(f =>
         '<li><span class="check">✓</span> ' + f + '</li>').join("");
