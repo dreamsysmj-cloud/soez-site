@@ -13,12 +13,12 @@
   --blue2: #2C5BB8;
   --blue-light: #EBF0FB;
   --text: #0F172A;
-  --text2: #334155;
+  --text2: #1F2937;
   --border: #E2E8F0;
   --bg: #F8FAFC;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 18px; }
 body.page-body {
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   color: var(--text); background: #fff; line-height: 1.6;
@@ -46,7 +46,7 @@ em { font-style: normal; color: var(--blue); }
 .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
 .nav-logo-mark { display: block; flex-shrink: 0; }
 .nav-logo div { line-height: 1.15; }
-.nav-logo span { display: block; font-size: .7rem; font-weight: 500; color: var(--text2); }
+.nav-logo span { display: block; font-size: .82rem; font-weight: 500; color: var(--text2); }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { font-size: .92rem; font-weight: 600; color: var(--text2); transition: color .2s; }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
@@ -72,7 +72,7 @@ em { font-style: normal; color: var(--blue); }
 .hero-visual-bar { display: flex; align-items: center; gap: 6px; background: #F1F5F9; padding: 10px 14px; border-bottom: 1px solid var(--border); }
 .hero-visual-bar span.dot1, .hero-visual-bar span.dot2, .hero-visual-bar span.dot3 { width: 12px; height: 12px; border-radius: 50%; }
 .dot1 { background: #EF4444; } .dot2 { background: #F59E0B; } .dot3 { background: #10B981; }
-.hero-visual-bar .title { margin-left: 12px; font-size: .78rem; color: var(--text2); font-weight: 600; }
+.hero-visual-bar .title { margin-left: 12px; font-size: .86rem; color: var(--text2); font-weight: 600; }
 .hero-screen { padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 360px; }
 .mock-row { height: 14px; background: var(--border); border-radius: 4px; }
 .mock-row.blue { background: var(--blue-light); height: 26px; width: 60%; }
@@ -107,7 +107,7 @@ em { font-style: normal; color: var(--blue); }
 .screenshot-content { padding: 12px 20px 24px; display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
 .upcoming-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .upcoming-card { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 32px 26px; position: relative; }
-.upcoming-badge { position: absolute; top: 16px; right: 16px; background: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; }
+.upcoming-badge { position: absolute; top: 16px; right: 16px; background: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; }
 .upcoming-icon { font-size: 1.8rem; margin-bottom: 14px; width: 50px; height: 50px; background: #F1F5F9; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
 .upcoming-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
 .upcoming-card p { font-size: .9rem; color: var(--text2); }
@@ -158,6 +158,7 @@ em { font-style: normal; color: var(--blue); }
       <li><a href="features.html">제품 소개</a></li>
       <li><a href="pricing.html">가격 및 구매</a></li>
       <li><a href="download.html">설치 파일 다운로드</a></li>
+      <li><a href="support.html">문의</a></li>
       <li><a href="order.html" class="nav-cta">구매 신청</a></li>
     </ul>
   </div>
@@ -213,7 +214,7 @@ em { font-style: normal; color: var(--blue); }
 
       <!-- 택배파일 자동화 -->
       <div style="background:#fff;border:2px solid var(--blue);border-radius:18px;padding:36px 30px;position:relative;transition:all .25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -12px rgba(59,111,212,.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:-14px;left:24px;background:var(--blue);color:#fff;padding:4px 16px;border-radius:999px;font-size:.75rem;font-weight:700;">🏆 판매 중</div>
+        <div style="position:absolute;top:-14px;left:24px;background:var(--blue);color:#fff;padding:4px 16px;border-radius:999px;font-size:.84rem;font-weight:700;">🏆 판매 중</div>
         <div style="font-size:2.4rem;margin-bottom:16px;">📦</div>
         <h3 style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:8px;">B2B 택배파일 자동화</h3>
         <p style="font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:20px;">대리점, 도매점, 소매점, 쿠팡 센터, 물류 센터 등 수많은 주소 자료를 일일이 찾을 필요 없이 클릭 몇 번으로 수십·수백 건의 송장 등록 파일을 한 번에 만드세요.</p>
@@ -230,7 +231,7 @@ em { font-style: normal; color: var(--blue); }
 
       <!-- 모던하우스 발주서 자동화 -->
       <div style="background:#fff;border:2px solid #7C3AED;border-radius:18px;padding:36px 30px;position:relative;transition:all .25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -12px rgba(124,58,237,.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:-14px;left:24px;background:#7C3AED;color:#fff;padding:4px 16px;border-radius:999px;font-size:.75rem;font-weight:700;">✨ 판매 중</div>
+        <div style="position:absolute;top:-14px;left:24px;background:#7C3AED;color:#fff;padding:4px 16px;border-radius:999px;font-size:.84rem;font-weight:700;">✨ 판매 중</div>
         <div style="font-size:2.4rem;margin-bottom:16px;">🏪</div>
         <h3 style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:8px;">모던하우스 발주서 자동화</h3>
         <p style="font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:20px;">모던하우스(생활용품 물류) 발주서를 업체별 양식에 맞춰 자동 변환·정리합니다. 업체마다 다른 열·서식을 프로필로 저장해두면, 엑셀 파일을 올리는 즉시 발주서가 완성됩니다.</p>
@@ -247,7 +248,7 @@ em { font-style: normal; color: var(--blue); }
 
       <!-- 쿠팡 출고 관리 -->
       <div style="background:#fff;border:2px solid #0D9488;border-radius:18px;padding:36px 30px;position:relative;transition:all .25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -12px rgba(14,116,144,.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:-14px;left:24px;background:#0D9488;color:#fff;padding:4px 16px;border-radius:999px;font-size:.75rem;font-weight:700;">🚚 판매 중</div>
+        <div style="position:absolute;top:-14px;left:24px;background:#0D9488;color:#fff;padding:4px 16px;border-radius:999px;font-size:.84rem;font-weight:700;">🚚 판매 중</div>
         <div style="font-size:2.4rem;margin-bottom:16px;">🚚</div>
         <h3 style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:8px;">쿠팡 출고 관리</h3>
         <p style="font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:20px;">쿠팡 발주 엑셀을 자동으로 읽어 제품 DB(바코드·SKU)와 매칭하고, 박스 수량 기준으로 택배·밀크런을 자동 분류합니다. 적재·피킹 리스트까지 바로 출력해 출고 업무를 단숨에 정리합니다.</p>
@@ -264,7 +265,7 @@ em { font-style: normal; color: var(--blue); }
 
       <!-- 다이소 발주서 자동화 -->
       <div style="background:#fff;border:2px solid #E11D48;border-radius:18px;padding:36px 30px;position:relative;transition:all .25s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -12px rgba(225,29,72,.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:-14px;left:24px;background:#E11D48;color:#fff;padding:4px 16px;border-radius:999px;font-size:.75rem;font-weight:700;">🏬 판매 중</div>
+        <div style="position:absolute;top:-14px;left:24px;background:#E11D48;color:#fff;padding:4px 16px;border-radius:999px;font-size:.84rem;font-weight:700;">🏬 판매 중</div>
         <div style="font-size:2.4rem;margin-bottom:16px;">🏬</div>
         <h3 style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:8px;">다이소 발주서 자동화</h3>
         <p style="font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:20px;">다이소(아성다이소) 발주 엑셀을 자동 분석하고 재고 입출고 원장과 유통기한(로트)을 관리합니다. FEFO 기준으로 출고 가능 수량을 판정하고 부족하면 다음 배치를 자동 혼입하며, 품질 체크리스트·생산로트 안전확인서까지 자동으로 만들어 줍니다.</p>
@@ -293,37 +294,37 @@ em { font-style: normal; color: var(--blue); }
       <!-- 택배 -->
       <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;border-radius:50%;background:#2563EB;flex-shrink:0;"></span><span style="font-size:1.05rem;font-weight:800;color:#0F172A;">택배 파일 자동화</span></div>
-        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 거래처마다 출고처·주소를 찾아 송장 등록 파일에 건별로 입력</div>
-        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 거래처별 출고처 DB 저장 → 클릭 선택 후 건수만 입력하면 송장 파일 완성</div>
+        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 거래처마다 출고처·주소를 찾아 송장 등록 파일에 건별로 입력</div>
+        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 거래처별 출고처 DB 저장 → 클릭 선택 후 건수만 입력하면 송장 파일 완성</div>
         <div style="margin-top:auto;font-size:.88rem;font-weight:700;color:#2563EB;">⏱ 하루 200건 송장 작업 1시간+ → 5분 이내</div>
       </div>
 
       <!-- 쿠팡 -->
       <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;border-radius:50%;background:#0D9488;flex-shrink:0;"></span><span style="font-size:1.05rem;font-weight:800;color:#0F172A;">쿠팡 출고 관리</span></div>
-        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 발주서 보며 제품 매칭·택배/밀크런 분류·피킹/파렛트 리스트 수기 작성</div>
-        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 발주 엑셀만 올리면 택배/밀크런 자동 분류, 피킹·파렛트 리스트 바로 출력</div>
+        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 발주서 보며 제품 매칭·택배/밀크런 분류·피킹/파렛트 리스트 수기 작성</div>
+        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 발주 엑셀만 올리면 택배/밀크런 자동 분류, 피킹·파렛트 리스트 바로 출력</div>
         <div style="margin-top:auto;font-size:.88rem;font-weight:700;color:#0D9488;">⏱ 거래처 1곳 하루 3시간+ → 15분 이내</div>
       </div>
 
       <!-- 다이소 -->
       <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;border-radius:50%;background:#E11D48;flex-shrink:0;"></span><span style="font-size:1.05rem;font-weight:800;color:#0F172A;">다이소 발주서 자동화</span></div>
-        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 발주·재고·유통기한 대조해 센터별 출고 수량·서류를 손으로 작성</div>
-        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 발주 엑셀 업로드 → 센터별 수량 자동 산출, 낱개·카톤·파렛트 리스트 출력</div>
+        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 발주·재고·유통기한 대조해 센터별 출고 수량·서류를 손으로 작성</div>
+        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 발주 엑셀 업로드 → 센터별 수량 자동 산출, 낱개·카톤·파렛트 리스트 출력</div>
         <div style="margin-top:auto;font-size:.88rem;font-weight:700;color:#E11D48;">⏱ 거래처 1곳 하루 1시간+ → 10분 이내</div>
       </div>
 
       <!-- 모던 -->
       <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;border-radius:50%;background:#7C3AED;flex-shrink:0;"></span><span style="font-size:1.05rem;font-weight:800;color:#0F172A;">모던하우스 발주서 자동화</span></div>
-        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 점포마다 다른 양식을 매번 손으로 변환해 납품 서류 작성</div>
-        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#334155;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 거래처 선택 후 발주 엑셀만 올리면 점포별 납품 서류 자동 완성</div>
+        <div style="background:#FEF2F2;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#B91C1C;">수작업</b> · 점포마다 다른 양식을 매번 손으로 변환해 납품 서류 작성</div>
+        <div style="background:#F0FDF4;border-radius:10px;padding:10px 12px;font-size:.86rem;color:#1F2937;line-height:1.55;"><b style="color:#15803D;">SOEZ</b> · 거래처 선택 후 발주 엑셀만 올리면 점포별 납품 서류 자동 완성</div>
         <div style="margin-top:auto;font-size:.88rem;font-weight:700;color:#7C3AED;">⏱ 거래처 1곳 하루 10분+ → 1분 이내</div>
       </div>
 
     </div>
-    <p style="margin-top:38px;text-align:center;max-width:780px;margin-left:auto;margin-right:auto;font-size:1.02rem;color:#334155;line-height:1.75;">
+    <p style="margin-top:38px;text-align:center;max-width:780px;margin-left:auto;margin-right:auto;font-size:1.02rem;color:#1F2937;line-height:1.75;">
       반복 업무에 쓰던 시간을 줄이면 <b style="color:#0F172A;">그만큼 인건비가 절감</b>되고, 직원은 실수 없이 더 중요한 일에 집중할 수 있습니다.
     </p>
   </div>
@@ -334,7 +335,7 @@ em { font-style: normal; color: var(--blue); }
   <div class="container" style="position:relative;">
 
     <h2 class="section-title" style="color:#0F172A;">⏱ 자동화하면 인건비가 얼마나 줄어들까요?</h2>
-    <p class="section-sub" style="color:#334155;">시간당 인건비 ₩12,000 · 월 22일 근무 기준 · 제품마다 처리 기준이 다릅니다 (실제 업무량에 따라 달라집니다)</p>
+    <p class="section-sub" style="color:#1F2937;">시간당 인건비 ₩12,000 · 월 22일 근무 기준 · 제품마다 처리 기준이 다릅니다 (실제 업무량에 따라 달라집니다)</p>
 
     <!-- ── 택배 파일 자동화 (blue) ── -->
     <div style="background:#fff;border:1px solid var(--border);border-top:4px solid #2563EB;border-radius:16px;padding:30px;margin-bottom:26px;">
@@ -342,11 +343,11 @@ em { font-style: normal; color: var(--blue); }
         <span style="width:12px;height:12px;border-radius:50%;background:#2563EB;"></span>
         <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;">택배 파일 자동화</h3>
       </div>
-      <p style="font-size:.82rem;color:#475569;margin-bottom:20px;">택배 송장 하루 200건 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
+      <p style="font-size:.96rem;font-weight:600;color:#374151;margin-bottom:20px;">택배 송장 하루 200건 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px;">
         <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:20px;">
-          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">❌ 기존 방식</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">❌ 기존 방식</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>거래처·출고처 정보 일일이 확인</li>
             <li>송장 등록 파일에 건별로 수기 입력</li>
             <li>오탈자·누락 재확인, 파일 정리</li>
@@ -357,8 +358,8 @@ em { font-style: normal; color: var(--blue); }
         </div>
         <div style="display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#2563EB;">→</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:20px;">
-          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">✅ SOEZ 사용 후</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">✅ SOEZ 사용 후</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>등록 거래처 클릭 (출고처 DB 자동 적용)</li>
             <li>택배 건수만 입력</li>
             <li>송장 등록 파일 양식 맞춰 한 번에 생성</li>
@@ -370,24 +371,24 @@ em { font-style: normal; color: var(--blue); }
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">하루 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#2563EB;">55분</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">60분 → 5분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">하루 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#2563EB;">55분</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">60분 → 5분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#2563EB;">20시간</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">22일 × 55분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#2563EB;">20시간</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">22일 × 55분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#2563EB;">₩24만</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">20시간 × ₩12,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#2563EB;">₩24만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">20시간 × ₩12,000</div>
         </div>
         <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#2563EB;margin-bottom:6px;">연간 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#2563EB;">₩288만</div>
-          <div style="font-size:.68rem;color:#2563EB;margin-top:4px;">12개월 기준</div>
+          <div style="font-size:.95rem;font-weight:700;color:#2563EB;margin-bottom:6px;">연간 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#2563EB;">₩288만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#2563EB;margin-top:4px;">12개월 기준</div>
         </div>
       </div>
     </div>
@@ -398,11 +399,11 @@ em { font-style: normal; color: var(--blue); }
         <span style="width:12px;height:12px;border-radius:50%;background:#0D9488;"></span>
         <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;">쿠팡 출고 관리</h3>
       </div>
-      <p style="font-size:.82rem;color:#475569;margin-bottom:20px;">거래처 1곳 하루 출고 처리 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
+      <p style="font-size:.96rem;font-weight:600;color:#374151;margin-bottom:20px;">거래처 1곳 하루 출고 처리 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px;">
         <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:20px;">
-          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">❌ 기존 방식</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">❌ 기존 방식</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>발주서 보며 제품 일일이 매칭</li>
             <li>택배·밀크런 수기 분류</li>
             <li>피킹·파렛트 리스트 손으로 작성</li>
@@ -413,8 +414,8 @@ em { font-style: normal; color: var(--blue); }
         </div>
         <div style="display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#0D9488;">→</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:20px;">
-          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">✅ SOEZ 사용 후</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">✅ SOEZ 사용 후</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>쿠팡 발주서 엑셀 업로드 → 택배·밀크런 자동 분류</li>
             <li>센터별 출고 리스트 간편 수정</li>
             <li>피킹·파렛트 리스트 바로 출력·저장</li>
@@ -426,24 +427,24 @@ em { font-style: normal; color: var(--blue); }
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">하루 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#0D9488;">2시간 45분</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">3시간 → 15분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">하루 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#0D9488;">2시간 45분</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">3시간 → 15분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#0D9488;">60시간</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">22일 × 165분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#0D9488;">60시간</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">22일 × 165분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#0D9488;">₩72만</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">60시간 × ₩12,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#0D9488;">₩72만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">60시간 × ₩12,000</div>
         </div>
         <div style="background:#F0FDFA;border:1px solid #99F6E4;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#0D9488;margin-bottom:6px;">연간 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#0D9488;">₩864만</div>
-          <div style="font-size:.68rem;color:#0D9488;margin-top:4px;">12개월 기준</div>
+          <div style="font-size:.95rem;font-weight:700;color:#0D9488;margin-bottom:6px;">연간 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#0D9488;">₩864만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#0D9488;margin-top:4px;">12개월 기준</div>
         </div>
       </div>
     </div>
@@ -454,11 +455,11 @@ em { font-style: normal; color: var(--blue); }
         <span style="width:12px;height:12px;border-radius:50%;background:#E11D48;"></span>
         <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;">다이소 발주서 자동화</h3>
       </div>
-      <p style="font-size:.82rem;color:#475569;margin-bottom:20px;">거래처 1곳 하루 발주·출고 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
+      <p style="font-size:.96rem;font-weight:600;color:#374151;margin-bottom:20px;">거래처 1곳 하루 발주·출고 기준 · 시간당 인건비 ₩12,000 · 월 22일 기준</p>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px;">
         <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:20px;">
-          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">❌ 기존 방식</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">❌ 기존 방식</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>발주·재고·유통기한 대조해 센터별 출고 수량 계산</li>
             <li>낱개·카톤·파렛트 단위 수기 환산</li>
             <li>피킹 리스트·서류 손으로 작성</li>
@@ -469,8 +470,8 @@ em { font-style: normal; color: var(--blue); }
         </div>
         <div style="display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#E11D48;">→</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:20px;">
-          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">✅ SOEZ 사용 후</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">✅ SOEZ 사용 후</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>발주서 엑셀 업로드 → 센터별 출고 수량 자동 산출</li>
             <li>낱개·카톤·파렛트 피킹 리스트 바로 출력</li>
             <li>체크리스트·안전확인서 자동 생성</li>
@@ -482,24 +483,24 @@ em { font-style: normal; color: var(--blue); }
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">하루 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#E11D48;">50분</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">60분 → 10분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">하루 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#E11D48;">50분</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">60분 → 10분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#E11D48;">18시간</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">22일 × 50분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#E11D48;">18시간</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">22일 × 50분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#E11D48;">₩22만</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">18시간 × ₩12,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#E11D48;">₩22만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">18시간 × ₩12,000</div>
         </div>
         <div style="background:#FFF1F2;border:1px solid #FECDD3;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#E11D48;margin-bottom:6px;">연간 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#E11D48;">₩260만</div>
-          <div style="font-size:.68rem;color:#E11D48;margin-top:4px;">12개월 기준</div>
+          <div style="font-size:.95rem;font-weight:700;color:#E11D48;margin-bottom:6px;">연간 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#E11D48;">₩260만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#E11D48;margin-top:4px;">12개월 기준</div>
         </div>
       </div>
     </div>
@@ -510,11 +511,11 @@ em { font-style: normal; color: var(--blue); }
         <span style="width:12px;height:12px;border-radius:50%;background:#7C3AED;"></span>
         <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;">모던하우스 발주서 자동화</h3>
       </div>
-      <p style="font-size:.82rem;color:#475569;margin-bottom:20px;">거래처 1곳 하루 발주 처리 기준 · 시간당 인건비 ₩12,000 · 월 22일 (거래처 수만큼 절감 효과 ↑)</p>
+      <p style="font-size:.96rem;font-weight:600;color:#374151;margin-bottom:20px;">거래처 1곳 하루 발주 처리 기준 · 시간당 인건비 ₩12,000 · 월 22일 (거래처 수만큼 절감 효과 ↑)</p>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px;">
         <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:20px;">
-          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">❌ 기존 방식</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#FEE2E2;color:#B91C1C;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">❌ 기존 방식</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>점포·업체마다 다른 양식 매번 확인</li>
             <li>품목·수량 손으로 옮겨 납품 서류 작성</li>
             <li>양식 맞춰 재정리·검수</li>
@@ -525,8 +526,8 @@ em { font-style: normal; color: var(--blue); }
         </div>
         <div style="display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#7C3AED;">→</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:20px;">
-          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:700;">✅ SOEZ 사용 후</span>
-          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;color:#334155;line-height:1.5;">
+          <span style="background:#DCFCE7;color:#15803D;padding:3px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">✅ SOEZ 사용 후</span>
+          <ul style="margin:14px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:1rem;font-weight:500;color:#1F2937;line-height:1.6;">
             <li>거래처 선택 후 발주서 엑셀만 업로드</li>
             <li>점포별 납품 서류 자동 작성</li>
             <li>바로 출력·전송</li>
@@ -538,24 +539,24 @@ em { font-style: normal; color: var(--blue); }
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">하루 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#7C3AED;">9분</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">10분 → 1분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">하루 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#7C3AED;">9분</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">10분 → 1분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 절감 시간</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#7C3AED;">3시간+</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">22일 × 9분</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 절감 시간</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#7C3AED;">3시간+</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">22일 × 9분</div>
         </div>
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#475569;margin-bottom:6px;">월 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#7C3AED;">₩4만</div>
-          <div style="font-size:.68rem;color:#64748B;margin-top:4px;">3시간 × ₩12,000</div>
+          <div style="font-size:.95rem;font-weight:700;color:#1F2937;margin-bottom:6px;">월 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#7C3AED;">₩4만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#374151;margin-top:4px;">3시간 × ₩12,000</div>
         </div>
         <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:10px;padding:16px 10px;text-align:center;">
-          <div style="font-size:.72rem;color:#7C3AED;margin-bottom:6px;">연간 인건비 절감</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#7C3AED;">₩48만</div>
-          <div style="font-size:.68rem;color:#7C3AED;margin-top:4px;">거래처 1곳 기준</div>
+          <div style="font-size:.95rem;font-weight:700;color:#7C3AED;margin-bottom:6px;">연간 인건비 절감</div>
+          <div style="font-size:1.85rem;font-weight:900;color:#7C3AED;">₩48만</div>
+          <div style="font-size:.84rem;font-weight:600;color:#7C3AED;margin-top:4px;">거래처 1곳 기준</div>
         </div>
       </div>
     </div>
