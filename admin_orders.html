@@ -7,7 +7,7 @@
   <style>
 :root {
   --navy: #0F1B3A; --navy2: #1B2B4B; --blue: #3B6FD4; --blue2: #2C5BB8;
-  --text: #0F172A; --text2: #64748B; --border: #E2E8F0; --bg: #F8FAFC;
+  --text: #0F172A; --text2: #334155; --border: #E2E8F0; --bg: #F8FAFC;
   --green: #16A34A; --green-bg: #DCFCE7; --red: #DC2626; --red-bg: #FEE2E2;
   --yellow-bg: #FEF9C3; --yellow: #D97706; --kakao: #FEE500;
   --tbl-fs: .78rem;   /* 테이블 글씨 크기 — JS에서 localStorage로 제어 */
@@ -39,7 +39,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .logout-btn { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
               color:#fff; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:.8rem; }
 .logout-btn:hover { background:rgba(255,255,255,.2); }
-.refresh-indicator { font-size:.78rem; color:#7094C4; }
+.refresh-indicator { font-size:.84rem; color:#7094C4; }
 
 .main { max-width:1280px; margin:0 auto; padding:28px 20px; }
 
@@ -59,7 +59,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
            transition:all .15s; color:var(--text2); white-space:nowrap; }
 .tab-btn.active { background:var(--blue); color:#fff; border-color:var(--blue); }
 .tab-btn .cnt { display:inline-block; background:rgba(0,0,0,.1); border-radius:99px;
-                font-size:.72rem; padding:1px 6px; margin-left:3px; }
+                font-size:.8rem; padding:1px 6px; margin-left:3px; }
 .tab-btn.active .cnt { background:rgba(255,255,255,.25); }
 .search-input { flex:1; min-width:180px; padding:9px 14px; border:1.5px solid var(--border);
                 border-radius:8px; font-size:.88rem; outline:none; transition:border-color .2s; }
@@ -110,13 +110,13 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .orders-table td.td-left { text-align:left; }
 
 /* 상태 뱃지 */
-.status-badge { display:inline-block; padding:3px 8px; border-radius:99px; font-size:.72rem; font-weight:700; white-space:nowrap; }
+.status-badge { display:inline-block; padding:3px 8px; border-radius:99px; font-size:.8rem; font-weight:700; white-space:nowrap; }
 .status-pending  { background:var(--yellow-bg); color:var(--yellow); }
 .status-approved { background:var(--green-bg);  color:var(--green); }
 .status-rejected { background:var(--red-bg);    color:var(--red); }
 
 /* 액션 버튼 */
-.tb-btn { display:inline-block; padding:3px 8px; border-radius:5px; font-size:.72rem;
+.tb-btn { display:inline-block; padding:3px 8px; border-radius:5px; font-size:.8rem;
           font-weight:700; cursor:pointer; border:none; white-space:nowrap; margin:1px; }
 .tb-btn-green  { background:var(--green); color:#fff; }
 .tb-btn-green:hover { background:#15803D; }
@@ -126,7 +126,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .tb-btn-blue:hover { background:var(--blue2); }
 .tb-btn-yellow { background:none; color:var(--yellow); border:1px solid var(--yellow); }
 .tb-btn-yellow:hover { background:var(--yellow); color:#fff; }
-.tb-btn-gray   { background:none; color:#888; border:1px solid #ccc; }
+.tb-btn-gray   { background:none; color:#444; border:1px solid #ccc; }
 .tb-btn-gray:hover { background:#eee; }
 
 /* 바우처 인라인 */
@@ -150,7 +150,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 /* 바우처 코드 박스 */
 .voucher-box { background:#EBF5FF; border:2px dashed var(--blue); border-radius:12px;
                padding:22px; text-align:center; margin-bottom:20px; }
-.voucher-label { font-size:.78rem; color:var(--text2); margin-bottom:6px; }
+.voucher-label { font-size:.84rem; color:var(--text2); margin-bottom:6px; }
 .voucher-big { font-family:monospace; font-size:2rem; font-weight:900; color:var(--navy2);
                letter-spacing:4px; margin-bottom:12px; }
 .copy-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px;
@@ -201,7 +201,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 /* 글씨 크기 조절 */
 .zoom-ctrl { display:flex; align-items:center; gap:4px; background:#fff;
              border:1.5px solid var(--border); border-radius:8px; padding:3px 8px; }
-.zoom-ctrl span { font-size:.78rem; color:var(--text2); min-width:36px; text-align:center; }
+.zoom-ctrl span { font-size:.84rem; color:var(--text2); min-width:36px; text-align:center; }
 .zoom-btn { background:none; border:none; cursor:pointer; font-size:.9rem; font-weight:800;
             color:var(--navy2); padding:2px 6px; border-radius:4px; transition:background .1s; }
 .zoom-btn:hover { background:var(--border); }
@@ -236,6 +236,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     <h1>📋 SOEZ 주문 관리</h1>
     <div class="topbar-right">
       <span class="refresh-indicator" id="refreshCountdown"></span>
+      <a href="admin_inquiries.html" class="logout-btn" style="text-decoration:none;">💬 문의 관리</a>
       <span id="adminKeyDisplay"></span>
       <button class="logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
@@ -646,17 +647,17 @@ function orderRow(o) {
   const statusBadge = `<span class="status-badge status-${o.status}">${statusLabel}</span>`;
 
   // 바우처 + 전달메시지 셀
-  let voucherTd = `<span style="color:#bbb;font-size:.75rem;">—</span>`;
+  let voucherTd = `<span style="color:#bbb;font-size:.82rem;">—</span>`;
   if (isApproved && o.voucher_code) {
     voucherTd = `
       <span class="voucher-inline">${esc(o.voucher_code)}</span>
       <button class="tb-btn tb-btn-blue" style="margin-top:3px;" onclick="quickCopy('${esc(o.voucher_code)}')">📋</button>
       <button class="tb-btn tb-btn-gray" style="margin-top:3px;" onclick="showResendModal(${o.id})">📤 전달</button>`;
   } else if (isApproved) {
-    voucherTd = `<span style="color:#bbb;font-size:.75rem;">코드 없음</span>`;
+    voucherTd = `<span style="color:#bbb;font-size:.82rem;">코드 없음</span>`;
   }
   if (o.memo && isRejected) {
-    voucherTd = `<span style="color:var(--red);font-size:.75rem;">${esc(o.memo)}</span>`;
+    voucherTd = `<span style="color:var(--red);font-size:.82rem;">${esc(o.memo)}</span>`;
   }
 
   // 액션 버튼 (세로 배치)
@@ -677,16 +678,16 @@ function orderRow(o) {
   }
 
   return `<tr id="row-${o.id}"${isPending?' class="is-new"':''}>
-    <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
+    <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.8rem;">${dt}</span></td>
     <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
     <td>${esc(o.buyer_name)}</td>
     <td>${esc(o.phone)}</td>
-    <td style="font-size:.74rem;">${esc(o.email)}</td>
+    <td style="font-size:.82rem;">${esc(o.email)}</td>
     <td>${bizTd}</td>
-    <td style="font-size:.74rem;color:var(--text2);">${esc(progName(o))}</td>
+    <td style="font-size:.82rem;color:var(--text2);">${esc(progName(o))}${o.tax_invoice ? `<br><span style="font-size:.78rem;color:#B45309;">🧾 ${esc(o.tax_invoice)}</span>` : ""}</td>
     <td style="color:var(--red);font-weight:800;">${amtFmt}</td>
     <td>${statusBadge}</td>
-    <td style="font-size:.74rem;">${approvedDt || "—"}</td>
+    <td style="font-size:.82rem;">${approvedDt || "—"}</td>
     <td style="text-align:left;">${voucherTd}</td>
     <td>${actionTd}</td>
   </tr>`;
@@ -857,14 +858,14 @@ function renderDeletedTable() {
       ? `<span class="voucher-inline">${esc(o.voucher_code)}</span>`
       : `<span style="color:#bbb;">—</span>`;
     return `<tr style="opacity:.72;background:#fafafa;">
-      <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.72rem;">${dt}</span></td>
+      <td><strong>#${o.id}</strong><br><span style="color:var(--text2);font-size:.8rem;">${dt}</span></td>
       <td class="td-left"><strong>${esc(o.company_name)}</strong></td>
       <td>${esc(o.buyer_name)}</td>
-      <td style="font-size:.74rem;">${esc(o.email)}</td>
+      <td style="font-size:.82rem;">${esc(o.email)}</td>
       <td><span class="status-badge status-${o.status}">${slabel}</span></td>
       <td style="color:var(--red);font-weight:700;">${amtFmt}</td>
       <td>${vc}</td>
-      <td style="font-size:.74rem;color:var(--red);">${delDt}</td>
+      <td style="font-size:.82rem;color:var(--red);">${delDt}</td>
       <td><button class="tb-btn tb-btn-green" onclick="restoreOrder(${o.id})">↩ 복구</button></td>
     </tr>`;
   }).join("") + "</tbody>";
@@ -929,6 +930,7 @@ function openApproveModal(voucherCode, o) {
     <div class="ci-row"><span class="ci-label">이메일</span><span class="ci-val">${esc(o.email)}</span></div>
     <div class="ci-row"><span class="ci-label">금액</span><span class="ci-val">${amtFmt}</span></div>
     <div class="ci-row"><span class="ci-label">제품</span><span class="ci-val">${progName(o)}</span></div>
+    <div class="ci-row"><span class="ci-label">세금계산서</span><span class="ci-val">${esc(o.tax_invoice || "-")}</span></div>
   `;
 
   // 바우처 코드
