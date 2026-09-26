@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>모던하우스 발주서 자동화 기능 소개 — SOEZ 쏘이지</title>
-  <meta name="description" content="물류센터 전용 납품 서류 양식 자동화. 업체별 프로필 설정, 열/행 자동 숨김, 원클릭 인쇄까지 SOEZ 모던하우스 발주서 자동화의 모든 기능을 확인하세요.">
+  <meta name="description" content="물류센터 전용 납품 서류 양식 자동화. 거래처 관리·검색, 설정 일괄 적용, 센터별 열/행 자동 숨김, PDF 저장, 거래처별 프린터, 모든 페이지 품목명 반복 인쇄까지 SOEZ 모던하우스 발주서 자동화의 모든 기능을 확인하세요.">
   <link rel="stylesheet" href="style.css">
   <style>
     .modern-hero { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
@@ -85,7 +85,8 @@
   <div class="container" style="text-align:center;">
     <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;margin-bottom:18px;">🏪 물류센터 · 납품 업무 전용</div>
     <h1 style="font-size:2.6rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">모던하우스 발주서 자동화</h1>
-    <p style="font-size:1rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto 28px;">모던하우스 발주서, 업체별 양식 그대로 자동으로 정리됩니다.<br>업체마다 다른 열·서식을 프로필로 저장해두면 엑셀 파일을 올리는 즉시 발주서가 완성됩니다.</p>
+    <p style="font-size:1rem;color:rgba(255,255,255,.8);max-width:640px;margin:0 auto 18px;">모던하우스 발주서, 거래처별 양식 그대로 자동으로 정리됩니다.<br>엑셀을 끌어다 놓으면 출고할 센터만 남기고 인쇄·PDF까지 한 번에 끝납니다.</p>
+    <div style="display:inline-block;background:rgba(255,255,255,.95);color:#5B21B6;padding:6px 16px;border-radius:999px;font-size:.82rem;font-weight:800;margin-bottom:24px;">✨ v1.2.0 — 거래처 관리 · 설정 일괄 적용 · PDF 저장 · 프린터 선택</div>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
       <a href="pricing.html" class="btn" style="background:#fff;color:#5B21B6;font-weight:800;padding:14px 28px;border-radius:10px;">🛒 지금 구매하기</a>
       <a href="download.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);padding:14px 28px;border-radius:10px;">⬇ 다운로드</a>
@@ -114,28 +115,28 @@
         <div class="flow-num">1</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">🏢</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">업체 선택</h4>
-        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">미리 등록된 업체 프로필에서 해당 납품처를 선택합니다</p>
+        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">분류·검색으로 거래처를 찾아 선택합니다. 거래처가 100곳이 넘어도 이름 몇 글자면 충분합니다</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">2</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">📂</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">엑셀 파일 첨부</h4>
-        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">발주서 엑셀 파일을 드래그&amp;드롭하거나 파일 선택으로 불러옵니다</p>
+        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">발주서 엑셀을 끌어다 놓거나 파일 선택으로 불러옵니다. 큰 파일도 빠르게 읽습니다</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">3</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">⚙️</div>
         <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">처리 시작</h4>
-        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">버튼 한 번으로 센터별 열/행 숨김 처리 · 인쇄 영역 자동 설정</p>
+        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">센터별 열/행 자동 숨김 후 센터·품목·박스·쪽수 요약을 바로 보여줍니다</p>
       </div>
 
       <div class="flow-step">
         <div class="flow-num">4</div>
         <div style="font-size:1.5rem;margin-bottom:10px;">🖨️</div>
-        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">인쇄 · 저장</h4>
-        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">처리 완료 즉시 인쇄하고 지정 폴더에 파일 자동 저장</p>
+        <h4 style="font-size:.95rem;font-weight:800;color:#0F1B3A;margin-bottom:6px;">인쇄 · PDF</h4>
+        <p style="font-size:.82rem;color:#1F2937;line-height:1.55;">거래처별 프린터로 바로 인쇄하거나 PDF로 저장합니다. 모든 페이지에 품목명 반복</p>
       </div>
 
     </div>
@@ -149,7 +150,7 @@
     <p class="section-sub">모던하우스 발주서 자동화의 주요 화면을 직접 확인하세요</p>
     <div id="shots-tabs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
       <button class="shot-tab active" data-img="images/screens/modern-main.png" data-cap="메인 화면 — 엑셀 발주서 드래그&드롭, 처리 후 인쇄·저장">🖥️ 메인 화면</button>
-      <button class="shot-tab" data-img="images/screens/modern-settings.png" data-cap="업체별 설정 — 처리 시트·숨김 기준 행·열 간격 등 세밀한 설정">⚙️ 업체별 설정</button>
+      <button class="shot-tab" data-img="images/screens/modern-settings.png" data-cap="거래처별 설정 — 간단/고급 모드, 프린터·반복할 열·다른 업체에도 적용">⚙️ 거래처별 설정</button>
     </div>
     <div style="max-width:980px;margin:0 auto;">
       <div style="background:#0F1B3A;border-radius:14px;padding:10px;box-shadow:0 20px 50px -20px rgba(15,27,58,.4);">
@@ -168,81 +169,111 @@
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
 
-      <!-- 업체별 프로필 -->
       <div class="feat-card">
         <div class="feat-icon-wrap" style="background:#EDE9FE;">🏢</div>
-        <h3>업체별 독립 프로필</h3>
-        <p>여러 납품 업체를 각각 독립된 프로필로 관리합니다. 업체를 선택하는 것만으로 해당 업체의 설정이 자동으로 전환됩니다.</p>
+        <h3>거래처 관리</h3>
+        <p>🏢 거래처 창에서 업체를 한눈에 관리합니다. 분류·담당자·연락처·주소·메모까지 함께 기록할 수 있습니다.</p>
         <ul>
-          <li>업체 프로필 무제한 추가 · 삭제 · 이름 변경</li>
-          <li>업체별 시트 설정 독립 저장</li>
-          <li>업체별 파일 저장 위치 별도 지정</li>
-          <li>프로필 전환 시 모든 설정 즉시 반영</li>
+          <li>거래처 추가 · 이름 변경 · 삭제</li>
+          <li>분류별 필터 + 이름·담당자 검색</li>
+          <li>검색 결과가 하나면 Enter로 바로 선택</li>
+          <li>거래처마다 설정 독립 저장</li>
         </ul>
       </div>
 
-      <!-- 드래그 앤 드롭 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#EDE9FE;">📋</div>
+        <h3>설정 다른 업체에도 적용</h3>
+        <p>한 거래처에서 맞춘 설정을 골라서 다른 거래처에 한 번에 적용합니다. 업체가 많아도 일일이 고칠 필요가 없습니다.</p>
+        <ul>
+          <li>적용할 항목만 골라서 체크</li>
+          <li>적용할 거래처 분류·검색 후 전체 선택</li>
+          <li>바뀌는 거래처 수 미리 표시</li>
+          <li>공장 기본값으로 되돌리기</li>
+        </ul>
+      </div>
+
       <div class="feat-card">
         <div class="feat-icon-wrap" style="background:#DBEAFE;">📂</div>
-        <h3>엑셀 파일 드래그&amp;드롭</h3>
-        <p>발주서 엑셀 파일을 프로그램 창으로 끌어다 놓기만 하면 즉시 불러옵니다. 파일 탐색기를 열 필요가 없습니다.</p>
+        <h3>드래그&amp;드롭 · 빠른 불러오기</h3>
+        <p>발주서 엑셀을 창으로 끌어다 놓으면 즉시 불러옵니다. 대용량 파일도 멈춤 없이 빠르게 읽습니다.</p>
         <ul>
-          <li>.xlsx 파일 드래그&amp;드롭 지원</li>
-          <li>파일 선택 버튼으로도 불러오기 가능</li>
-          <li>파일 로드 즉시 데이터 미리보기</li>
+          <li>.xlsx 드래그&amp;드롭 · 파일 선택</li>
+          <li>대용량 파일 고속 읽기</li>
+          <li>불러오는 즉시 데이터 미리보기</li>
           <li>잘못된 파일 형식 자동 차단</li>
         </ul>
       </div>
 
-      <!-- 자동 숨김 처리 -->
       <div class="feat-card">
         <div class="feat-icon-wrap" style="background:#D1FAE5;">⚙️</div>
         <h3>납품 양식 자동 처리</h3>
-        <p>센터별로 다른 납품 서류 양식에 맞게 필요 없는 열과 행을 자동으로 숨기고 인쇄 영역을 설정합니다.</p>
+        <p>센터별로 수량이 없는 열과 행을 자동으로 숨기고 인쇄 영역을 맞춥니다. 숨길 게 없거나 빈 양식이면 미리 알려줍니다.</p>
         <ul>
-          <li>불필요한 열 · 행 자동 숨김 처리</li>
+          <li>수량 0 · 빈 칸 열/행 자동 숨김</li>
+          <li>"0번센터" 같은 글자는 수량으로 오인하지 않음</li>
           <li>인쇄 영역 자동 지정</li>
-          <li>데이터 시작 행 · 컬럼 인덱스 세부 설정</li>
-          <li>박스 수 등 납품 수량 정보 반영</li>
+          <li>플랜트 번호 행 서식 그대로 복사</li>
         </ul>
       </div>
 
-      <!-- 미리보기 -->
       <div class="feat-card">
-        <div class="feat-icon-wrap" style="background:#FEF3C7;">👁️</div>
-        <h3>데이터 미리보기</h3>
-        <p>처리 전 엑셀 데이터를 프로그램 내에서 바로 확인합니다. 잘못된 파일을 처리 전에 걸러낼 수 있습니다.</p>
+        <div class="feat-icon-wrap" style="background:#FEF3C7;">📊</div>
+        <h3>처리 결과 요약</h3>
+        <p>처리가 끝나면 센터 수 · 품목 수 · 박스 합계 · 인쇄 쪽수를 바로 보여줍니다. 출력 전에 숫자로 한 번 더 확인하세요.</p>
         <ul>
-          <li>파일 로드 직후 즉시 미리보기</li>
-          <li>열 너비 드래그 조절 가능</li>
-          <li>합계 행(합계) 하이라이트 표시</li>
-          <li>처리 전 데이터 내용 확인</li>
+          <li>센터 · 품목 · 박스 합계 표시</li>
+          <li>합계 행은 품목 수에서 자동 제외</li>
+          <li>예상 인쇄 쪽수 표시</li>
+          <li>처리 로그 기록</li>
         </ul>
       </div>
 
-      <!-- 원클릭 인쇄 -->
       <div class="feat-card">
         <div class="feat-icon-wrap" style="background:#FCE7F3;">🖨️</div>
-        <h3>원클릭 인쇄</h3>
-        <p>처리 완료 직후 인쇄 버튼 한 번으로 납품 서류를 바로 출력합니다. Excel이 설치되어 있으면 추가 조작 없이 인쇄됩니다.</p>
+        <h3>인쇄 · PDF 저장</h3>
+        <p>처리 후 바로 인쇄하거나 PDF로 저장합니다. 거래처마다 쓰는 프린터를 지정해 둘 수 있습니다.</p>
         <ul>
-          <li>처리 후 바로 인쇄 (처리+인쇄 통합 모드)</li>
-          <li>이미 처리된 파일 별도 인쇄 모드</li>
-          <li>인쇄 미리보기 지원</li>
-          <li>Microsoft Excel 연동 출력</li>
+          <li>처리 후 인쇄 / 인쇄 미리보기</li>
+          <li>PDF 저장</li>
+          <li>거래처별 프린터 지정</li>
+          <li>모든 페이지에 상품명 등 반복할 열 지정 (예: A,B)</li>
         </ul>
       </div>
 
-      <!-- 자동 저장 -->
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#E0E7FF;">👁️</div>
+        <h3>데이터 미리보기</h3>
+        <p>처리 전 엑셀 내용을 프로그램 안에서 바로 확인합니다. 보기 편하게 맞춘 배치는 그대로 기억합니다.</p>
+        <ul>
+          <li>엑셀처럼 열 너비 드래그 조절</li>
+          <li>헤더를 끌어서 열 순서 변경</li>
+          <li>열별 합계 표시 켜기/끄기</li>
+          <li>합계 행 하이라이트</li>
+        </ul>
+      </div>
+
       <div class="feat-card">
         <div class="feat-icon-wrap" style="background:#E0F2FE;">💾</div>
         <h3>처리 파일 자동 저장</h3>
-        <p>처리가 완료된 파일을 업체별로 지정된 폴더에 자동으로 저장합니다. 파일명은 날짜와 시간이 자동으로 포함됩니다.</p>
+        <p>처리가 끝난 파일을 거래처별로 지정한 폴더에 자동 저장합니다. 📂 파일 보기로 바로 열어볼 수 있습니다.</p>
         <ul>
-          <li>업체별 저장 폴더 개별 설정</li>
+          <li>거래처별 저장 폴더 개별 설정</li>
           <li>처리 완료 즉시 자동 저장</li>
           <li>날짜·시간 포함 파일명 자동 생성</li>
-          <li>원본 파일은 bak_ 접두어로 별도 보관</li>
+          <li>📂 파일 보기로 저장 위치 바로 열기</li>
+        </ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon-wrap" style="background:#F3E8FF;">🧭</div>
+        <h3>쉬운 설정 화면</h3>
+        <p>자주 쓰는 설정만 보이는 간단 모드와 모든 설정을 다루는 고급 모드를 제공합니다. 설정 창은 크기 조절·최대화가 됩니다.</p>
+        <ul>
+          <li>간단 / 고급 모드 전환</li>
+          <li>설정 창 크기 · 위치 기억</li>
+          <li>❓ 사용법 버튼으로 도움말 바로 보기</li>
+          <li>Excel 창을 건드리지 않고 백그라운드 처리</li>
         </ul>
       </div>
 
@@ -254,48 +285,48 @@
 <section class="section" style="padding:70px 0;">
   <div class="container">
     <h2 class="section-title">세부 설정 옵션</h2>
-    <p class="section-sub">업체별로 독립적으로 저장되는 세밀한 설정</p>
+    <p class="section-sub">거래처별로 독립 저장 · 필요하면 다른 거래처에도 한 번에 적용</p>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto;">
       <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
-        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">📊 데이터 설정</h4>
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">📊 처리 설정</h4>
         <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
-            <span style="font-size:.88rem;color:#1F2937;">시트 번호</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">작업할 시트 위치 지정</span>
+            <span style="font-size:.88rem;color:#1F2937;">시트 · 데이터 시작 행</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">양식 위치 지정</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
-            <span style="font-size:.88rem;color:#1F2937;">데이터 시작 행</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">헤더 아래 첫 데이터 행</span>
+            <span style="font-size:.88rem;color:#1F2937;">센터 열 · 품목 열</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">숨김 기준 지정</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
-            <span style="font-size:.88rem;color:#1F2937;">데이터 컬럼 인덱스</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">필드 위치 세부 지정</span>
+            <span style="font-size:.88rem;color:#1F2937;">박스 수 · 합계 행</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">요약 계산 기준</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
-            <span style="font-size:.88rem;color:#1F2937;">박스 수 컬럼</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">납품 수량 열 위치</span>
+            <span style="font-size:.88rem;color:#1F2937;">플랜트 번호 행 복사</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">원본 행 서식 그대로</span>
           </li>
         </ul>
       </div>
       <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:28px;">
-        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">🖥️ 화면 · 저장 설정</h4>
+        <h4 style="font-size:1rem;font-weight:800;color:#0F1B3A;margin-bottom:16px;">🖨️ 인쇄 · 화면 설정</h4>
         <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#1F2937;">프린터</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">거래처별 지정</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
+            <span style="font-size:.88rem;color:#1F2937;">반복할 열 · 행</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">예: A,B — 모든 쪽에 표시</span>
+          </li>
+          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
             <span style="font-size:.88rem;color:#1F2937;">저장 폴더</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">업체별 개별 설정</span>
-          </li>
-          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
-            <span style="font-size:.88rem;color:#1F2937;">미리보기 열 비율</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">드래그로 즉시 조절</span>
-          </li>
-          <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;">
-            <span style="font-size:.88rem;color:#1F2937;">창 크기 · 비율</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">재실행 시 자동 복원</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">거래처별 개별 설정</span>
           </li>
           <li style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
-            <span style="font-size:.88rem;color:#1F2937;">스플리터 위치</span>
-            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">영역 크기 자동 저장</span>
+            <span style="font-size:.88rem;color:#1F2937;">미리보기 열</span>
+            <span style="font-size:.82rem;color:#1F2937;background:#F1F5F9;padding:2px 10px;border-radius:6px;">너비·순서·합계 기억</span>
           </li>
         </ul>
       </div>
