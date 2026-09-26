@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모던하우스 발주서 자동화 사용 설명서 — SOEZ 쏘이지</title>
+  <meta name="description" content="모던하우스 발주서 자동화 프로그램의 설치·활성화부터 업체 프로필 설정, 엑셀 드래그&드롭, 납품 양식 자동 처리, 미리보기·인쇄까지 단계별 사용 설명서.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .gd-hero { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
+    .gd-switch { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:26px 0 6px; }
+    .gd-switch a { background:#fff; border:1px solid #E2E8F0; border-radius:999px; padding:9px 18px;
+      font-size:.95rem; font-weight:700; color:#1F2937; transition:all .2s; }
+    .gd-switch a:hover { border-color:#7C3AED; color:#7C3AED; }
+    .gd-switch a.active { background:#7C3AED; color:#fff; border-color:#7C3AED; }
+    .gd-toc { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; padding:24px 28px; margin:0 auto 40px; max-width:880px; }
+    .gd-toc h2 { font-size:1.1rem; font-weight:800; color:#0F1B3A; margin-bottom:14px; }
+    .gd-toc ol { margin:0; padding-left:22px; columns:2; column-gap:32px; }
+    .gd-toc li { font-size:.98rem; color:#1F2937; margin-bottom:9px; font-weight:600; }
+    .gd-toc a { color:#1F2937; } .gd-toc a:hover { color:#7C3AED; }
+    .gd-sec { max-width:880px; margin:0 auto 56px; scroll-margin-top:90px; }
+    .gd-sec-head { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .gd-sec-num { width:42px; height:42px; flex-shrink:0; background:#7C3AED; color:#fff; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.15rem; }
+    .gd-sec-head h2 { font-size:1.5rem; font-weight:900; color:#0F1B3A; letter-spacing:-.01em; }
+    .gd-lead { font-size:1.02rem; color:#1F2937; line-height:1.75; margin-bottom:18px; }
+    .gd-steps { counter-reset: gstep; display:flex; flex-direction:column; gap:14px; margin:18px 0; }
+    .gd-step { display:flex; gap:14px; background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:16px 18px; }
+    .gd-step::before { counter-increment: gstep; content: counter(gstep); flex-shrink:0;
+      width:30px; height:30px; background:#F5F3FF; color:#7C3AED; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.95rem; }
+    .gd-step-body { font-size:1rem; color:#1F2937; line-height:1.7; }
+    .gd-step-body strong { color:#0F1B3A; }
+    .gd-shot { margin:20px 0; border:1px solid #E2E8F0; border-radius:14px; overflow:hidden; box-shadow:0 8px 24px -12px rgba(15,27,58,.2); }
+    .gd-shot img { width:100%; display:block; }
+    .gd-shot figcaption { font-size:.9rem; color:#374151; font-weight:600; padding:10px 16px; background:#F8FAFC; border-top:1px solid #E2E8F0; }
+    .gd-tip, .gd-warn { border-radius:0 10px 10px 0; padding:14px 18px; margin:16px 0; font-size:.98rem; line-height:1.7; }
+    .gd-tip { background:#F5F3FF; border-left:4px solid #7C3AED; color:#5B21B6; }
+    .gd-warn { background:#FFF7ED; border-left:4px solid #F59E0B; color:#92400E; }
+    .gd-tip strong, .gd-warn strong { font-weight:800; }
+    .gd-menu { width:100%; border-collapse:collapse; margin:16px 0; }
+    .gd-menu th, .gd-menu td { border:1px solid #E2E8F0; padding:11px 14px; text-align:left; font-size:.98rem; }
+    .gd-menu th { background:#F1F5F9; font-weight:800; color:#0F1B3A; }
+    .gd-menu td:first-child { font-weight:700; color:#7C3AED; white-space:nowrap; }
+    @media (max-width:768px){ .gd-toc ol { columns:1; } .gd-sec-head h2 { font-size:1.25rem; } }
+  </style>
+</head>
+<body class="page-body">
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
+      <div>쏘이지<span style="display:block;font-size:.82rem;font-weight:500;color:#1F2937;">스마트 업무 자동화 솔루션</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">제품 소개</a></li>
+      <li><a href="guide_taekbae.html" class="active">사용 방법</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="support.html">문의</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero gd-hero">
+  <div class="container" style="text-align:center;">
+    <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.85rem;font-weight:700;color:#fff;margin-bottom:18px;">📖 사용 설명서</div>
+    <h1 style="font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">모던하우스 발주서 자동화 사용 방법</h1>
+    <p style="font-size:1.05rem;color:rgba(255,255,255,.9);max-width:660px;margin:0 auto;">설치·활성화부터 거래처 관리, 엑셀 드래그&드롭으로<br>납품 양식 자동 처리, 인쇄·PDF 저장까지 순서대로 안내합니다.</p>
+  </div>
+</section>
+
+<div class="container" style="padding:44px 24px 20px;">
+
+  <div class="gd-switch">
+    <a href="guide_taekbae.html">📦 택배 파일 자동화</a>
+    <a href="guide_coupang.html">🚀 쿠팡 출고 관리</a>
+    <a href="guide_daiso.html">🏪 다이소 발주서</a>
+    <a href="guide_modern.html" class="active">🛋 모던하우스 발주서</a>
+  </div>
+
+  <div class="gd-toc">
+    <h2>📑 목차</h2>
+    <ol>
+      <li><a href="#s1">설치 및 라이선스 활성화</a></li>
+      <li><a href="#s2">화면 구성 한눈에 보기</a></li>
+      <li><a href="#s3">거래처 관리 · 선택</a></li>
+      <li><a href="#s4">발주 엑셀 불러오기 · 처리 (핵심)</a></li>
+      <li><a href="#s5">미리보기 · 인쇄 · PDF</a></li>
+      <li><a href="#s6">처리 파일 저장 · 설정 팁</a></li>
+      <li><a href="#s7">자주 묻는 질문 · 문제 해결</a></li>
+    </ol>
+  </div>
+
+  <section class="gd-sec" id="s1">
+    <div class="gd-sec-head"><div class="gd-sec-num">1</div><h2>설치 및 라이선스 활성화</h2></div>
+    <p class="gd-lead">구매 후 받으신 바우처 코드로 1대의 PC에서 영구 사용하실 수 있습니다. 설치와 활성화는 한 번만 하면 됩니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 파일 다운로드</strong> — 구매 승인 후 이메일로 받은 링크, 또는 <a href="download.html" style="color:#7C3AED;font-weight:700;">설치 파일 다운로드</a> 페이지에서 구매자 이메일을 입력해 받습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 실행</strong> — 받은 설치 파일(.exe)을 실행해 설치하면 바탕화면에 아이콘이 생성됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>바우처 코드 입력</strong> — 처음 실행 시 활성화 창에서 <strong>[🎫 바우처 코드 입력]</strong> 탭에 코드(<code>SOEZ-XXXX-XXXX-XXXX</code>)를 입력하고 활성화합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>활성화 완료</strong> — 정상 처리되면 메인 화면이 열리고, 이후에는 바로 실행됩니다.</div></div>
+    </div>
+    <div class="gd-warn">⚠️ <strong>활성화 시 인터넷 연결</strong>이 필요합니다(서버 코드 확인). 바우처 코드는 <strong>1대 PC 전용</strong>입니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s2">
+    <div class="gd-sec-head"><div class="gd-sec-num">2</div><h2>화면 구성 한눈에 보기</h2></div>
+    <p class="gd-lead">메인 화면 하나에서 거래처 선택 → 엑셀 첨부 → 처리·인쇄까지 끝납니다. 오른쪽 위 버튼 3개로 필요한 창을 엽니다.</p>
+    <figure class="gd-shot"><img src="images/screens/modern-main.png" alt="모던하우스 발주서 자동화 메인 화면"><figcaption>▲ 메인 화면 — 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄</figcaption></figure>
+    <table class="gd-menu">
+      <tr><th>화면 · 버튼</th><th>하는 일</th></tr>
+      <tr><td>🏠 메인</td><td>분류·검색으로 거래처 선택, 발주 엑셀 첨부, 처리 시작 / 인쇄 미리보기 / 처리 후 인쇄 / PDF 저장 / 📂 파일 보기</td></tr>
+      <tr><td>🏢 거래처</td><td>거래처 추가·이름 변경·삭제, 분류·담당자·연락처·주소·기타 메모 관리</td></tr>
+      <tr><td>⚙️ 설정</td><td>선택한 거래처의 처리·인쇄·저장 설정 (간단/고급 모드), 다른 업체에도 적용</td></tr>
+      <tr><td>❓ 사용법</td><td>프로그램 안에서 바로 보는 사용 안내</td></tr>
+    </table>
+  </section>
+
+  <section class="gd-sec" id="s3">
+    <div class="gd-sec-head"><div class="gd-sec-num">3</div><h2>거래처 관리 · 선택</h2></div>
+    <p class="gd-lead">거래처마다 설정이 따로 저장됩니다. 거래처를 고르기만 하면 그 업체의 양식·프린터·저장 위치가 자동으로 바뀝니다.</p>
+    <figure class="gd-shot"><img src="images/screens/modern-clients.png" alt="모던하우스 거래처 관리 화면"><figcaption>▲ 🏢 거래처 관리 창 — 분류·검색, 거래처 정보, [이 거래처로 작업하기]</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>[🏢 거래처]</strong> 버튼을 눌러 거래처 창을 엽니다. <strong>새 거래처 · 복사해서 추가 · 삭제</strong>와 함께 분류·담당자·연락처·주소·기타 메모를 입력할 수 있습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>메인 화면에서 찾기</strong> — <strong>[분류▼]</strong>로 좁히고 <strong>🔍 검색</strong>칸에 이름이나 담당자 몇 글자를 입력합니다. 결과가 하나면 <strong>Enter</strong>로 바로 선택됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body">거래처를 고르고 <strong>[✔ 이 거래처로 작업하기]</strong> 또는 <strong>[저장하고 닫기]</strong>를 누르면 반영됩니다. 이어서 <strong>[⚙️ 설정]</strong>에서 그 거래처의 저장 폴더·프린터·처리 옵션을 지정합니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 거래처가 100곳이 넘어도 분류 + 검색으로 금방 찾을 수 있습니다. 오른쪽의 <strong>N/전체</strong> 숫자로 검색 결과 개수를 확인하세요.</div>
+  </section>
+
+  <section class="gd-sec" id="s4">
+    <div class="gd-sec-head"><div class="gd-sec-num">4</div><h2>발주 엑셀 불러오기 · 처리 (핵심)</h2></div>
+    <p class="gd-lead">발주 엑셀을 끌어다 놓고 [처리 시작]을 누르면, 수량이 없는 센터 열과 품목 행이 자동으로 숨겨져 납품 양식이 완성됩니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>거래처 선택</strong> — 작업할 거래처를 고릅니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>엑셀 드래그&드롭</strong> — 발주 엑셀 파일을 오른쪽 <strong>끌어다 놓기</strong> 영역에 놓거나 파일 선택으로 불러옵니다. 불러오는 즉시 아래에 데이터 미리보기가 나옵니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>[처리 시작]</strong> — 처리가 끝나면 <strong>센터 수 · 품목 수 · 박스 합계 · 인쇄 쪽수</strong> 요약이 표시됩니다. 출력 전에 숫자를 한 번 확인하세요.</div></div>
+    </div>
+    <div class="gd-tip">💡 숨길 내용이 없거나 인쇄할 데이터가 비어 있으면 미리 알려주므로 빈 종이가 출력되지 않습니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s5">
+    <div class="gd-sec-head"><div class="gd-sec-num">5</div><h2>미리보기 · 인쇄 · PDF</h2></div>
+    <p class="gd-lead">처리 결과를 미리 보고 바로 인쇄하거나 PDF로 저장할 수 있습니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>데이터 미리보기</strong> — 엑셀처럼 열 경계를 끌어 너비를 조절하고, 헤더를 끌어 열 순서를 바꿀 수 있습니다. 맞춘 배치는 다음에도 그대로 유지됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>[인쇄 미리보기]</strong> — 실제 출력 모양을 먼저 확인합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>[처리 후 인쇄]</strong> — 처리와 인쇄를 한 번에 합니다. 설정에서 거래처별 <strong>프린터</strong>를 지정해 두면 그 프린터로 나갑니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>[PDF 저장]</strong> — 인쇄 대신 PDF 파일로 저장합니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 2쪽부터 상품명이 안 보이면 [⚙️ 설정]의 <strong>반복할 열</strong>에 <code>A,B</code>처럼 열 문자를 입력하세요. 모든 쪽에 해당 열이 반복 인쇄됩니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s6">
+    <div class="gd-sec-head"><div class="gd-sec-num">6</div><h2>처리 파일 저장 · 설정 팁</h2></div>
+    <p class="gd-lead">처리된 파일은 거래처별 저장 폴더에 날짜·시간이 붙은 이름으로 자동 저장됩니다. <strong>[📂 파일 보기]</strong>로 바로 열어볼 수 있습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/modern-settings.png" alt="모던하우스 설정 화면"><figcaption>▲ ⚙️ 설정 창 — 거래처별 설정, 고급 설정 보기, [다른 업체에도 적용...]</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>간단 / 고급 모드</strong> — 설정 창은 자주 쓰는 항목만 보이는 간단 모드로 열립니다. 세부 항목이 필요하면 왼쪽 위 <strong>[고급 설정 보기]</strong>를 체크하세요.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>다른 업체에도 적용</strong> — 설정 창 왼쪽 아래 <strong>[다른 업체에도 적용...]</strong>에서 원하는 항목만 골라, 선택한 여러 거래처에 한 번에 적용합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>공장 기본값</strong> — 설정이 꼬였다면 기본값으로 되돌릴 수 있습니다.</div></div>
+    </div>
+  </section>
+
+  <section class="gd-sec" id="s7">
+    <div class="gd-sec-head"><div class="gd-sec-num">7</div><h2>자주 묻는 질문 · 문제 해결</h2></div>
+    <table class="gd-menu">
+      <tr><th>상황</th><th>해결 방법</th></tr>
+      <tr><td>활성화가<br>안 돼요</td><td>① 인터넷 연결 확인 ② 바우처 코드 정확히 입력(공백·오타) ③ 코드는 1대 PC 전용이라 다른 PC에서 이미 사용했는지 확인하세요.</td></tr>
+      <tr><td>처리가<br>안 돼요</td><td>발주 엑셀이 모던하우스 양식이 맞는지, 올바른 거래처가 선택됐는지 확인하세요. Microsoft Excel이 설치되어 있어야 합니다.</td></tr>
+      <tr><td>2쪽부터 상품명이<br>안 나와요</td><td>[⚙️ 설정] → <strong>반복할 열</strong>에 <code>A,B</code>처럼 반복할 열 문자를 입력하세요.</td></tr>
+      <tr><td>업체가 많아<br>찾기 어려워요</td><td>메인 화면의 분류·검색을 사용하세요. 검색 결과가 하나면 Enter로 바로 선택됩니다.</td></tr>
+      <tr><td>여러 업체 설정을<br>한꺼번에 바꾸고 싶어요</td><td>[⚙️ 설정] → <strong>다른 업체에도 적용</strong>에서 항목과 거래처를 골라 한 번에 적용하세요.</td></tr>
+      <tr><td>엉뚱한 프린터로<br>나가요</td><td>[⚙️ 설정]에서 해당 거래처의 <strong>프린터</strong>를 지정하세요.</td></tr>
+      <tr><td>그 외 문의</td><td><a href="support.html" style="color:#7C3AED;font-weight:700;">문의 게시판</a> 또는 카카오톡 채널로 연락 주세요.</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<section class="cta-banner" style="background:linear-gradient(135deg,#7C3AED,#5B21B6);">
+  <div class="container">
+    <h2 style="color:#fff;">아직 도입 전이신가요?</h2>
+    <p style="color:rgba(255,255,255,.9);">모던하우스 발주서를 끌어다 놓기만 하면 납품 양식이 완성됩니다.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <a href="order.html?program=modern" class="btn btn-lg" style="background:#fff;color:#7C3AED;font-weight:800;">🛒 구매 신청</a>
+      <a href="features_modern.html" class="btn btn-lg" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);">제품 소개 보기</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p style="margin-bottom:8px;">
+      <a href="index.html">홈</a> &nbsp;·&nbsp;
+      <a href="features.html">제품 소개</a> &nbsp;·&nbsp;
+      <a href="guide_taekbae.html">사용 방법</a> &nbsp;·&nbsp;
+      <a href="pricing.html">가격 및 구매</a> &nbsp;·&nbsp;
+      <a href="support.html">문의</a>
+    </p>
+    <p>© 2026 SOEZ(쏘이지) · 사업자등록번호: 759-03-03828</p>
+  </div>
+</footer>
+
+</body>
+</html>
