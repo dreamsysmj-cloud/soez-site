@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다이소 발주서 자동화 사용 설명서 — SOEZ 쏘이지</title>
+  <meta name="description" content="다이소 발주서 자동화 프로그램의 설치·활성화부터 거래처·제품 DB, 발주 분석, 재고 DB(입출고 원장), FEFO 선출고, 첨부파일(체크리스트·확인서) 생성까지 단계별 사용 설명서.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .gd-hero { background: linear-gradient(135deg, #E11D48, #BE123C); }
+    .gd-switch { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:26px 0 6px; }
+    .gd-switch a { background:#fff; border:1px solid #E2E8F0; border-radius:999px; padding:9px 18px;
+      font-size:.95rem; font-weight:700; color:#1F2937; transition:all .2s; }
+    .gd-switch a:hover { border-color:#E11D48; color:#E11D48; }
+    .gd-switch a.active { background:#E11D48; color:#fff; border-color:#E11D48; }
+    .gd-toc { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; padding:24px 28px; margin:0 auto 40px; max-width:880px; }
+    .gd-toc h2 { font-size:1.1rem; font-weight:800; color:#0F1B3A; margin-bottom:14px; }
+    .gd-toc ol { margin:0; padding-left:22px; columns:2; column-gap:32px; }
+    .gd-toc li { font-size:.98rem; color:#1F2937; margin-bottom:9px; font-weight:600; }
+    .gd-toc a { color:#1F2937; } .gd-toc a:hover { color:#E11D48; }
+    .gd-sec { max-width:880px; margin:0 auto 56px; scroll-margin-top:90px; }
+    .gd-sec-head { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .gd-sec-num { width:42px; height:42px; flex-shrink:0; background:#E11D48; color:#fff; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.15rem; }
+    .gd-sec-head h2 { font-size:1.5rem; font-weight:900; color:#0F1B3A; letter-spacing:-.01em; }
+    .gd-lead { font-size:1.02rem; color:#1F2937; line-height:1.75; margin-bottom:18px; }
+    .gd-steps { counter-reset: gstep; display:flex; flex-direction:column; gap:14px; margin:18px 0; }
+    .gd-step { display:flex; gap:14px; background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:16px 18px; }
+    .gd-step::before { counter-increment: gstep; content: counter(gstep); flex-shrink:0;
+      width:30px; height:30px; background:#FFF1F3; color:#E11D48; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.95rem; }
+    .gd-step-body { font-size:1rem; color:#1F2937; line-height:1.7; }
+    .gd-step-body strong { color:#0F1B3A; }
+    .gd-shot { margin:20px 0; border:1px solid #E2E8F0; border-radius:14px; overflow:hidden; box-shadow:0 8px 24px -12px rgba(15,27,58,.2); }
+    .gd-shot img { width:100%; display:block; }
+    .gd-shot figcaption { font-size:.9rem; color:#374151; font-weight:600; padding:10px 16px; background:#F8FAFC; border-top:1px solid #E2E8F0; }
+    .gd-tip, .gd-warn { border-radius:0 10px 10px 0; padding:14px 18px; margin:16px 0; font-size:.98rem; line-height:1.7; }
+    .gd-tip { background:#FFF1F3; border-left:4px solid #E11D48; color:#9F1239; }
+    .gd-warn { background:#FFF7ED; border-left:4px solid #F59E0B; color:#92400E; }
+    .gd-tip strong, .gd-warn strong { font-weight:800; }
+    .gd-menu { width:100%; border-collapse:collapse; margin:16px 0; }
+    .gd-menu th, .gd-menu td { border:1px solid #E2E8F0; padding:11px 14px; text-align:left; font-size:.98rem; }
+    .gd-menu th { background:#F1F5F9; font-weight:800; color:#0F1B3A; }
+    .gd-menu td:first-child { font-weight:700; color:#E11D48; white-space:nowrap; }
+    @media (max-width:768px){ .gd-toc ol { columns:1; } .gd-sec-head h2 { font-size:1.25rem; } }
+  </style>
+</head>
+<body class="page-body">
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
+      <div>쏘이지<span style="display:block;font-size:.82rem;font-weight:500;color:#1F2937;">스마트 업무 자동화 솔루션</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">제품 소개</a></li>
+      <li><a href="guide_taekbae.html" class="active">사용 방법</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="support.html">문의</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero gd-hero">
+  <div class="container" style="text-align:center;">
+    <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.85rem;font-weight:700;color:#fff;margin-bottom:18px;">📖 사용 설명서</div>
+    <h1 style="font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">다이소 발주서 자동화 사용 방법</h1>
+    <p style="font-size:1.05rem;color:rgba(255,255,255,.9);max-width:680px;margin:0 auto;">설치·활성화부터 거래처·제품 DB, 발주 분석, 재고 원장,<br>FEFO 선출고 판정, 품질 체크리스트·확인서 생성까지 순서대로 안내합니다.</p>
+  </div>
+</section>
+
+<div class="container" style="padding:44px 24px 20px;">
+
+  <div class="gd-switch">
+    <a href="guide_taekbae.html">📦 택배 파일 자동화</a>
+    <a href="guide_coupang.html">🚀 쿠팡 출고 관리</a>
+    <a href="guide_daiso.html" class="active">🏪 다이소 발주서</a>
+    <a href="guide_modern.html">🛋 모던하우스 발주서</a>
+  </div>
+
+  <div class="gd-toc">
+    <h2>📑 목차</h2>
+    <ol>
+      <li><a href="#s1">설치 및 라이선스 활성화</a></li>
+      <li><a href="#s2">화면 구성 한눈에 보기</a></li>
+      <li><a href="#s3">거래처 등록·관리</a></li>
+      <li><a href="#s4">제품 DB 등록·관리</a></li>
+      <li><a href="#s5">발주 분석 (핵심)</a></li>
+      <li><a href="#s6">재고 DB · 입출고 원장</a></li>
+      <li><a href="#s7">첨부파일(체크리스트·확인서) 생성</a></li>
+      <li><a href="#s8">홈 대시보드</a></li>
+      <li><a href="#s9">환경설정</a></li>
+      <li><a href="#s10">자주 묻는 질문 · 문제 해결</a></li>
+    </ol>
+  </div>
+
+  <section class="gd-sec" id="s1">
+    <div class="gd-sec-head"><div class="gd-sec-num">1</div><h2>설치 및 라이선스 활성화</h2></div>
+    <p class="gd-lead">구매 후 받으신 바우처 코드로 1대의 PC에서 영구 사용하실 수 있습니다. 설치와 활성화는 한 번만 하면 됩니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 파일 다운로드</strong> — 구매 승인 후 이메일로 받은 링크, 또는 <a href="download.html" style="color:#E11D48;font-weight:700;">설치 파일 다운로드</a> 페이지에서 구매자 이메일을 입력해 받습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 실행</strong> — 받은 설치 파일(.exe)을 실행해 설치하면 바탕화면에 아이콘이 생성됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>바우처 코드 입력</strong> — 처음 실행 시 활성화 창에서 <strong>[🎫 바우처 코드 입력]</strong> 탭에 코드(<code>SOEZ-XXXX-XXXX-XXXX</code>)를 입력하고 활성화합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>활성화 완료</strong> — 정상 처리되면 메인 화면이 열리고, 이후에는 바로 실행됩니다.</div></div>
+    </div>
+    <div class="gd-warn">⚠️ <strong>활성화 시 인터넷 연결</strong>이 필요합니다(서버 코드 확인). 바우처 코드는 <strong>1대 PC 전용</strong>입니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s2">
+    <div class="gd-sec-head"><div class="gd-sec-num">2</div><h2>화면 구성 한눈에 보기</h2></div>
+    <p class="gd-lead">상단 탭으로 화면을 이동합니다. 각 탭의 역할은 다음과 같습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-home.png" alt="다이소 발주서 자동화 홈 화면"><figcaption>▲ 홈 화면</figcaption></figure>
+    <table class="gd-menu">
+      <tr><th>탭</th><th>하는 일</th></tr>
+      <tr><td>🏠 홈</td><td>발주 개요·현황을 한눈에 보는 대시보드</td></tr>
+      <tr><td>📊 발주 분석</td><td>다이소 발주 엑셀을 분석해 출고 수량·FEFO 등을 판정하는 핵심 화면</td></tr>
+      <tr><td>📎 첨부파일</td><td>품질 체크리스트·안전 확인서 등 납품 서류 생성·인쇄</td></tr>
+      <tr><td>📦 재고 DB</td><td>입출고 원장 — 로트(유통기한)별 재고 관리</td></tr>
+      <tr><td>🗂 제품 DB</td><td>거래처별 제품 정보 등록·관리</td></tr>
+      <tr><td>🏢 거래처</td><td>거래처(업체) 등록·대표자·도장 관리</td></tr>
+      <tr><td>⚙️ 설정</td><td>거래처 선택·저장 위치 등 기본 설정</td></tr>
+    </table>
+    <div class="gd-tip">💡 대부분의 화면이 <strong>거래처(업체) 기준</strong>으로 동작합니다. 마지막에 작업한 거래처가 기억되며, 거래처를 바꾸면 해당 업체 기준으로 보여집니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s3">
+    <div class="gd-sec-head"><div class="gd-sec-num">3</div><h2>거래처 등록·관리</h2></div>
+    <p class="gd-lead">거래처(업체)를 등록하고 대표자·도장 이미지를 함께 저장하면, 납품 서류에 자동으로 반영됩니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-clients.png" alt="다이소 거래처 관리 화면"><figcaption>▲ 거래처 관리 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>거래처 추가</strong> — 업체명·대표자 등 정보를 입력합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>도장 이미지 첨부</strong> — 대표자 도장 이미지를 등록해 두면 확인서 등 서류에 자동으로 찍힙니다.</div></div>
+    </div>
+  </section>
+
+  <section class="gd-sec" id="s4">
+    <div class="gd-sec-head"><div class="gd-sec-num">4</div><h2>제품 DB 등록·관리</h2></div>
+    <p class="gd-lead">거래처별로 취급 제품을 등록해 두면 발주 분석 시 품번·수량 등이 자동으로 매칭됩니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-products.png" alt="다이소 제품 DB 화면"><figcaption>▲ 제품 DB 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>거래처 선택</strong> 후 제품을 추가합니다. 카톤/파렛트 입수량 등 단위 정보를 함께 등록하면 단위 변환이 정확해집니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>열 구성</strong> — 필요한 열을 추가·표시/숨김 하고, 검색·다중 선택 삭제로 관리합니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 품번은 기본적으로 오름차순으로 정렬되어 찾기 쉽습니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s5">
+    <div class="gd-sec-head"><div class="gd-sec-num">5</div><h2>발주 분석 (핵심)</h2></div>
+    <p class="gd-lead">다이소에서 받은 발주 엑셀을 불러오면 제품 DB와 매칭해 분석하고, 유통기한(FEFO) 기준 선출고까지 판정합니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-analysis.png" alt="다이소 발주 분석 화면"><figcaption>▲ 발주 분석 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>발주 엑셀 불러오기</strong> — 발주 파일을 불러오면 자동으로 분석되어 품번별 수량이 정리됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>FEFO 선출고 판정</strong> — 재고 DB의 유통기한 정보를 바탕으로 먼저 출고할 로트를 판정합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>단위 변환</strong> — 카톤·파렛트 단위로 변환해 볼 수 있어 적재·발주 단위 파악이 쉽습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>출고분만 보기</strong> — 실제 출고분만 추려서 확인하고, 결과를 엑셀/PDF로 저장하거나 인쇄합니다.</div></div>
+    </div>
+  </section>
+
+  <section class="gd-sec" id="s6">
+    <div class="gd-sec-head"><div class="gd-sec-num">6</div><h2>재고 DB · 입출고 원장</h2></div>
+    <p class="gd-lead">로트(유통기한)별로 재고를 관리하는 원장입니다. 입고·출고가 기록되어 FEFO 판정의 기준이 됩니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-stock.png" alt="다이소 재고 DB 화면"><figcaption>▲ 재고 DB 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>입고 등록</strong> — 로트(유통기한)별로 재고를 입력합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>출고 확정</strong> — 발주 분석에서 확정된 출고가 재고에 반영됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>수동 출고 입력</strong> — 출고 확정 이후 추가로 나간 분량이 있으면 <strong>[📦 출고 입력]</strong>으로 직접 차감할 수 있습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>입출고 이력</strong> — 장부(이력) 대화상자에서 모든 입출고 내역을 확인합니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 마지막에 작업한 거래처가 저장되므로, 다시 켜도 직전 업체 기준으로 이어집니다.</div>
+  </section>
+
+  <section class="gd-sec" id="s7">
+    <div class="gd-sec-head"><div class="gd-sec-num">7</div><h2>첨부파일(체크리스트·확인서) 생성</h2></div>
+    <p class="gd-lead">납품 시 필요한 품질 체크리스트·안전 확인서 등 서류를 자동으로 만들어 미리보고 인쇄할 수 있습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/daiso-attach.png" alt="다이소 첨부파일 화면"><figcaption>▲ 첨부파일 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>양식 선택·생성</strong> — 체크리스트/확인서 양식을 선택해 발주 내용으로 자동 생성합니다. 거래처 도장이 자동으로 반영됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>미리보기·인쇄</strong> — 세로 양식으로 미리보고 바로 인쇄합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>양식 편집·초기화</strong> — 업체별로 양식을 편집할 수 있고, 필요하면 <strong>공장 초기화</strong>로 기본 양식으로 되돌립니다.</div></div>
+    </div>
+  </section>
+
+  <section class="gd-sec" id="s8">
+    <div class="gd-sec-head"><div class="gd-sec-num">8</div><h2>홈 대시보드</h2></div>
+    <p class="gd-lead">홈에서 발주 개요와 재고 기준 현황을 확인합니다. 표 머리글을 클릭해 정렬할 수 있고, 재고 기준은 거래처별 설정을 따릅니다.</p>
+  </section>
+
+  <section class="gd-sec" id="s9">
+    <div class="gd-sec-head"><div class="gd-sec-num">9</div><h2>환경설정</h2></div>
+    <p class="gd-lead">설정에서 작업할 거래처를 선택하고 저장 위치 등 기본값을 지정합니다. 현재 버전도 확인할 수 있습니다.</p>
+  </section>
+
+  <section class="gd-sec" id="s10">
+    <div class="gd-sec-head"><div class="gd-sec-num">10</div><h2>자주 묻는 질문 · 문제 해결</h2></div>
+    <table class="gd-menu">
+      <tr><th>상황</th><th>해결 방법</th></tr>
+      <tr><td>활성화가<br>안 돼요</td><td>① 인터넷 연결 확인 ② 바우처 코드 정확히 입력(공백·오타) ③ 코드는 1대 PC 전용이라 다른 PC에서 이미 사용했는지 확인하세요.</td></tr>
+      <tr><td>FEFO 판정이<br>이상해요</td><td>재고 DB에 로트별 유통기한이 정확히 입력돼 있는지 확인하세요. 유통기한 정보가 비면 선출고 판정이 어렵습니다.</td></tr>
+      <tr><td>도장이<br>안 찍혀요</td><td>거래처 관리에서 해당 업체에 도장 이미지가 등록돼 있는지 확인하세요.</td></tr>
+      <tr><td>그 외 문의</td><td><a href="support.html" style="color:#E11D48;font-weight:700;">문의 게시판</a> 또는 카카오톡 채널로 연락 주세요.</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<section class="cta-banner" style="background:linear-gradient(135deg,#E11D48,#BE123C);">
+  <div class="container">
+    <h2 style="color:#fff;">아직 도입 전이신가요?</h2>
+    <p style="color:rgba(255,255,255,.9);">다이소 발주부터 출고·납품 서류까지 한 번에 자동화해 보세요.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <a href="order.html?program=daiso" class="btn btn-lg" style="background:#fff;color:#E11D48;font-weight:800;">🛒 구매 신청</a>
+      <a href="features_daiso.html" class="btn btn-lg" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);">제품 소개 보기</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p style="margin-bottom:8px;">
+      <a href="index.html">홈</a> &nbsp;·&nbsp;
+      <a href="features.html">제품 소개</a> &nbsp;·&nbsp;
+      <a href="guide_taekbae.html">사용 방법</a> &nbsp;·&nbsp;
+      <a href="pricing.html">가격 및 구매</a> &nbsp;·&nbsp;
+      <a href="support.html">문의</a>
+    </p>
+    <p>© 2026 SOEZ(쏘이지) · 사업자등록번호: 759-03-03828</p>
+  </div>
+</footer>
+
+</body>
+</html>
