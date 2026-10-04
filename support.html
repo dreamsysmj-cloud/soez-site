@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의하기 — SOEZ 쏘이지</title>
+  <meta name="description" content="SOEZ 업무 자동화 솔루션에 대해 궁금한 점을 남겨주세요. 답변은 입력하신 이메일로 보내드립니다.">
+  <style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+:root{
+  --navy:#0F1B3A; --navy2:#1B2B4B; --blue:#3B6FD4; --blue2:#2C5BB8;
+  --blue-light:#EBF0FB; --text:#0F172A; --text2:#1F2937; --border:#E2E8F0; --bg:#F8FAFC;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:18px;}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  color:var(--text);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;}
+.nav-logo div{line-height:1.15;}
+.nav-logo span{display:block;font-size:.82rem;font-weight:500;color:var(--text2);}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:.95rem;font-weight:600;color:var(--text2);transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-cta{background:var(--blue);color:#fff !important;padding:10px 18px;border-radius:8px;}
+.nav-cta:hover{background:var(--blue2);}
+
+/* HEADER */
+.page-header{background:#F8FAFC;color:var(--text);padding:52px 0 56px;text-align:center;
+  border-bottom:1px solid var(--border);}
+.page-header h1{font-size:2.1rem;font-weight:900;margin-bottom:10px;color:var(--navy);}
+.page-header p{font-size:1.05rem;color:var(--text2);}
+
+/* LAYOUT */
+.support-layout{max-width:1040px;margin:46px auto;padding:0 24px;
+  display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:start;}
+.card{background:#fff;border-radius:16px;border:1px solid var(--border);
+  padding:34px 38px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+.card h2{font-size:1.25rem;font-weight:800;color:var(--navy2);margin-bottom:24px;}
+
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:7px;}
+.form-group label .required{color:#E53E3E;margin-left:2px;}
+.form-group label .optional{font-weight:400;color:var(--text2);font-size:.85rem;margin-left:4px;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;
+  font-size:1rem;color:var(--text);font-family:inherit;
+  transition:border-color .2s,box-shadow .2s;outline:none;background:#fff;}
+.form-group textarea{min-height:160px;resize:vertical;line-height:1.6;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,111,212,.12);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#94A3B8;}
+
+.btn-submit{width:100%;padding:16px;background:var(--blue);color:#fff;border:none;
+  border-radius:10px;font-size:1.08rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-submit:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(59,111,212,.3);}
+.btn-submit:disabled{background:#93A4C4;cursor:not-allowed;transform:none;box-shadow:none;}
+
+.error-msg{display:none;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;
+  padding:12px 16px;font-size:.95rem;color:#B91C1C;margin-bottom:16px;}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:16px 0;}
+.success-icon{font-size:4rem;margin-bottom:16px;}
+.success-screen h2{font-size:1.55rem;font-weight:900;color:var(--navy2);margin-bottom:12px;}
+.success-screen p{font-size:1.02rem;color:var(--text2);line-height:1.75;}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:18px;}
+.sidebar-card{background:#fff;border-radius:14px;border:1px solid var(--border);
+  padding:22px 24px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.sidebar-card h3{font-size:1rem;font-weight:800;color:var(--navy2);margin-bottom:12px;}
+.sidebar-card p{font-size:.95rem;color:var(--text2);line-height:1.7;}
+.info-list li{display:flex;gap:8px;font-size:.95rem;color:var(--text2);padding:5px 0;}
+.info-list li .ic{flex-shrink:0;}
+.kakao-btn{display:block;text-align:center;background:#FEE500;color:#000;font-weight:800;
+  padding:12px;border-radius:8px;font-size:.98rem;margin-top:6px;}
+
+/* FOOTER */
+.footer{background:#F1F5F9;color:#374151;padding:34px 0;margin-top:60px;text-align:center;
+  font-size:.92rem;border-top:1px solid var(--border);}
+.footer a{color:#374151;}.footer a:hover{color:var(--blue);}
+
+@media(max-width:768px){
+  .support-layout{grid-template-columns:1fr;}
+  .card{padding:24px 20px;}
+  .sidebar{order:-1;}
+  .nav-links{gap:14px;}
+  .nav-links li:nth-child(2),.nav-links li:nth-child(4){display:none;}
+  .page-header h1{font-size:1.6rem;}
+}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
+      <div>쏘이지<span>스마트 업무 자동화 솔루션</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">제품 소개</a></li>
+      <li><a href="guide_taekbae.html">사용 방법</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="download.html">설치 파일 다운로드</a></li>
+      <li><a href="support.html" class="active">문의</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>💬 문의하기</h1>
+    <p>궁금한 점을 남겨주시면 입력하신 이메일로 답변드립니다. (로그인 불필요)</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="support-layout">
+
+  <!-- 폼 카드 -->
+  <div class="card">
+    <h2>📝 문의 작성</h2>
+    <div class="error-msg" id="errorMsg"></div>
+
+    <form id="inquiryForm">
+      <div class="form-group">
+        <label>이름 <span class="required">*</span></label>
+        <input type="text" name="name" id="name" placeholder="예: 홍길동" required maxlength="50">
+      </div>
+      <div class="form-group">
+        <label>이메일 <span class="required">*</span></label>
+        <input type="email" name="email" id="email" placeholder="답변받으실 이메일 주소" required maxlength="100">
+      </div>
+      <div class="form-group">
+        <label>연락처 <span class="optional">(선택)</span></label>
+        <input type="tel" name="phone" id="phone" placeholder="예: 010-1234-5678" maxlength="20">
+      </div>
+      <div class="form-group">
+        <label>관련 제품 <span class="optional">(선택)</span></label>
+        <select name="program_id" id="program_id">
+          <option value="">선택 안 함 / 기타</option>
+          <option value="TAEKBAE">택배 파일 자동화</option>
+          <option value="MODERN">모던하우스 발주서 자동화</option>
+          <option value="DAISO">다이소 발주서 자동화</option>
+          <option value="COUPANG">쿠팡 출고 관리</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>제목 <span class="required">*</span></label>
+        <input type="text" name="title" id="title" placeholder="문의 제목을 입력하세요" required maxlength="120">
+      </div>
+      <div class="form-group">
+        <label>문의 내용 <span class="required">*</span></label>
+        <textarea name="message" id="message" placeholder="문의하실 내용을 자세히 적어주세요." required maxlength="2000"></textarea>
+      </div>
+      <button type="submit" class="btn-submit" id="submitBtn">문의 접수하기 →</button>
+    </form>
+
+    <!-- 성공 -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">✅</div>
+      <h2>문의가 접수되었습니다!</h2>
+      <p>소중한 문의 감사합니다.<br>
+      답변은 입력하신 <strong>이메일</strong>로 보내드립니다.<br>
+      보통 <strong>1~2 영업일 이내</strong>에 회신드립니다.</p>
+    </div>
+  </div>
+
+  <!-- 사이드바 -->
+  <div class="sidebar">
+    <div class="sidebar-card">
+      <h3>📌 안내</h3>
+      <ul class="info-list">
+        <li><span class="ic">✉️</span> 답변은 입력하신 이메일로 발송됩니다.</li>
+        <li><span class="ic">🔒</span> 문의 내용은 다른 방문자에게 공개되지 않습니다.</li>
+        <li><span class="ic">⏱️</span> 평일 기준 1~2일 이내 회신.</li>
+      </ul>
+    </div>
+    <div class="sidebar-card">
+      <h3>💛 빠른 상담</h3>
+      <p>급한 문의는 카카오톡 채널로 바로 연락 주세요.</p>
+      <a href="http://pf.kakao.com/_ACvjX/chat" target="_blank" rel="noopener" class="kakao-btn">카카오톡 문의</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p style="margin-bottom:8px;">
+      <a href="index.html">홈</a> &nbsp;·&nbsp;
+      <a href="features.html">제품 소개</a> &nbsp;·&nbsp;
+      <a href="pricing.html">가격 및 구매</a> &nbsp;·&nbsp;
+      <a href="support.html">문의</a>
+    </p>
+    <p>© 2026 SOEZ(쏘이지) · 사업자등록번호: 759-03-03828</p>
+  </div>
+</footer>
+
+<script>
+  const API_URL = "https://web-production-7913d.up.railway.app";
+
+  // 전화번호 자동 하이픈
+  document.getElementById("phone").addEventListener("input", (e) => {
+    let v = e.target.value.replace(/\D/g, "");
+    if (v.length <= 3) e.target.value = v;
+    else if (v.length <= 7) e.target.value = v.slice(0,3) + "-" + v.slice(3);
+    else e.target.value = v.slice(0,3) + "-" + v.slice(3,7) + "-" + v.slice(7,11);
+  });
+
+  document.getElementById("inquiryForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    const errBox = document.getElementById("errorMsg");
+    errBox.style.display = "none";
+    btn.disabled = true; btn.textContent = "접수 중...";
+
+    const fd = new FormData(e.target);
+    try {
+      const res = await fetch(`${API_URL}/inquiry`, { method:"POST", body:fd });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.detail || "서버 오류가 발생했습니다.");
+      document.getElementById("inquiryForm").style.display = "none";
+      document.getElementById("successScreen").style.display = "block";
+      window.scrollTo({ top:0, behavior:"smooth" });
+    } catch (err) {
+      errBox.textContent = "⚠️ " + err.message + " 잠시 후 다시 시도하거나 카카오톡으로 문의해 주세요.";
+      errBox.style.display = "block";
+      btn.disabled = false; btn.textContent = "문의 접수하기 →";
+    }
+  });
+</script>
+</body>
+</html>
