@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 — 문의 관리 | SOEZ</title>
+  <style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+:root{ --navy:#0F1B3A; --navy2:#1B2B4B; --blue:#3B6FD4; --blue2:#2C5BB8;
+  --text:#0F172A; --text2:#334155; --border:#E2E8F0; --bg:#F8FAFC;
+  --green:#16A34A; --green-bg:#DCFCE7; --amber:#B45309; --amber-bg:#FEF3C7; --red:#DC2626; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:17px;}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);}
+.login-card{background:#fff;border-radius:18px;padding:44px 40px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center;}
+.login-card h1{font-size:1.8rem;font-weight:900;color:var(--navy);letter-spacing:2px;}
+.login-sub{font-size:.92rem;color:var(--text2);margin-bottom:26px;}
+.login-card input{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:9px;font-size:1rem;margin-bottom:14px;outline:none;}
+.login-card input:focus{border-color:var(--blue);}
+.login-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:9px;font-size:1.05rem;font-weight:800;cursor:pointer;}
+.login-btn:hover{background:var(--blue2);}
+.login-err{display:none;color:var(--red);font-size:.9rem;margin-top:10px;}
+
+/* PANEL */
+.panel{display:none;max-width:1080px;margin:0 auto;padding:24px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin-bottom:18px;}
+.topbar h1{font-size:1.4rem;font-weight:900;color:var(--navy2);}
+.topbar .right{display:flex;align-items:center;gap:10px;font-size:.92rem;color:var(--text2);}
+.linkbtn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-weight:700;font-size:.9rem;cursor:pointer;color:var(--text);}
+.linkbtn:hover{background:#EEF2F7;}
+
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.tab-btn{background:#fff;border:1px solid var(--border);border-radius:999px;padding:9px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--text2);}
+.tab-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+.inq{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+.inq-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.inq-id{font-size:.86rem;color:var(--text2);font-weight:700;}
+.badge{padding:4px 12px;border-radius:999px;font-size:.82rem;font-weight:800;}
+.badge.pending{background:var(--amber-bg);color:var(--amber);}
+.badge.answered{background:var(--green-bg);color:var(--green);}
+.inq-title{font-size:1.12rem;font-weight:800;color:var(--navy2);margin:8px 0;}
+.inq-meta{font-size:.9rem;color:var(--text2);display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
+.inq-meta b{color:var(--text);font-weight:700;}
+.inq-body{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:1rem;color:#1F2937;line-height:1.7;white-space:pre-wrap;}
+.inq-answer{border:2px solid var(--blue);border-radius:10px;padding:14px 16px;margin-top:12px;}
+.inq-answer .lbl{font-size:.86rem;font-weight:700;color:var(--blue);margin-bottom:6px;}
+.inq-answer .txt{font-size:1rem;color:var(--navy2);line-height:1.7;white-space:pre-wrap;}
+.answer-box{margin-top:14px;}
+.answer-box textarea{width:100%;min-height:120px;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:1rem;font-family:inherit;line-height:1.6;resize:vertical;outline:none;}
+.answer-box textarea:focus{border-color:var(--blue);}
+.row-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.btn{border:none;border-radius:8px;padding:10px 18px;font-weight:800;font-size:.95rem;cursor:pointer;}
+.btn-blue{background:var(--blue);color:#fff;}.btn-blue:hover{background:var(--blue2);}
+.btn-gray{background:var(--bg);color:var(--text);border:1px solid var(--border);}
+.btn-red{background:#fff;color:var(--red);border:1px solid #FECACA;}.btn-red:hover{background:#FEF2F2;}
+.empty{text-align:center;padding:60px 20px;color:var(--text2);}
+.empty .ic{font-size:2.4rem;margin-bottom:10px;}
+.snack{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy2);color:#fff;
+  padding:13px 22px;border-radius:10px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;z-index:99;}
+.snack.show{opacity:1;}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <h1>SOEZ</h1>
+    <div class="login-sub">관리자 문의 관리 페이지</div>
+    <input type="password" id="adminKeyInput" placeholder="관리자 키를 입력하세요" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <div class="login-err" id="loginErr">⚠️ 관리자 키가 올바르지 않습니다.</div>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div class="panel" id="panel">
+  <div class="topbar">
+    <h1>💬 문의 관리</h1>
+    <div class="right">
+      <a href="admin_orders.html" class="linkbtn">📦 주문 관리로</a>
+      <span id="keyDisplay"></span>
+      <button class="linkbtn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'')">전체 <span id="cnt-all">0</span></button>
+    <button class="tab-btn" onclick="switchTab(this,'pending')">대기 <span id="cnt-pending">0</span></button>
+    <button class="tab-btn" onclick="switchTab(this,'answered')">답변완료 <span id="cnt-answered">0</span></button>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<div class="snack" id="snack"></div>
+
+<script>
+  const API_URL = "https://web-production-7913d.up.railway.app";
+  let adminKey = "";
+  let all = [];
+  let currentStatus = "";
+
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, m => (
+    {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])); }
+  function showSnack(t){ const s=document.getElementById("snack"); s.textContent=t; s.classList.add("show"); setTimeout(()=>s.classList.remove("show"),2200); }
+
+  function doLogin(){
+    const k = document.getElementById("adminKeyInput").value.trim();
+    if(!k) return;
+    adminKey = k;
+    document.getElementById("keyDisplay").textContent = "키: " + k.slice(0,3) + "***";
+    document.getElementById("loginWrap").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+    loadInquiries();
+  }
+  function doLogout(){
+    adminKey=""; all=[];
+    document.getElementById("loginWrap").style.display="flex";
+    document.getElementById("panel").style.display="none";
+    document.getElementById("adminKeyInput").value="";
+    document.getElementById("loginErr").style.display="none";
+  }
+
+  function switchTab(el,status){
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    el.classList.add("active");
+    currentStatus = status;
+    render();
+  }
+
+  async function loadInquiries(){
+    try{
+      const res = await fetch(`${API_URL}/admin/inquiries`, { headers:{ "X-Admin-Key":adminKey } });
+      if(res.status===403){ document.getElementById("loginErr").style.display="block"; doLogout(); return; }
+      const data = await res.json();
+      all = data.data || [];
+      updateCounts();
+      render();
+    }catch(e){
+      document.getElementById("list").innerHTML =
+        `<div class="empty"><div class="ic">⚠️</div><p>서버 연결 오류: ${esc(e.message)}</p></div>`;
+    }
+  }
+
+  function updateCounts(){
+    document.getElementById("cnt-all").textContent = all.length;
+    document.getElementById("cnt-pending").textContent = all.filter(i=>i.status==="pending").length;
+    document.getElementById("cnt-answered").textContent = all.filter(i=>i.status==="answered").length;
+  }
+
+  const PROG = {TAEKBAE:"택배 파일 자동화",MODERN:"모던하우스 발주서 자동화",DAISO:"다이소 발주서 자동화",COUPANG:"쿠팡 출고 관리"};
+
+  function render(){
+    const list = currentStatus ? all.filter(i=>i.status===currentStatus) : all;
+    const el = document.getElementById("list");
+    if(!list.length){ el.innerHTML = `<div class="empty"><div class="ic">📭</div><p>문의가 없습니다.</p></div>`; return; }
+    el.innerHTML = list.map(i=>{
+      const isPending = i.status==="pending";
+      const badge = isPending ? `<span class="badge pending">답변 대기</span>` : `<span class="badge answered">답변 완료</span>`;
+      const prog = i.program_id && PROG[i.program_id] ? ` · ${PROG[i.program_id]}` : "";
+      const answered = (!isPending && i.answer) ? `
+        <div class="inq-answer"><div class="lbl">내 답변 (${esc(i.answered_at||"")})</div><div class="txt">${esc(i.answer)}</div></div>` : "";
+      const answerBox = `
+        <div class="answer-box">
+          <textarea id="ans-${i.id}" placeholder="답변 내용을 입력하세요. 작성자 이메일로 발송됩니다.">${esc(isPending?"":i.answer)}</textarea>
+          <div class="row-actions">
+            <button class="btn btn-blue" onclick="sendAnswer(${i.id})">${isPending?"📨 답변 전송":"✏️ 답변 수정 후 재전송"}</button>
+            <button class="btn btn-red" onclick="delInquiry(${i.id})">🗑️ 삭제</button>
+          </div>
+        </div>`;
+      return `<div class="inq">
+        <div class="inq-head"><span class="inq-id">#${i.id} · ${esc(i.created_at||"")}</span>${badge}</div>
+        <div class="inq-title">${esc(i.title)}${prog}</div>
+        <div class="inq-meta"><span>👤 <b>${esc(i.name)}</b></span><span>📧 ${esc(i.email)}</span><span>📱 ${esc(i.phone||"-")}</span></div>
+        <div class="inq-body">${esc(i.message)}</div>
+        ${answered}
+        ${answerBox}
+      </div>`;
+    }).join("");
+  }
+
+  async function sendAnswer(id){
+    const answer = document.getElementById("ans-"+id).value.trim();
+    if(!answer){ showSnack("⚠️ 답변 내용을 입력하세요."); return; }
+    if(!confirm("이 답변을 작성자 이메일로 전송할까요?")) return;
+    try{
+      const res = await fetch(`${API_URL}/admin/inquiries/${id}/answer`, {
+        method:"POST",
+        headers:{ "X-Admin-Key":adminKey, "Content-Type":"application/json" },
+        body: JSON.stringify({ answer })
+      });
+      const data = await res.json();
+      if(!res.ok || !data.ok) throw new Error(data.detail || "오류");
+      showSnack("✅ 답변 전송 완료! (이메일 발송)");
+      await loadInquiries();
+    }catch(e){ showSnack("⚠️ " + e.message); }
+  }
+
+  async function delInquiry(id){
+    if(!confirm(`문의 #${id}을 삭제할까요?`)) return;
+    try{
+      const res = await fetch(`${API_URL}/admin/inquiries/${id}`, {
+        method:"DELETE", headers:{ "X-Admin-Key":adminKey }
+      });
+      const data = await res.json();
+      if(!res.ok || !data.ok) throw new Error(data.detail || "오류");
+      showSnack("🗑️ 삭제 완료");
+      await loadInquiries();
+    }catch(e){ showSnack("⚠️ " + e.message); }
+  }
+</script>
+</body>
+</html>
