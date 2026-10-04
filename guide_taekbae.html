@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>택배 파일 자동화 사용 설명서 — SOEZ 쏘이지</title>
+  <meta name="description" content="택배 파일 자동화 프로그램의 설치·라이선스 활성화부터 거래처/출고처 관리, 송장 파일 생성, 생성 이력까지 단계별 사용 설명서.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .gd-hero { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+    /* 제품 스위처 */
+    .gd-switch { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:26px 0 6px; }
+    .gd-switch a { background:#fff; border:1px solid #E2E8F0; border-radius:999px; padding:9px 18px;
+      font-size:.95rem; font-weight:700; color:#1F2937; transition:all .2s; }
+    .gd-switch a:hover { border-color:#2563EB; color:#2563EB; }
+    .gd-switch a.active { background:#2563EB; color:#fff; border-color:#2563EB; }
+    /* 목차 */
+    .gd-toc { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; padding:24px 28px; margin:0 auto 40px; max-width:880px; }
+    .gd-toc h2 { font-size:1.1rem; font-weight:800; color:#0F1B3A; margin-bottom:14px; }
+    .gd-toc ol { margin:0; padding-left:22px; columns:2; column-gap:32px; }
+    .gd-toc li { font-size:.98rem; color:#1F2937; margin-bottom:9px; font-weight:600; }
+    .gd-toc a { color:#1F2937; } .gd-toc a:hover { color:#2563EB; }
+    /* 섹션 */
+    .gd-sec { max-width:880px; margin:0 auto 56px; scroll-margin-top:90px; }
+    .gd-sec-head { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .gd-sec-num { width:42px; height:42px; flex-shrink:0; background:#2563EB; color:#fff; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.15rem; }
+    .gd-sec-head h2 { font-size:1.5rem; font-weight:900; color:#0F1B3A; letter-spacing:-.01em; }
+    .gd-lead { font-size:1.02rem; color:#1F2937; line-height:1.75; margin-bottom:18px; }
+    /* 단계 */
+    .gd-steps { counter-reset: gstep; display:flex; flex-direction:column; gap:14px; margin:18px 0; }
+    .gd-step { display:flex; gap:14px; background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:16px 18px; }
+    .gd-step::before { counter-increment: gstep; content: counter(gstep); flex-shrink:0;
+      width:30px; height:30px; background:#EFF6FF; color:#2563EB; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.95rem; }
+    .gd-step-body { font-size:1rem; color:#1F2937; line-height:1.7; }
+    .gd-step-body strong { color:#0F1B3A; }
+    /* 스크린샷 */
+    .gd-shot { margin:20px 0; border:1px solid #E2E8F0; border-radius:14px; overflow:hidden; box-shadow:0 8px 24px -12px rgba(15,27,58,.2); }
+    .gd-shot img { width:100%; display:block; }
+    .gd-shot figcaption { font-size:.9rem; color:#374151; font-weight:600; padding:10px 16px; background:#F8FAFC; border-top:1px solid #E2E8F0; }
+    /* 박스 */
+    .gd-tip, .gd-warn { border-radius:0 10px 10px 0; padding:14px 18px; margin:16px 0; font-size:.98rem; line-height:1.7; }
+    .gd-tip { background:#EFF6FF; border-left:4px solid #2563EB; color:#1E3A8A; }
+    .gd-warn { background:#FFF7ED; border-left:4px solid #F59E0B; color:#92400E; }
+    .gd-tip strong, .gd-warn strong { font-weight:800; }
+    /* 메뉴 표 */
+    .gd-menu { width:100%; border-collapse:collapse; margin:16px 0; }
+    .gd-menu th, .gd-menu td { border:1px solid #E2E8F0; padding:11px 14px; text-align:left; font-size:.98rem; }
+    .gd-menu th { background:#F1F5F9; font-weight:800; color:#0F1B3A; }
+    .gd-menu td:first-child { font-weight:700; color:#2563EB; white-space:nowrap; }
+    @media (max-width:768px){ .gd-toc ol { columns:1; } .gd-sec-head h2 { font-size:1.25rem; } }
+  </style>
+</head>
+<body class="page-body">
+
+<!-- ── 네비게이션 ── -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
+      <div>쏘이지<span style="display:block;font-size:.82rem;font-weight:500;color:#1F2937;">스마트 업무 자동화 솔루션</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">제품 소개</a></li>
+      <li><a href="guide_taekbae.html" class="active">사용 방법</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="support.html">문의</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── 히어로 ── -->
+<section class="page-hero gd-hero">
+  <div class="container" style="text-align:center;">
+    <div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:5px 18px;border-radius:999px;font-size:.85rem;font-weight:700;color:#fff;margin-bottom:18px;">📖 사용 설명서</div>
+    <h1 style="font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.02em;">택배 파일 자동화 사용 방법</h1>
+    <p style="font-size:1.05rem;color:rgba(255,255,255,.9);max-width:660px;margin:0 auto;">설치와 라이선스 활성화부터 거래처·출고처 관리, 송장 파일 생성까지<br>처음 사용하시는 분도 순서대로 따라 하실 수 있도록 정리했습니다.</p>
+  </div>
+</section>
+
+<div class="container" style="padding:44px 24px 20px;">
+
+  <!-- 제품 스위처 -->
+  <div class="gd-switch">
+    <a href="guide_taekbae.html" class="active">📦 택배 파일 자동화</a>
+    <a href="guide_coupang.html">🚀 쿠팡 출고 관리</a>
+    <a href="guide_daiso.html">🏪 다이소 발주서</a>
+    <a href="guide_modern.html">🛋 모던하우스 발주서</a>
+  </div>
+
+  <!-- 목차 -->
+  <div class="gd-toc">
+    <h2>📑 목차</h2>
+    <ol>
+      <li><a href="#s1">설치 및 라이선스 활성화</a></li>
+      <li><a href="#s2">화면 구성 한눈에 보기</a></li>
+      <li><a href="#s3">거래처 등록·관리</a></li>
+      <li><a href="#s4">출고처 등록·관리</a></li>
+      <li><a href="#s5">거래처별 설정 · 전역 동기화</a></li>
+      <li><a href="#s6">송장 파일 만들기 (핵심)</a></li>
+      <li><a href="#s7">대시보드(홈) 보기</a></li>
+      <li><a href="#s8">생성 이력 관리</a></li>
+      <li><a href="#s9">환경설정</a></li>
+      <li><a href="#s10">자주 묻는 질문 · 문제 해결</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. 설치 및 활성화 -->
+  <section class="gd-sec" id="s1">
+    <div class="gd-sec-head"><div class="gd-sec-num">1</div><h2>설치 및 라이선스 활성화</h2></div>
+    <p class="gd-lead">구매 후 받으신 바우처 코드로 1대의 PC에서 영구 사용하실 수 있습니다. 설치와 활성화는 한 번만 하면 됩니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 파일 다운로드</strong> — 구매 승인 후 이메일로 받은 다운로드 링크, 또는 <a href="download.html" style="color:#2563EB;font-weight:700;">설치 파일 다운로드</a> 페이지에서 구매자 이메일을 입력해 받습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>설치 실행</strong> — 받은 설치 파일(.exe)을 실행하고 안내에 따라 설치합니다. 설치가 끝나면 바탕화면에 아이콘이 생성됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>프로그램 실행</strong> — 아이콘을 더블클릭하면 처음 한 번 <strong>'라이선스 활성화'</strong> 창이 나타납니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>바우처 코드 입력</strong> — <strong>[🎫 바우처 코드 입력]</strong> 탭에서 이메일로 받은 코드(<code>SOEZ-XXXX-XXXX-XXXX</code>)를 입력하고 <strong>[✅ 바우처로 활성화]</strong>를 누릅니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>활성화 완료</strong> — 정상 처리되면 메인 화면이 열립니다. 이후에는 활성화 창 없이 바로 실행됩니다.</div></div>
+    </div>
+    <div class="gd-warn">⚠️ <strong>활성화 시에는 인터넷 연결</strong>이 필요합니다(서버에서 코드 확인). 활성화가 끝난 뒤 일상 사용은 인터넷 없이도 가능합니다. 바우처 코드는 <strong>1대의 PC에서만</strong> 사용됩니다.</div>
+    <div class="gd-tip">💡 판매자에게 라이선스 키(<code>XXXX-XXXX-XXXX-XXXX</code> 형식)를 직접 받은 경우에는 <strong>[🔑 라이선스 키 직접 입력]</strong> 탭을 사용하세요.</div>
+  </section>
+
+  <!-- 2. 화면 구성 -->
+  <section class="gd-sec" id="s2">
+    <div class="gd-sec-head"><div class="gd-sec-num">2</div><h2>화면 구성 한눈에 보기</h2></div>
+    <p class="gd-lead">왼쪽 사이드바의 메뉴로 화면을 이동합니다. 각 메뉴의 역할은 다음과 같습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/home.png" alt="택배 파일 자동화 메인(홈) 화면"><figcaption>▲ 메인 화면 — 왼쪽 사이드바 메뉴 + 대시보드</figcaption></figure>
+    <table class="gd-menu">
+      <tr><th>메뉴</th><th>하는 일</th></tr>
+      <tr><td>🏠 홈</td><td>파일 생성 횟수 등 사용 현황을 한눈에 보는 대시보드</td></tr>
+      <tr><td>📦 파일 생성</td><td>거래처·출고처를 선택해 택배 송장 엑셀 파일을 만드는 핵심 화면</td></tr>
+      <tr><td>📋 생성 이력</td><td>지금까지 만든 송장 파일의 기록 조회</td></tr>
+      <tr><td>🏢 거래처 관리</td><td>상위 거래처(브랜드·업체) 등록·수정·그룹 분류</td></tr>
+      <tr><td>🚚 출고처 관리</td><td>거래처 아래의 실제 배송지(출고처) 등록·관리</td></tr>
+      <tr><td>⚙️ 설정</td><td>저장 경로 등 기본 환경 설정</td></tr>
+    </table>
+    <div class="gd-tip">💡 <strong>거래처</strong>는 상위(예: 'A브랜드'), <strong>출고처</strong>는 그 아래 실제 보내는 곳(여러 매장·지점)입니다. 거래처를 고르면 그 거래처에 속한 출고처만 보여줍니다.</div>
+  </section>
+
+  <!-- 3. 거래처 관리 -->
+  <section class="gd-sec" id="s3">
+    <div class="gd-sec-head"><div class="gd-sec-num">3</div><h2>거래처 등록·관리</h2></div>
+    <p class="gd-lead">송장을 만들기 전에 먼저 거래처(상위 업체)를 등록합니다. 거래처는 그룹으로 분류해 관리할 수 있습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/clients.png" alt="거래처 관리 화면"><figcaption>▲ 거래처 관리 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>[🏢 거래처 관리]</strong> 메뉴로 이동합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>거래처 추가</strong> — 추가 버튼을 눌러 상호명·대표자·연락처·주소·메모 등을 입력하고 저장합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>그룹 분류</strong> — 거래처가 많으면 그룹을 만들어 묶으면 송장 생성 시 그룹 단위로 빠르게 필터할 수 있습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>수정·삭제</strong> — 목록에서 항목을 선택해 정보를 수정하거나 삭제합니다. (출고처가 연결된 거래처는 안전을 위해 삭제가 제한될 수 있습니다.)</div></div>
+    </div>
+  </section>
+
+  <!-- 4. 출고처 관리 -->
+  <section class="gd-sec" id="s4">
+    <div class="gd-sec-head"><div class="gd-sec-num">4</div><h2>출고처 등록·관리</h2></div>
+    <p class="gd-lead">각 거래처 아래에 실제 택배를 보내는 출고처(매장·지점·수령처)를 등록합니다. 송장은 이 출고처 정보로 만들어집니다.</p>
+    <figure class="gd-shot"><img src="images/screens/shipto.png" alt="출고처 관리 화면"><figcaption>▲ 출고처 관리 화면</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>[🚚 출고처 관리]</strong> 메뉴에서 상단의 <strong>거래처를 먼저 선택</strong>합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>출고처 추가</strong> — 상호명·대표자·전화번호·핸드폰·주소·메모를 입력합니다. 입력한 주소·연락처가 송장에 그대로 들어갑니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>대량 관리</strong> — 검색으로 빠르게 찾고, 여러 항목을 선택해 한 번에 삭제할 수 있습니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 출고처 정보(주소·연락처)를 정확히 입력해 두면, 이후 송장 만들 때 매번 다시 입력할 필요 없이 클릭만으로 끝납니다.</div>
+  </section>
+
+  <!-- 5. 거래처별 설정 -->
+  <section class="gd-sec" id="s5">
+    <div class="gd-sec-head"><div class="gd-sec-num">5</div><h2>거래처별 설정 · 전역 동기화</h2></div>
+    <p class="gd-lead">거래처마다 저장 경로와 송장 옵션을 따로 기억합니다. 그리고 한 화면에서 거래처를 바꾸면 모든 화면이 같은 거래처 기준으로 함께 바뀝니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>거래처별 저장 위치</strong> — 거래처마다 파일을 저장할 폴더를 다르게 지정해 두면, 그 거래처를 고를 때 자동으로 해당 폴더에 저장됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>옵션 자동 전환</strong> — 거래처를 선택하면 그 거래처에 저장된 운임·품목 등 송장 옵션이 자동으로 적용됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>전역 동기화</strong> — 홈·파일 생성·이력·거래처/출고처 관리 어느 화면에서든 거래처를 바꾸면, 다른 화면도 같은 거래처 기준으로 보입니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 여러 거래처를 번갈아 작업해도, 거래처만 고르면 저장 위치·옵션이 알아서 따라오므로 설정을 매번 바꿀 필요가 없습니다.</div>
+  </section>
+
+  <!-- 6. 송장 만들기 -->
+  <section class="gd-sec" id="s6">
+    <div class="gd-sec-head"><div class="gd-sec-num">6</div><h2>송장 파일 만들기 (핵심)</h2></div>
+    <p class="gd-lead">가장 많이 쓰는 화면입니다. 거래처와 출고처를 고르고 수량만 입력하면 택배사 양식에 맞춘 엑셀 송장 파일이 한 번에 만들어집니다.</p>
+    <figure class="gd-shot"><img src="images/screens/create.png" alt="송장 파일 생성 화면"><figcaption>▲ 파일 생성 화면 — 거래처/출고처 선택 + 수량 입력</figcaption></figure>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>[📦 파일 생성]</strong> 메뉴로 이동합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>① 거래처 선택</strong> — 상단 <strong>🏢 거래처</strong> 콤보에서 작업할 거래처를 고릅니다. 선택한 거래처의 출고처만 아래 목록에 나타나고, 저장 설정·옵션도 자동 적용됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>② 출고처 선택</strong> — 보낼 출고처를 체크합니다. 검색으로 찾거나 <strong>[전체 선택]/[전체 해제]</strong>를 활용하고, 그룹 필터로 범위를 좁힐 수 있습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>③ 수량 입력</strong> — 각 출고처의 택배 건수(수량)를 입력합니다. 선택 개수와 총 수량이 하단에 표시됩니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>④ 옵션 확인</strong> — 운임 구분·품목명 등을 확인합니다. 필요 시 '미표기'로 비워둘 수 있고, 운임 가격 미표기 여부도 체크할 수 있습니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>⑤ 생성</strong> — 생성 버튼을 누르면 택배사 양식에 자동으로 맞춰 엑셀 송장 파일이 만들어지고, 거래처의 저장 경로(날짜별 폴더)에 저장됩니다.</div></div>
+    </div>
+    <div class="gd-tip">💡 한 거래처의 여러 출고처를 한 번에 선택해 <strong>하나의 송장 파일로</strong> 만들 수 있어, 매장이 많아도 클릭 몇 번이면 끝납니다.</div>
+    <div class="gd-warn">⚠️ 만든 파일은 곧바로 택배사 양식에 맞춰져 있으므로, 별도 가공 없이 택배사 시스템에 업로드하거나 출력해 사용하시면 됩니다.</div>
+  </section>
+
+  <!-- 7. 대시보드 -->
+  <section class="gd-sec" id="s7">
+    <div class="gd-sec-head"><div class="gd-sec-num">7</div><h2>대시보드(홈) 보기</h2></div>
+    <p class="gd-lead">홈 화면에서는 파일 생성 횟수 등 사용 현황을 한눈에 확인할 수 있습니다. 표 머리글을 클릭해 정렬할 수 있습니다.</p>
+    <div class="gd-tip">💡 자주 쓰는 거래처와 작업량을 빠르게 파악해 업무 흐름을 점검하기 좋습니다.</div>
+  </section>
+
+  <!-- 8. 생성 이력 -->
+  <section class="gd-sec" id="s8">
+    <div class="gd-sec-head"><div class="gd-sec-num">8</div><h2>생성 이력 관리</h2></div>
+    <p class="gd-lead">지금까지 만든 송장 파일의 기록을 확인합니다. 거래처를 기준으로 필터링해 원하는 이력만 볼 수 있습니다.</p>
+    <figure class="gd-shot"><img src="images/screens/history.png" alt="생성 이력 화면"><figcaption>▲ 생성 이력 화면</figcaption></figure>
+    <div class="gd-tip">💡 어떤 거래처에 언제 송장을 만들었는지 추적할 수 있어, 누락·중복 발송을 줄이는 데 도움이 됩니다.</div>
+  </section>
+
+  <!-- 9. 설정 -->
+  <section class="gd-sec" id="s9">
+    <div class="gd-sec-head"><div class="gd-sec-num">9</div><h2>환경설정</h2></div>
+    <p class="gd-lead">설정 화면에서 기본 저장 경로 등 프로그램 동작에 관한 기본값을 지정할 수 있습니다.</p>
+    <div class="gd-steps">
+      <div class="gd-step"><div class="gd-step-body"><strong>기본 저장 경로</strong> — 거래처별 저장 위치를 따로 지정하지 않은 경우 사용할 기본 폴더를 설정합니다.</div></div>
+      <div class="gd-step"><div class="gd-step-body"><strong>프로그램 정보</strong> — 현재 버전을 확인할 수 있습니다.</div></div>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="gd-sec" id="s10">
+    <div class="gd-sec-head"><div class="gd-sec-num">10</div><h2>자주 묻는 질문 · 문제 해결</h2></div>
+    <table class="gd-menu">
+      <tr><th>상황</th><th>해결 방법</th></tr>
+      <tr><td>활성화가<br>안 돼요</td><td>① 인터넷 연결을 확인하세요(활성화 시 필요). ② 바우처 코드를 정확히 입력했는지(공백·오타) 확인하세요. ③ 코드는 1대 PC 전용이라 다른 PC에서 이미 사용했는지 확인하세요.</td></tr>
+      <tr><td>출고처가<br>안 보여요</td><td>파일 생성 화면 상단에서 <strong>거래처를 먼저 선택</strong>해야 해당 거래처의 출고처가 나타납니다.</td></tr>
+      <tr><td>저장 위치를<br>바꾸고 싶어요</td><td>거래처별 저장 경로를 지정하거나, 설정에서 기본 저장 경로를 변경하세요.</td></tr>
+      <tr><td>그 외 문의</td><td><a href="support.html" style="color:#2563EB;font-weight:700;">문의 게시판</a> 또는 카카오톡 채널로 연락 주세요.</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<!-- ── CTA ── -->
+<section class="cta-banner" style="background:linear-gradient(135deg,#2563EB,#1D4ED8);">
+  <div class="container">
+    <h2 style="color:#fff;">아직 도입 전이신가요?</h2>
+    <p style="color:rgba(255,255,255,.9);">택배 파일 자동화로 송장 작업 시간을 1시간에서 5분으로 줄여보세요.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <a href="order.html?program=taekbae" class="btn btn-lg" style="background:#fff;color:#2563EB;font-weight:800;">🛒 구매 신청</a>
+      <a href="features.html" class="btn btn-lg" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);">제품 소개 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer class="footer">
+  <div class="container">
+    <p style="margin-bottom:8px;">
+      <a href="index.html">홈</a> &nbsp;·&nbsp;
+      <a href="features.html">제품 소개</a> &nbsp;·&nbsp;
+      <a href="guide_taekbae.html">사용 방법</a> &nbsp;·&nbsp;
+      <a href="pricing.html">가격 및 구매</a> &nbsp;·&nbsp;
+      <a href="support.html">문의</a>
+    </p>
+    <p>© 2026 SOEZ(쏘이지) · 사업자등록번호: 759-03-03828</p>
+  </div>
+</footer>
+
+</body>
+</html>
