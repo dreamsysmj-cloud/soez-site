@@ -5,17 +5,17 @@ window.SOEZ_CONTENT["modern"] = {
   {
    "img": "images/content/modern/20261005_150444_masked.png",
    "title": "🖥️ 메인 화면",
-   "desc": "분류·검색으로 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄·PDF"
+   "desc": "분류·검색으로 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄·파일 저장"
   },
   {
    "img": "images/content/modern/20261005_150745_masked.png",
    "title": "모던 인쇄 미리보기",
-   "desc": ""
+   "desc": "처리된 엑셀 인쇄 미리 보기"
   },
   {
    "img": "images/content/modern/20261005_150854_masked.png",
    "title": "모던 인쇄 미리보기2",
-   "desc": ""
+   "desc": "엑셀 미리보기2"
   },
   {
    "img": "images/screens/modern-settings.png",
