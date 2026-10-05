@@ -164,6 +164,7 @@
   <div class="container">
     <h2 class="section-title">실제 화면</h2>
     <p class="section-sub">모던하우스 발주서 자동화의 주요 화면을 직접 확인하세요</p>
+    <div data-soez-gallery="modern" data-color="#7C3AED"><!-- 아래는 JS가 안 될 때 보이는 기본 화면. 실제 내용은 관리센터 «🖼 홈페이지»에서 관리 -->
     <div id="shots-tabs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
       <button class="shot-tab active" data-img="images/screens/modern-main.png" data-cap="메인 화면 — 분류·검색으로 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄·PDF">🖥️ 메인 화면</button>
       <button class="shot-tab" data-img="images/screens/modern-settings.png" data-cap="거래처별 설정 — 간단/고급 모드, 프린터·반복할 열·다른 업체에도 적용">⚙️ 거래처별 설정</button>
@@ -174,6 +175,7 @@
         <img id="shot-img" src="images/screens/modern-main.png" alt="모던하우스 발주서 자동화 화면" style="max-width:100%;max-height:600px;width:auto;border-radius:8px;display:block;margin:0 auto;">
       </div>
       <p id="shot-cap" style="text-align:center;font-size:.9rem;color:#1F2937;margin-top:14px;">메인 화면 — 분류·검색으로 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄·PDF</p>
+    </div>
     </div>
   </div>
 </section>
@@ -402,10 +404,9 @@
   </div>
 </footer>
 
-<script>
-(function(){var t=document.querySelectorAll('#shots-tabs .shot-tab'),i=document.getElementById('shot-img'),c=document.getElementById('shot-cap');if(!t.length||!i)return;t.forEach(function(b){b.addEventListener('click',function(){t.forEach(function(x){x.classList.remove('active');});b.classList.add('active');i.src=b.getAttribute('data-img');c.textContent=b.getAttribute('data-cap');});});})();
-</script>
 
+<script src="content/modern.js"></script>
+<script src="content.js" defer></script>
 <script src="nav.js" defer></script>
 </body>
 </html>
