@@ -186,15 +186,15 @@ ul { list-style: none; }
       <svg class="nav-logo-mark" viewBox="0 0 76 34" height="30" xmlns="http://www.w3.org/2000/svg"><text x="1" y="27" font-family="'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="29" fill="#0F1B3A" letter-spacing="-0.5">Soez</text></svg>
       <div>쏘이지<span>스마트 업무 자동화 솔루션</span></div>
     </a>
-    <div class="nav-links">
-      <a href="index.html">홈</a>
-      <a href="features.html">기능</a>
-      <a href="guide_taekbae.html">사용 방법</a>
-      <a href="pricing.html">가격</a>
-      <a href="download.html">다운로드</a>
-      <a href="support.html">문의</a>
-      <a href="order.html" class="nav-cta" style="color:#fff;">구매 신청</a>
-    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">홈</a></li>
+      <li><a href="features.html">제품 소개</a></li>
+      <li><a href="guide_taekbae.html">사용 방법</a></li>
+      <li><a href="pricing.html">가격 및 구매</a></li>
+      <li><a href="download.html">설치 파일 다운로드</a></li>
+      <li><a href="support.html">문의</a></li>
+      <li><a href="order.html" class="nav-cta">구매 신청</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -559,5 +559,6 @@ ul { list-style: none; }
     else e.target.value = v.slice(0,3) + "-" + v.slice(3,7) + "-" + v.slice(7,11);
   });
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>
