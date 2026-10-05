@@ -3,9 +3,19 @@ window.SOEZ_CONTENT = window.SOEZ_CONTENT || {};
 window.SOEZ_CONTENT["modern"] = {
  "gallery": [
   {
-   "img": "images/screens/modern-main.png",
+   "img": "images/content/modern/20261005_150444_masked.png",
    "title": "🖥️ 메인 화면",
    "desc": "분류·검색으로 거래처 선택, 엑셀 드래그&드롭, 처리·인쇄·PDF"
+  },
+  {
+   "img": "images/content/modern/20261005_150745_masked.png",
+   "title": "모던 인쇄 미리보기",
+   "desc": ""
+  },
+  {
+   "img": "images/content/modern/20261005_150854_masked.png",
+   "title": "모던 인쇄 미리보기2",
+   "desc": ""
   },
   {
    "img": "images/screens/modern-settings.png",
