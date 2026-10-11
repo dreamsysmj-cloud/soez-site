@@ -1,6 +1,7 @@
 /* SOEZ 홈페이지 콘텐츠 표시 (2026-10-05)
  * 관리센터 «🖼 홈페이지» 창에서 고친 사진·영상 목록(content/{제품}.js)을 읽어 페이지에 그린다.
- * 영상 항목 = {"yt": 유튜브 영상ID} → 유튜브 재생창(youtube-nocookie). 내 PC(file://)에서 열면 유튜브가 막으므로 썸네일+링크로 대신 보여 줌.
+ * 영상 파일 항목 = {"video": "images/content/…mp4"} → 재생창(<video>).
+ * 유튜브 항목 = {"yt": 유튜브 영상ID} → 유튜브 재생창(youtube-nocookie). 내 PC(file://)에서 열면 유튜브가 막으므로 썸네일+링크로 대신 보여 줌.
  * 사용: <div data-soez-gallery="modern" data-color="#7C3AED"> (JS 가 안 될 때 보일 기존 내용) </div>
  *       <script src="content/modern.js"></script> <script src="content.js" defer></script>
  * 이 파일은 손으로 고칠 일이 없다 — 내용은 관리센터에서 관리.
@@ -34,7 +35,7 @@
 
   function gallery(host) {
     var key = host.getAttribute('data-soez-gallery');
-    var items = ((DATA[key] || {}).gallery || []).filter(function (x) { return x && (x.img || x.yt); });
+    var items = ((DATA[key] || {}).gallery || []).filter(function (x) { return x && (x.img || x.yt || x.video); });
     if (!items.length) return;                       // 데이터가 없으면 기존 내용 그대로 둔다
     var color = host.getAttribute('data-color') || '#2563EB';
     host.innerHTML = '';
@@ -51,7 +52,7 @@
       '.sg-cap{text-align:center;font-size:1rem;color:#111827;margin-top:14px;line-height:1.6;}' +
       '.sg-hint{text-align:center;font-size:.85rem;color:#111827;margin-top:4px;}' +
       '.sg-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000;}' +
-      '.sg-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}' +
+      '.sg-video iframe,.sg-video video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain;background:#000;}' +
       '.sg-video a{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;' +
       '  color:#fff;font-weight:700;text-decoration:none;background:center/cover no-repeat;}' +
       '.sg-video a span{background:rgba(220,38,38,.92);padding:12px 22px;border-radius:12px;font-size:1.05rem;}';
@@ -69,6 +70,13 @@
     wrap.appendChild(frame);
     wrap.appendChild(cap);
     wrap.appendChild(hint);
+
+    function showFile(src, title) {
+      video.innerHTML = '';
+      // #t=0.1 → 재생 전에도 첫 장면이 보이게(포스터 대신)
+      video.appendChild(el('video', { src: src + '#t=0.1', controls: '', playsinline: '', preload: 'metadata',
+        'aria-label': title || '사용 영상' }));
+    }
 
     function showVideo(id, title) {
       video.innerHTML = '';                          // 탭을 바꾸면 이전 영상은 멈춘다(새로 만듦)
@@ -88,11 +96,11 @@
 
     function show(i) {
       var it = items[i];
-      var isVideo = !!it.yt;
+      var isVideo = !!(it.yt || it.video);
       img.style.display = isVideo ? 'none' : '';
       video.style.display = isVideo ? '' : 'none';
       hint.style.display = isVideo ? 'none' : '';
-      if (isVideo) { showVideo(it.yt, it.title); img.removeAttribute('src'); }
+      if (isVideo) { if (it.yt) showVideo(it.yt, it.title); else showFile(it.video, it.title); img.removeAttribute('src'); }
       else { video.innerHTML = ''; img.src = it.img; }
       img.alt = it.title || '';
       cap.textContent = it.desc ? (it.title ? it.title + ' — ' : '') + it.desc : (it.title || '');
