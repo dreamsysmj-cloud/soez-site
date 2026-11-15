@@ -269,6 +269,18 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .side-nav .sn-item.active { background:#E0EAFF; color:#1D4ED8; }
 .side-nav .sn-bottom { margin-top:auto; padding-bottom:12px; }
 .with-side { padding-left:84px; }
+
+/* ── 기간 설정 (2026-11-15) ── */
+.period-bar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:-6px 0 14px;
+              background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; }
+.period-bar .p-lbl { font-size:.85rem; font-weight:800; color:var(--text); margin-right:2px; }
+.period-bar select, .period-bar input[type=date] { padding:6px 8px; border:1.5px solid var(--border); border-radius:7px;
+              font-size:.85rem; font-weight:700; color:var(--text); background:#fff; font-family:inherit; }
+.p-btn { padding:6px 12px; border-radius:7px; border:1.5px solid var(--border); background:#fff; font-size:.83rem;
+         font-weight:700; cursor:pointer; color:var(--text); white-space:nowrap; }
+.p-btn:hover { border-color:var(--blue); color:var(--blue); }
+.p-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+.p-sum { margin-left:auto; font-size:.85rem; font-weight:800; color:var(--text); }
   </style>
 </head>
 <body>
@@ -375,6 +387,25 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       <button class="refresh-btn" onclick="downloadExcel()" style="border-color:#15803D;color:#15803D;">📊 엑셀</button>
       <button class="refresh-btn" onclick="openReport()" title="매일 아침 카톡으로 가는 알림 내용 보기·지금 보내기" style="border-color:#B45309;color:#B45309;">🌅 아침 알림</button>
       <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
+    </div>
+
+    <!-- 기간 설정 -->
+    <div class="period-bar" id="periodBar">
+      <span class="p-lbl">📅 기간</span>
+      <select id="pBasis" onchange="onPeriodChange()" title="어떤 날짜로 거를지">
+        <option value="created">신청일 기준</option>
+        <option value="approved">승인일 기준</option>
+      </select>
+      <button class="p-btn" data-p="all"    onclick="setPeriod('all')">전체</button>
+      <button class="p-btn" data-p="today"  onclick="setPeriod('today')">오늘</button>
+      <button class="p-btn" data-p="week"   onclick="setPeriod('week')">이번 주</button>
+      <button class="p-btn" data-p="month"  onclick="setPeriod('month')">이번 달</button>
+      <button class="p-btn" data-p="prev"   onclick="setPeriod('prev')">지난달</button>
+      <button class="p-btn" data-p="3m"     onclick="setPeriod('3m')">최근 3개월</button>
+      <button class="p-btn" data-p="year"   onclick="setPeriod('year')">올해</button>
+      <input type="date" id="pFrom" onchange="onPeriodChange(true)"> ~
+      <input type="date" id="pTo"   onchange="onPeriodChange(true)">
+      <span class="p-sum" id="pSum"></span>
     </div>
 
     <div id="ordersList">
@@ -715,7 +746,8 @@ async function loadOrders() {
 }
 
 function updateCounts() {
-  const cnt = s => s ? allOrders.filter(o => o.status === s).length : allOrders.length;
+  const base = inPeriod(allOrders);
+  const cnt = s => s ? base.filter(o => o.status === s).length : base.length;
   ["","pending","approved","rejected"].forEach(s =>
     document.getElementById("cnt-" + (s||"all")).textContent = cnt(s)
   );
@@ -724,13 +756,78 @@ function updateCounts() {
 // ────────────────────────────────────────────────────
 // 주문 렌더 (테이블)
 // ────────────────────────────────────────────────────
-function renderOrders() {
-  if (currentStatus === 'deleted') { renderDeletedTable(); return; }
+// ── 기간 설정 (2026-11-15) ──────────────────────────
+let periodPreset = "all";
+function _ds(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function presetRange(p) {
+  const n = new Date(), y = n.getFullYear(), m = n.getMonth();
+  if (p === "today") return [_ds(n), _ds(n)];
+  if (p === "week")  { const s = new Date(y, m, n.getDate() - ((n.getDay() + 6) % 7)); return [_ds(s), _ds(n)]; }  // 월요일부터
+  if (p === "month") return [_ds(new Date(y, m, 1)), _ds(n)];
+  if (p === "prev")  return [_ds(new Date(y, m - 1, 1)), _ds(new Date(y, m, 0))];
+  if (p === "3m")    return [_ds(new Date(y, m - 2, 1)), _ds(n)];
+  if (p === "year")  return [_ds(new Date(y, 0, 1)), _ds(n)];
+  return ["", ""];
+}
+function setPeriod(p, quiet) {
+  periodPreset = p;
+  const [f, t] = presetRange(p);
+  document.getElementById("pFrom").value = f;
+  document.getElementById("pTo").value   = t;
+  savePeriod();
+  document.querySelectorAll("#periodBar .p-btn").forEach(b => b.classList.toggle("active", b.dataset.p === p));
+  if (!quiet) { updateCounts(); renderOrders(); }
+}
+function onPeriodChange(custom) {
+  if (custom) {
+    periodPreset = "custom";
+    document.querySelectorAll("#periodBar .p-btn").forEach(b => b.classList.remove("active"));
+  }
+  savePeriod(); updateCounts(); renderOrders();
+}
+function savePeriod() {
+  try { localStorage.setItem("soez_period", JSON.stringify({
+    p: periodPreset, b: document.getElementById("pBasis").value,
+    f: document.getElementById("pFrom").value, t: document.getElementById("pTo").value })); } catch (e) {}
+}
+function restorePeriod() {
+  let v = {}; try { v = JSON.parse(localStorage.getItem("soez_period") || "{}"); } catch (e) {}
+  document.getElementById("pBasis").value = v.b === "approved" ? "approved" : "created";
+  if (v.p === "custom") {
+    periodPreset = "custom";
+    document.getElementById("pFrom").value = v.f || "";
+    document.getElementById("pTo").value   = v.t || "";
+  } else {
+    setPeriod(v.p || "all", true);   // 프리셋은 오늘 날짜로 다시 계산
+  }
+}
+function inPeriod(list) {
+  const f = document.getElementById("pFrom").value, t = document.getElementById("pTo").value;
+  if (!f && !t) return list;
+  const basis = document.getElementById("pBasis").value;
+  return list.filter(o => {
+    const raw = basis === "approved" ? o.approved_at : o.created_at;
+    if (!raw) return false;                              // 승인일 기준인데 아직 승인 안 된 주문은 제외
+    const d = String(raw).replace("T", " ").slice(0, 10);
+    return (!f || d >= f) && (!t || d <= t);
+  });
+}
+/** 지금 화면에 보이는 주문 (기간 + 상태 탭 + 검색) */
+function visibleOrders() {
   const q = (document.getElementById("searchInput").value || "").toLowerCase();
-  let list = currentStatus ? allOrders.filter(o => o.status === currentStatus) : allOrders;
+  let list = inPeriod(allOrders);
+  if (currentStatus) list = list.filter(o => o.status === currentStatus);
   if (q) list = list.filter(o =>
     [o.company_name, o.buyer_name, o.email, o.phone].some(v => (v||"").toLowerCase().includes(q))
   );
+  return list;
+}
+
+function renderOrders() {
+  if (currentStatus === 'deleted') { renderDeletedTable(); return; }
+  const list = visibleOrders();
+  const sumEl = document.getElementById("pSum");
+  if (sumEl) sumEl.textContent = `${list.length}건 · 합계 ${list.reduce((t,o) => t + Number(o.amount||0), 0).toLocaleString("ko-KR")}원`;
 
   const el = document.getElementById("ordersList");
   if (!list.length) {
@@ -1096,7 +1193,7 @@ async function restoreOrder(orderId) {
 // ────────────────────────────────────────────────────
 function downloadExcel() {
   const headers = ["주문번호","신청일시","업체명","구매자","연락처","이메일","제품","금액","상태","승인일시","바우처코드","첨부파일"];
-  const rows = allOrders.map(o => [
+  const rows = visibleOrders().map(o => [   // 지금 화면에 보이는 주문만 (기간·탭·검색 적용)
     o.id,
     (o.created_at||"").replace("T"," ").substring(0,16),
     o.company_name, o.buyer_name, o.phone, o.email,
@@ -1477,12 +1574,14 @@ function navTo(v) {            // 왼쪽 메뉴 (같은 페이지 안 전환)
   return false;
 }
 function goPending() {
+  setPeriod('all', true);
   switchView('orders');
   const b = document.querySelector('.tab-btn[data-status="pending"]');
   if (b) switchTab(b, 'pending');
 }
 function goOrder(id) {
   const o = orderMap.get(id);
+  setPeriod('all', true);
   switchView('orders');
   const b = document.querySelector('.tab-btn[data-status=""]');
   if (b) switchTab(b, '');
@@ -1508,6 +1607,7 @@ document.addEventListener("keydown", e => {
     closeApproveModal(); closeRejectModal(); closeRevokeModal(); closeDeleteModal();
   }
 });
+restorePeriod();
 // 다른 관리 페이지에서 로그인했으면 자동 로그인
 (function autoLogin() {
   let k = ""; try { k = sessionStorage.getItem("soez_admin_key") || ""; } catch (e) {}
