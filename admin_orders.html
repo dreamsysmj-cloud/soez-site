@@ -214,6 +214,49 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   /* 모바일에서 정보 행을 2열로 */
   .order-info-grid { grid-template-columns:1fr 1fr !important; }
 }
+
+/* ── 📊 대시보드 (2026-11-15) ── */
+.view-btn { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#fff;
+            padding:6px 14px; border-radius:6px; cursor:pointer; font-size:.82rem; font-weight:700; }
+.view-btn.active { background:#fff; color:var(--navy2); border-color:#fff; }
+.dash-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+.dash-head h2 { font-size:1.15rem; font-weight:900; color:var(--text); }
+.dash-head .sub { font-size:.85rem; color:var(--text2); font-weight:600; }
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px; }
+@media (max-width:900px) { .kpi-grid { grid-template-columns:repeat(2,1fr); } .dash-2col { grid-template-columns:1fr !important; } }
+.kpi { background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:16px 18px; }
+.kpi.click { cursor:pointer; } .kpi.click:hover { border-color:var(--blue); }
+.kpi .k-label { font-size:.85rem; font-weight:800; color:var(--text2); margin-bottom:8px; }
+.kpi .k-val { font-size:1.55rem; font-weight:900; color:var(--text); letter-spacing:-.5px; }
+.kpi .k-sub { font-size:.82rem; font-weight:600; color:var(--text2); margin-top:6px; line-height:1.45; }
+.kpi.warn { border-color:#F59E0B; background:#FFFBEB; } .kpi.warn .k-val { color:#B45309; }
+.up { color:var(--green); font-weight:800; } .down { color:var(--red); font-weight:800; }
+.dash-card { background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:18px; }
+.dash-card h3 { font-size:1rem; font-weight:900; color:var(--text); margin-bottom:4px; }
+.dash-card .c-sub { font-size:.82rem; font-weight:600; color:var(--text2); margin-bottom:14px; }
+.dash-2col { display:grid; grid-template-columns:1.4fr 1fr; gap:18px; }
+.bars { display:flex; align-items:flex-end; gap:8px; height:200px; padding-top:22px; border-bottom:2px solid var(--border); }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative; }
+.bar { width:70%; max-width:42px; background:#93B4EA; border-radius:6px 6px 0 0; min-height:2px; }
+.bar.cur { background:var(--blue); }
+.bar-val { font-size:.72rem; font-weight:800; color:var(--text); margin-bottom:4px; white-space:nowrap; }
+.bar-lbls { display:flex; gap:8px; margin-top:6px; }
+.bar-lbls div { flex:1; text-align:center; font-size:.75rem; font-weight:700; color:var(--text2); }
+.prog-row { margin-bottom:12px; }
+.prog-top { display:flex; justify-content:space-between; font-size:.88rem; font-weight:800; margin-bottom:5px; }
+.prog-track { height:14px; background:#EEF2F7; border-radius:7px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:7px; }
+.dtbl { width:100%; border-collapse:collapse; font-size:.88rem; }
+.dtbl th { text-align:left; font-weight:800; color:var(--text2); padding:9px 10px; border-bottom:2px solid var(--border); white-space:nowrap; }
+.dtbl td { padding:10px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+.dtbl td.num, .dtbl th.num { text-align:right; white-space:nowrap; }
+.dtbl tr.go { cursor:pointer; } .dtbl tr.go:hover td { background:#F1F5FF; }
+.age { display:inline-block; padding:2px 9px; border-radius:20px; font-weight:800; font-size:.8rem; background:#E2E8F0; color:var(--text); }
+.age.mid { background:#FEF3C7; color:#92400E; } .age.old { background:var(--red-bg); color:var(--red); }
+.dash-empty { padding:22px; text-align:center; color:var(--text2); font-weight:700; font-size:.9rem; }
+.dash-note { font-size:.8rem; color:var(--text2); font-weight:600; margin-top:10px; }
+.mini-btn { padding:4px 10px; border-radius:6px; border:1.5px solid var(--border); background:#fff; font-size:.78rem; font-weight:700; cursor:pointer; color:var(--text); }
+.mini-btn:hover { border-color:var(--blue); color:var(--blue); }
   </style>
 </head>
 <body>
@@ -237,6 +280,8 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     <h1>📋 SOEZ 주문 관리</h1>
     <div class="topbar-right">
       <span class="refresh-indicator" id="refreshCountdown"></span>
+      <button class="view-btn active" id="vbDash" onclick="switchView('dash')">📊 대시보드</button>
+      <button class="view-btn" id="vbOrders" onclick="switchView('orders')">📋 주문 목록</button>
       <a href="admin_inquiries.html" class="logout-btn" style="text-decoration:none;">💬 문의 관리</a>
       <span id="adminKeyDisplay"></span>
       <button class="logout-btn" onclick="doLogout()">로그아웃</button>
@@ -251,6 +296,39 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       <button onclick="dismissBanner()" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1.1rem;">✕</button>
     </div>
 
+    <!-- 📊 대시보드 -->
+    <div id="dashView">
+      <div class="dash-head">
+        <div><h2>📊 쏘이지 경영 대시보드</h2><div class="sub" id="dashAsOf"></div></div>
+        <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
+      </div>
+      <div class="kpi-grid" id="dashKpis"><div class="loading">불러오는 중...</div></div>
+      <div class="dash-2col">
+        <div class="dash-card">
+          <h3>월별 매출</h3>
+          <div class="c-sub">승인(입금 확인) 기준 · VAT 포함 · 최근 12개월</div>
+          <div id="dashBars"></div>
+        </div>
+        <div class="dash-card">
+          <h3>프로그램별 매출</h3>
+          <div class="c-sub" id="dashProgSub">올해 승인 기준 · VAT 포함</div>
+          <div id="dashProgs"></div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <h3>💸 못 받은 돈 (입금 대기)</h3>
+        <div class="c-sub">견적·입금 안내를 보냈는데 아직 승인하지 않은 주문 · 오래된 순 · 줄을 누르면 주문 목록에서 찾아요</div>
+        <div id="dashUnpaid"></div>
+      </div>
+      <div class="dash-card">
+        <h3>🧾 세금계산서 발행 대상</h3>
+        <div class="c-sub">이번 달·지난달 승인된 주문 중 세금계산서 요청이 있는 건</div>
+        <div id="dashTax"></div>
+        <div class="dash-note">※ «발행 완료» 체크와 버튼 한 번 발행은 다음 단계(세금계산서)에서 붙입니다. 지금은 홈택스에서 발행한 뒤 이 목록과 대조하세요.</div>
+      </div>
+    </div>
+
+    <div id="ordersView" style="display:none;">
     <!-- 툴바 -->
     <div class="toolbar">
       <button class="tab-btn active" data-status="" onclick="switchTab(this,'')">
@@ -278,19 +356,22 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       </div>
       <button class="refresh-btn" onclick="resetColWidths()" title="열 너비를 기본값으로 초기화">↔ 열초기화</button>
       <button class="refresh-btn" onclick="downloadExcel()" style="border-color:#15803D;color:#15803D;">📊 엑셀</button>
+      <button class="refresh-btn" onclick="openReport()" title="매일 아침 카톡으로 가는 알림 내용 보기·지금 보내기" style="border-color:#B45309;color:#B45309;">🌅 아침 알림</button>
       <button class="refresh-btn" onclick="loadOrders()">🔄 새로고침</button>
     </div>
 
     <div id="ordersList">
       <div class="loading">주문을 불러오는 중...</div>
     </div>
+    </div><!-- /ordersView -->
   </div>
 </div>
 
 <!-- ── 승인 완료 모달 ── -->
 <div class="modal-overlay" id="approveModal">
   <div class="modal">
-    <div class="modal-title">✅ 승인 완료 — 고객에게 전달하세요</div>
+    <div class="modal-title">✅ 승인 완료</div>
+    <div id="approveMailStatus" style="margin:-4px 0 12px;padding:10px 14px;border-radius:8px;font-size:.92rem;font-weight:700;"></div>
 
     <!-- 고객 정보 -->
     <div class="customer-info-box" id="approveCustomerInfo"></div>
@@ -506,6 +587,8 @@ function doLogin() {
   document.getElementById("adminKeyDisplay").textContent = "키: " + key.slice(0,3) + "***";
   document.getElementById("loginWrap").style.display  = "none";
   document.getElementById("adminPanel").style.display = "block";
+  let v = "dash"; try { v = localStorage.getItem("soez_admin_view") || "dash"; } catch (e) {}
+  switchView(v === "orders" ? "orders" : "dash");
   loadOrders();
   startAutoRefresh();
 }
@@ -578,6 +661,7 @@ async function loadOrders() {
     orders.forEach(o => orderMap.set(o.id, o));
     updateCounts();
     renderOrders();
+    try { renderDashboard(); } catch (e) { console.error("대시보드 오류", e); }
     fetchDeletedCount(); // 삭제됨 탭 카운트 업데이트
   } catch (e) {
     document.getElementById("ordersList").innerHTML =
@@ -653,7 +737,11 @@ function orderRow(o) {
     voucherTd = `
       <span class="voucher-inline">${esc(o.voucher_code)}</span>
       <button class="tb-btn tb-btn-blue" style="margin-top:3px;" onclick="quickCopy('${esc(o.voucher_code)}')">📋</button>
-      <button class="tb-btn tb-btn-gray" style="margin-top:3px;" onclick="showResendModal(${o.id})">📤 전달</button>`;
+      <button class="tb-btn tb-btn-gray" style="margin-top:3px;" onclick="showResendModal(${o.id})">📤 전달</button>
+      <div style="margin-top:4px;font-size:.78rem;${o.mail_sent_at ? 'color:var(--green);' : 'color:var(--red);font-weight:700;'}">
+        ${o.mail_sent_at ? '📧 메일 발송 ' + esc(o.mail_sent_at.substring(5,16)) : '📧 메일 미발송'}
+        <button class="tb-btn tb-btn-blue" id="btn-mail-${o.id}" style="margin-left:4px;" onclick="resendMail(${o.id})">${o.mail_sent_at ? '재발송' : '보내기'}</button>
+      </div>`;
   } else if (isApproved) {
     voucherTd = `<span style="color:#bbb;font-size:.82rem;">코드 없음</span>`;
   }
@@ -686,8 +774,8 @@ function orderRow(o) {
     <td style="font-size:.82rem;">${esc(o.email)}</td>
     <td>${bizTd}</td>
     <td style="font-size:.82rem;color:var(--text2);">${esc(progName(o))}${o.tax_invoice ? `<br><span style="font-size:.78rem;color:#B45309;">🧾 ${esc(o.tax_invoice)}</span>` : ""}</td>
-    <td style="color:var(--red);font-weight:800;">${amtFmt}</td>
-    <td>${statusBadge}</td>
+    <td style="color:var(--red);font-weight:800;">${amtFmt}${isPending ? `<br><button class="tb-btn tb-btn-gray" style="margin-top:3px;" onclick="editAmount(${o.id})" title="견적 금액(VAT 포함) 수정">✏ 금액</button>` : ""}</td>
+    <td>${statusBadge}${isPending ? pendingAge(o) : ""}</td>
     <td style="font-size:.82rem;">${approvedDt || "—"}</td>
     <td style="text-align:left;">${voucherTd}</td>
     <td>${actionTd}</td>
@@ -712,18 +800,89 @@ async function approveOrder(orderId) {
     if (!res.ok) throw new Error(data.detail || "오류");
 
     await loadOrders();
-    // 갱신된 데이터로 모달 열기
+    // 갱신된 데이터로 모달 열기 (자동 메일 결과 표시)
     const updated = orderMap.get(orderId) || o;
-    openApproveModal(data.voucher_code, updated);
+    if (data.download_url) updated.download_url = data.download_url;
+    showSnack(data.email_sent ? "✅ 승인 완료 — 라이선스 메일을 자동으로 보냈습니다" : "⚠️ 승인은 됐지만 메일 발송 실패 — 재발송하거나 아래 내용을 복사해 보내세요");
+    openApproveModal(data.voucher_code, updated, data.email_sent);
   } catch (e) {
     showSnack("⚠️ 오류: " + e.message);
     if (btn) { btn.disabled = false; btn.textContent = "✅ 승인 (바우처 발급)"; }
   }
 }
 
+// ── 입금 대기 경과일 (자동화 C) ──
+const PENDING_WARN_DAYS = 3;
+function pendingAge(o) {
+  const t = Date.parse((o.created_at || "").replace(" ", "T"));
+  if (isNaN(t)) return "";
+  const d = Math.floor((Date.now() - t) / 86400000);
+  if (d < 1) return "";
+  const warn = d >= PENDING_WARN_DAYS;
+  return `<div style="margin-top:4px;font-size:.78rem;font-weight:700;color:${warn ? 'var(--red)' : 'var(--text2)'};">${warn ? '⏰ ' : ''}${d}일째</div>`;
+}
+
+// ── 견적 금액 수정 (자동화 C) ──
+async function editAmount(orderId) {
+  const o = orderMap.get(orderId);
+  if (!o) return;
+  const cur = Number(o.amount || 0).toLocaleString("ko-KR");
+  const v = prompt(`주문 #${orderId} (${o.company_name}) 견적 금액 — VAT 포함, 원 단위\n현재: ${cur}원`, cur);
+  if (v === null) return;
+  const amount = Number(String(v).replace(/[,원\s]/g, ""));
+  if (!Number.isInteger(amount) || amount < 1000) { showSnack("⚠️ 금액을 숫자로 입력해 주세요 (예: 1,320,000)"); return; }
+  const notify = confirm(`견적 금액을 ${amount.toLocaleString("ko-KR")}원으로 바꿉니다.\n\n고객(${o.email})에게 바뀐 금액으로 입금 안내 메일을 다시 보낼까요?\n[확인] 보내기 / [취소] 금액만 바꾸기`);
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${orderId}/amount`, {
+      method:"POST", headers:{"X-Admin-Key": adminKey, "Content-Type":"application/json"},
+      body: JSON.stringify({ amount, notify })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    let msg = `✅ 주문 #${orderId} 금액 ${amount.toLocaleString("ko-KR")}원으로 변경`;
+    if (notify) msg += data.mailed ? " · 입금 안내 메일 발송" : " · ⚠️ 메일 발송 실패(입금 계좌 설정·메일 설정 확인)";
+    showSnack(msg);
+    await loadOrders();
+  } catch (e) { showSnack("⚠️ 오류: " + e.message); }
+}
+
+// ── 아침 알림 미리보기·보내기 (자동화 C/E) ──
+async function openReport() {
+  try {
+    const res = await fetch(`${API_URL}/admin/report`, { method:"POST", headers:{"X-Admin-Key": adminKey} });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    if (!data.text) { alert("지금 알릴 내용이 없습니다.\n(입금 대기 " + data.days + "일 이상 주문 없음)\n\n매일 아침 9시 이후 알릴 내용이 있을 때만 카톡이 갑니다."); return; }
+    if (!confirm(data.text + "\n\n────────\n매일 아침 9시 이후 이 내용이 카톡으로 갑니다.\n지금 바로 카톡으로 보내 볼까요?")) return;
+    const r2 = await fetch(`${API_URL}/admin/report?send=true`, { method:"POST", headers:{"X-Admin-Key": adminKey} });
+    const d2 = await r2.json();
+    showSnack(d2.sent ? "✅ 카톡으로 보냈습니다" : "⚠️ 카톡 발송 실패 — 카카오 토큰 설정 확인");
+  } catch (e) { showSnack("⚠️ 오류: " + e.message); }
+}
+
 function showResendModal(orderId) {
   const o = orderMap.get(orderId);
-  if (o) openApproveModal(o.voucher_code, o);
+  if (o) openApproveModal(o.voucher_code, o, o.mail_sent_at ? true : null);
+}
+
+async function resendMail(orderId) {
+  const o = orderMap.get(orderId);
+  if (!o) return;
+  if (o.mail_sent_at && !confirm(`주문 #${orderId} (${o.company_name})에 라이선스 메일을 다시 보낼까요?\n받는 주소: ${o.email}`)) return;
+  const btn = document.getElementById(`btn-mail-${orderId}`);
+  if (btn) { btn.disabled = true; btn.textContent = "보내는 중..."; }
+  try {
+    const res = await fetch(`${API_URL}/admin/orders/${orderId}/send-email`, {
+      method:"POST", headers:{"X-Admin-Key": adminKey}
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "오류");
+    showSnack(`✅ 주문 #${orderId} 라이선스 메일 발송 완료 → ${o.email}`);
+    await loadOrders();
+  } catch (e) {
+    showSnack("⚠️ 메일 발송 실패: " + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = "다시 시도"; }
+  }
 }
 
 // ────────────────────────────────────────────────────
@@ -919,8 +1078,21 @@ function downloadExcel() {
   showSnack("✅ 엑셀 파일 다운로드 완료!");
 }
 
-function openApproveModal(voucherCode, o) {
+function openApproveModal(voucherCode, o, emailSent) {
   approveData = { voucherCode, o };
+  const DL = o.download_url || DOWNLOAD_URL;   // 제품별 설치 파일 주소(없으면 다운로드 페이지)
+  const ms = document.getElementById("approveMailStatus");
+  const MS_BASE = "margin:-4px 0 12px;padding:10px 14px;border-radius:8px;font-size:.92rem;font-weight:700;";
+  if (emailSent === true) {
+    ms.style.cssText = MS_BASE + "background:#DCFCE7;color:#166534;";
+    ms.textContent = `📧 ${o.email} 로 라이선스 메일을 보냈습니다. 아래는 카톡 등으로 따로 보낼 때만 쓰세요.`;
+  } else if (emailSent === false) {
+    ms.style.cssText = MS_BASE + "background:#FEE2E2;color:#991B1B;";
+    ms.textContent = "⚠️ 자동 메일 발송 실패 — 목록의 «보내기»로 다시 보내거나 아래 내용을 복사해 직접 보내세요.";
+  } else {
+    ms.style.cssText = MS_BASE + "background:#FEF3C7;color:#92400E;";
+    ms.textContent = "📧 아직 라이선스 메일을 보내지 않은 주문입니다. 목록의 «보내기» 버튼으로 보낼 수 있습니다.";
+  }
 
   // 고객 정보
   const amtFmt = o.amount ? "₩" + Number(o.amount).toLocaleString("ko-KR") + "원" : "₩495,000원";
@@ -948,7 +1120,7 @@ ${progName(o)} 구매가 승인되었습니다.
 🔑 라이선스 코드: ${voucherCode}
 
 💿 설치 파일 다운로드:
-${DOWNLOAD_URL}
+${DL}
 
 📋 활성화 방법:
 ① 설치 파일 다운로드 후 실행
@@ -975,7 +1147,7 @@ SOEZ 고객지원팀입니다.
 ■ 업체명: ${o.company_name}
 
 ■ 설치 파일 다운로드:
-${DOWNLOAD_URL}
+${DL}
 
 ■ 활성화 방법:
 1. 위 링크에서 설치 파일 다운로드 후 실행
@@ -1107,6 +1279,163 @@ function base64ToBlob(b64, mime) {
   const bin = atob(b64); const arr = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
   return new Blob([arr], { type: mime });
+}
+
+
+// ────────────────────────────────────────────────────
+// 📊 대시보드 (2026-11-15) — 주문 데이터만으로 계산 (서버 변경 없음)
+// ────────────────────────────────────────────────────
+const PROG_COLORS = { TAEKBAE:"#2563EB", MODERN:"#7C3AED", DAISO:"#E11D48", COUPANG:"#0D9488" };
+const PROG_SHORT  = { TAEKBAE:"택배", MODERN:"모던하우스", DAISO:"다이소", COUPANG:"쿠팡" };
+
+function switchView(v) {
+  const dash = v === 'dash';
+  document.getElementById("dashView").style.display   = dash ? "block" : "none";
+  document.getElementById("ordersView").style.display = dash ? "none"  : "block";
+  document.getElementById("vbDash").classList.toggle("active", dash);
+  document.getElementById("vbOrders").classList.toggle("active", !dash);
+  try { localStorage.setItem("soez_admin_view", v); } catch (e) {}
+}
+function _pd(s) {               // "YYYY-MM-DD HH:MM:SS" → Date
+  if (!s) return null;
+  const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/);
+  return m ? new Date(+m[1], +m[2]-1, +m[3], +(m[4]||0), +(m[5]||0)) : null;
+}
+function _ym(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
+function _won(n) { return Number(n||0).toLocaleString("ko-KR") + "원"; }
+function _man(n) {              // 막대 위 짧은 표기
+  n = Number(n||0);
+  if (n >= 100000000) return (n/100000000).toFixed(1).replace(/\.0$/,"") + "억";
+  if (n >= 10000) return Math.round(n/10000).toLocaleString("ko-KR") + "만";
+  return n ? n.toLocaleString("ko-KR") : "";
+}
+function _days(d) { return d ? Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000)) : 0; }
+function _pid(o) { return (o.program_id ? String(o.program_id).toUpperCase() : "TAEKBAE"); }
+function _amt(o) { return Number(o.amount || 0); }
+function _paidDate(o) { return _pd(o.approved_at) || _pd(o.created_at); }
+
+function renderDashboard() {
+  const now = new Date();
+  const thisYM = _ym(now);
+  const prev = new Date(now.getFullYear(), now.getMonth()-1, 1);
+  const prevYM = _ym(prev);
+  const approved = allOrders.filter(o => o.status === "approved");
+  const pending  = allOrders.filter(o => o.status === "pending");
+
+  const sumBy = (arr) => arr.reduce((t,o) => t + _amt(o), 0);
+  const inMonth = (ym) => approved.filter(o => { const d = _paidDate(o); return d && _ym(d) === ym; });
+  const thisM = inMonth(thisYM), prevM = inMonth(prevYM);
+  const thisSum = sumBy(thisM), prevSum = sumBy(prevM);
+  const supply = Math.round(thisSum / 1.1), vat = thisSum - supply;
+  const yearApproved = approved.filter(o => { const d = _paidDate(o); return d && d.getFullYear() === now.getFullYear(); });
+  const yearSum = sumBy(yearApproved);
+  const pendSum = sumBy(pending);
+  const oldest = pending.reduce((mx,o) => Math.max(mx, _days(_pd(o.created_at))), 0);
+
+  let diff = "";
+  if (prevSum > 0) {
+    const pct = Math.round((thisSum - prevSum) / prevSum * 100);
+    diff = pct >= 0 ? `<span class="up">▲ ${pct}%</span> 지난달 대비` : `<span class="down">▼ ${-pct}%</span> 지난달 대비`;
+  } else {
+    diff = `지난달 ${_won(prevSum)}`;
+  }
+
+  document.getElementById("dashAsOf").textContent =
+    `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일 ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")} 기준 · 전체 주문 ${allOrders.length}건`;
+
+  document.getElementById("dashKpis").innerHTML = `
+    <div class="kpi">
+      <div class="k-label">이번 달 매출 (${now.getMonth()+1}월)</div>
+      <div class="k-val">${_won(thisSum)}</div>
+      <div class="k-sub">${thisM.length}건 · ${diff}<br>공급가 ${_won(supply)} · 부가세 ${_won(vat)}</div>
+    </div>
+    <div class="kpi click ${pending.length ? 'warn' : ''}" onclick="goPending()">
+      <div class="k-label">💸 못 받은 돈 (입금 대기)</div>
+      <div class="k-val">${_won(pendSum)}</div>
+      <div class="k-sub">${pending.length}건${pending.length ? ` · 가장 오래된 건 ${oldest}일째` : ' · 모두 받았어요'}</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">올해 누적 매출 (${now.getFullYear()}년)</div>
+      <div class="k-val">${_won(yearSum)}</div>
+      <div class="k-sub">${yearApproved.length}건 · 부가세 예상 ${_won(yearSum - Math.round(yearSum/1.1))}</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">이번 달 새 문의·주문</div>
+      <div class="k-val">${allOrders.filter(o => { const d=_pd(o.created_at); return d && _ym(d)===thisYM; }).length}건</div>
+      <div class="k-sub">승인 ${thisM.length}건 · 반려 ${allOrders.filter(o => o.status==='rejected' && (()=>{const d=_pd(o.created_at);return d&&_ym(d)===thisYM;})()).length}건</div>
+    </div>`;
+
+  // 월별 막대 (최근 12개월)
+  const months = [];
+  for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth()-i, 1); months.push(d); }
+  const vals = months.map(d => sumBy(inMonth(_ym(d))));
+  const mx = Math.max(1, ...vals);
+  document.getElementById("dashBars").innerHTML = `
+    <div class="bars">${months.map((d,i) => `
+      <div class="bar-col" title="${d.getFullYear()}년 ${d.getMonth()+1}월 ${_won(vals[i])}">
+        <div class="bar-val">${_man(vals[i])}</div>
+        <div class="bar ${i===11?'cur':''}" style="height:${Math.round(vals[i]/mx*150)}px"></div>
+      </div>`).join("")}</div>
+    <div class="bar-lbls">${months.map(d => `<div>${d.getMonth()===0 ? (String(d.getFullYear()).slice(2)+'.') : ''}${d.getMonth()+1}월</div>`).join("")}</div>`;
+
+  // 프로그램별 (올해)
+  const byP = {};
+  yearApproved.forEach(o => { const p=_pid(o); byP[p] = (byP[p]||0) + _amt(o); });
+  const keys = ["TAEKBAE","MODERN","DAISO","COUPANG"].concat(Object.keys(byP).filter(k => !PROG_SHORT[k]));
+  document.getElementById("dashProgs").innerHTML = yearSum ? keys.map(k => {
+    const v = byP[k] || 0, pct = Math.round(v / yearSum * 100);
+    const cnt = yearApproved.filter(o => _pid(o)===k).length;
+    return `<div class="prog-row">
+      <div class="prog-top"><span>${esc(PROG_SHORT[k] || k)} <span style="font-weight:600;color:var(--text2);">${cnt}건</span></span><span>${_won(v)} · ${pct}%</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${PROG_COLORS[k]||'#64748B'}"></div></div>
+    </div>`; }).join("") : `<div class="dash-empty">올해 승인된 매출이 아직 없어요.</div>`;
+
+  // 못 받은 돈
+  const up = pending.slice().sort((a,b) => String(a.created_at).localeCompare(String(b.created_at)));
+  document.getElementById("dashUnpaid").innerHTML = up.length ? `
+    <table class="dtbl"><thead><tr>
+      <th>접수일</th><th>업체 · 제품</th><th>담당자 · 연락처</th><th class="num">견적 금액</th><th class="num">지난 날</th>
+    </tr></thead><tbody>${up.map(o => {
+      const d = _pd(o.created_at), age = _days(d);
+      return `<tr class="go" onclick="goOrder(${o.id})">
+        <td>${d ? `${String(d.getFullYear()).slice(2)}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}` : "-"}</td>
+        <td><b>${esc(o.company_name)}</b><br><span style="font-size:.8rem;color:var(--text2);font-weight:600;">#${o.id} · ${esc(PROG_SHORT[_pid(o)] || progName(o))}</span></td>
+        <td>${esc(o.buyer_name)}<br><span style="font-size:.8rem;color:var(--text2);font-weight:600;">${esc(o.phone)}</span></td>
+        <td class="num"><b>${_amt(o) ? _won(_amt(o)) : "금액 미정"}</b></td>
+        <td class="num"><span class="age ${age>=7?'old':(age>=3?'mid':'')}">${age}일</span></td>
+      </tr>`; }).join("")}
+    </tbody></table>` : `<div class="dash-empty">🎉 못 받은 돈이 없어요.</div>`;
+
+  // 세금계산서 대상 (이번 달·지난달 승인 + 요청 있음)
+  const tax = approved.filter(o => {
+    const d = _paidDate(o); if (!d) return false;
+    const ym = _ym(d); return (ym === thisYM || ym === prevYM) && String(o.tax_invoice||"").trim();
+  }).sort((a,b) => String(b.approved_at||"").localeCompare(String(a.approved_at||"")));
+  document.getElementById("dashTax").innerHTML = tax.length ? `
+    <table class="dtbl"><thead><tr>
+      <th>승인일</th><th>업체 · 제품</th><th class="num">공급가액</th><th class="num">부가세</th><th class="num">합계</th><th>사업자등록증</th>
+    </tr></thead><tbody>${tax.map(o => {
+      const d = _paidDate(o), a = _amt(o), s = Math.round(a/1.1);
+      return `<tr>
+        <td>${d ? `${d.getMonth()+1}/${d.getDate()}` : "-"}</td>
+        <td><b>${esc(o.company_name)}</b><br><span style="font-size:.8rem;color:var(--text2);font-weight:600;">#${o.id} · ${esc(PROG_SHORT[_pid(o)] || progName(o))} · ${esc(o.email)}</span></td>
+        <td class="num">${_won(s)}</td><td class="num">${_won(a - s)}</td><td class="num"><b>${_won(a)}</b></td>
+        <td>${o.biz_reg_data ? `<button class="mini-btn" onclick="viewBizReg(${o.id})">보기</button>` : "-"}</td>
+      </tr>`; }).join("")}
+    </tbody></table>` : `<div class="dash-empty">이번 달·지난달 세금계산서 발행 대상이 없어요.</div>`;
+}
+
+function goPending() {
+  switchView('orders');
+  const b = document.querySelector('.tab-btn[data-status="pending"]');
+  if (b) switchTab(b, 'pending');
+}
+function goOrder(id) {
+  const o = orderMap.get(id);
+  switchView('orders');
+  const b = document.querySelector('.tab-btn[data-status=""]');
+  if (b) switchTab(b, '');
+  if (o) { document.getElementById("searchInput").value = o.company_name || ""; renderOrders(); }
 }
 
 // ────────────────────────────────────────────────────
