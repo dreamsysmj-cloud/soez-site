@@ -28,7 +28,7 @@ a{text-decoration:none;color:inherit;}
 .login-err{display:none;color:var(--red);font-size:.9rem;margin-top:10px;}
 
 /* PANEL */
-.panel{display:none;max-width:1080px;margin:0 auto;padding:24px;}
+.panel{display:none;max-width:none;margin:0;padding:16px 14px 16px 98px;}
 .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
   background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin-bottom:18px;}
 .topbar h1{font-size:1.4rem;font-weight:900;color:var(--navy2);}
@@ -66,6 +66,18 @@ a{text-decoration:none;color:inherit;}
 .snack{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy2);color:#fff;
   padding:13px 22px;border-radius:10px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;z-index:99;}
 .snack.show{opacity:1;}
+
+/* ── 왼쪽 메뉴 (2026-11-15, 두 관리 페이지 공통) ── */
+.side-nav { position:fixed; left:0; top:0; bottom:0; width:84px; background:#fff; border-right:1px solid #E2E8F0;
+            display:flex; flex-direction:column; align-items:stretch; padding-top:10px; z-index:50; }
+.side-nav .sn-logo { text-align:center; font-weight:900; font-size:.95rem; letter-spacing:1px; color:#1B2B4B; padding:8px 0 14px; }
+.side-nav .sn-item { display:flex; flex-direction:column; align-items:center; gap:3px; padding:12px 4px; margin:2px 6px;
+            border-radius:10px; text-decoration:none; color:#0F172A; font-size:.8rem; font-weight:800; cursor:pointer; }
+.side-nav .sn-item .ic { font-size:1.35rem; line-height:1; }
+.side-nav .sn-item:hover { background:#F1F5F9; }
+.side-nav .sn-item.active { background:#E0EAFF; color:#1D4ED8; }
+.side-nav .sn-bottom { margin-top:auto; padding-bottom:12px; }
+.with-side { padding-left:84px; }
   </style>
 </head>
 <body>
@@ -83,10 +95,17 @@ a{text-decoration:none;color:inherit;}
 
 <!-- PANEL -->
 <div class="panel" id="panel">
+  <!-- 왼쪽 메뉴 -->
+  <aside class="side-nav">
+    <div class="sn-logo">SOEZ</div>
+    <a class="sn-item" id="snDash" href="admin_orders.html#dash"><span class="ic">📊</span>대시보드</a>
+    <a class="sn-item" id="snOrders" href="admin_orders.html#orders"><span class="ic">📋</span>주문 목록</a>
+    <a class="sn-item active" id="snInq" href="admin_inquiries.html"><span class="ic">💬</span>문의 관리</a>
+    <div class="sn-bottom"><a class="sn-item" onclick="doLogout()"><span class="ic">🚪</span>로그아웃</a></div>
+  </aside>
   <div class="topbar">
     <h1>💬 문의 관리</h1>
     <div class="right">
-      <a href="admin_orders.html" class="linkbtn">📦 주문 관리로</a>
       <span id="keyDisplay"></span>
       <button class="linkbtn" onclick="doLogout()">로그아웃</button>
     </div>
@@ -117,6 +136,7 @@ a{text-decoration:none;color:inherit;}
     const k = document.getElementById("adminKeyInput").value.trim();
     if(!k) return;
     adminKey = k;
+    try { sessionStorage.setItem("soez_admin_key", k); } catch (e) {}
     document.getElementById("keyDisplay").textContent = "키: " + k.slice(0,3) + "***";
     document.getElementById("loginWrap").style.display = "none";
     document.getElementById("panel").style.display = "block";
@@ -124,6 +144,7 @@ a{text-decoration:none;color:inherit;}
   }
   function doLogout(){
     adminKey=""; all=[];
+    try { sessionStorage.removeItem("soez_admin_key"); } catch (e) {}
     document.getElementById("loginWrap").style.display="flex";
     document.getElementById("panel").style.display="none";
     document.getElementById("adminKeyInput").value="";
@@ -140,7 +161,7 @@ a{text-decoration:none;color:inherit;}
   async function loadInquiries(){
     try{
       const res = await fetch(`${API_URL}/admin/inquiries`, { headers:{ "X-Admin-Key":adminKey } });
-      if(res.status===403){ document.getElementById("loginErr").style.display="block"; doLogout(); return; }
+      if(res.status===403){ doLogout(); document.getElementById("loginErr").style.display="block"; return; }
       const data = await res.json();
       all = data.data || [];
       updateCounts();
@@ -217,6 +238,9 @@ a{text-decoration:none;color:inherit;}
       await loadInquiries();
     }catch(e){ showSnack("⚠️ " + e.message); }
   }
+  // 다른 관리 페이지에서 로그인했으면 자동 로그인
+  (function(){ let k=""; try{ k=sessionStorage.getItem("soez_admin_key")||""; }catch(e){}
+    if(k){ document.getElementById("adminKeyInput").value=k; doLogin(); } })();
 </script>
 </body>
 </html>
