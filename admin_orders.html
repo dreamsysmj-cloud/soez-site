@@ -42,7 +42,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .logout-btn:hover { background:rgba(255,255,255,.2); }
 .refresh-indicator { font-size:.84rem; color:#7094C4; }
 
-.main { max-width:1280px; margin:0 auto; padding:28px 20px; }
+.main { max-width:none; margin:0; padding:16px 14px; }
 
 /* ── 새 주문 알림 배너 ── */
 .new-order-banner {
@@ -257,6 +257,18 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .dash-note { font-size:.8rem; color:var(--text2); font-weight:600; margin-top:10px; }
 .mini-btn { padding:4px 10px; border-radius:6px; border:1.5px solid var(--border); background:#fff; font-size:.78rem; font-weight:700; cursor:pointer; color:var(--text); }
 .mini-btn:hover { border-color:var(--blue); color:var(--blue); }
+
+/* ── 왼쪽 메뉴 (2026-11-15, 두 관리 페이지 공통) ── */
+.side-nav { position:fixed; left:0; top:0; bottom:0; width:84px; background:#fff; border-right:1px solid #E2E8F0;
+            display:flex; flex-direction:column; align-items:stretch; padding-top:10px; z-index:50; }
+.side-nav .sn-logo { text-align:center; font-weight:900; font-size:.95rem; letter-spacing:1px; color:#1B2B4B; padding:8px 0 14px; }
+.side-nav .sn-item { display:flex; flex-direction:column; align-items:center; gap:3px; padding:12px 4px; margin:2px 6px;
+            border-radius:10px; text-decoration:none; color:#0F172A; font-size:.8rem; font-weight:800; cursor:pointer; }
+.side-nav .sn-item .ic { font-size:1.35rem; line-height:1; }
+.side-nav .sn-item:hover { background:#F1F5F9; }
+.side-nav .sn-item.active { background:#E0EAFF; color:#1D4ED8; }
+.side-nav .sn-bottom { margin-top:auto; padding-bottom:12px; }
+.with-side { padding-left:84px; }
   </style>
 </head>
 <body>
@@ -274,15 +286,20 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 </div>
 
 <!-- ── 관리자 패널 ── -->
-<div class="panel" id="adminPanel">
+<div class="panel with-side" id="adminPanel">
+  <!-- 왼쪽 메뉴 -->
+  <aside class="side-nav">
+    <div class="sn-logo">SOEZ</div>
+    <a class="sn-item active" id="snDash" href="admin_orders.html#dash" onclick="return navTo('dash')"><span class="ic">📊</span>대시보드</a>
+    <a class="sn-item" id="snOrders" href="admin_orders.html#orders" onclick="return navTo('orders')"><span class="ic">📋</span>주문 목록</a>
+    <a class="sn-item" id="snInq" href="admin_inquiries.html"><span class="ic">💬</span>문의 관리</a>
+    <div class="sn-bottom"><a class="sn-item" onclick="doLogout()"><span class="ic">🚪</span>로그아웃</a></div>
+  </aside>
 
   <div class="topbar">
-    <h1>📋 SOEZ 주문 관리</h1>
+    <h1 id="pageTitle">📊 대시보드</h1>
     <div class="topbar-right">
       <span class="refresh-indicator" id="refreshCountdown"></span>
-      <button class="view-btn active" id="vbDash" onclick="switchView('dash')">📊 대시보드</button>
-      <button class="view-btn" id="vbOrders" onclick="switchView('orders')">📋 주문 목록</button>
-      <a href="admin_inquiries.html" class="logout-btn" style="text-decoration:none;">💬 문의 관리</a>
       <span id="adminKeyDisplay"></span>
       <button class="logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
@@ -584,16 +601,19 @@ function doLogin() {
   const key = document.getElementById("adminKeyInput").value.trim();
   if (!key) return;
   adminKey = key;
+  try { sessionStorage.setItem("soez_admin_key", key); } catch (e) {}
   document.getElementById("adminKeyDisplay").textContent = "키: " + key.slice(0,3) + "***";
   document.getElementById("loginWrap").style.display  = "none";
   document.getElementById("adminPanel").style.display = "block";
-  let v = "dash"; try { v = localStorage.getItem("soez_admin_view") || "dash"; } catch (e) {}
+  let v = (location.hash || "").replace("#", "");
+  if (v !== "dash" && v !== "orders") { v = "dash"; try { v = localStorage.getItem("soez_admin_view") || "dash"; } catch (e) {} }
   switchView(v === "orders" ? "orders" : "dash");
   loadOrders();
   startAutoRefresh();
 }
 function doLogout() {
   adminKey = ""; allOrders = [];
+  try { sessionStorage.removeItem("soez_admin_key"); } catch (e) {}
   clearInterval(refreshTimer); clearInterval(countdownTimer);
   document.getElementById("loginWrap").style.display  = "flex";
   document.getElementById("adminPanel").style.display = "none";
@@ -642,8 +662,9 @@ async function loadOrders() {
       headers: { "X-Admin-Key": adminKey }
     });
     if (res.status === 403) {
+      doLogout();
       document.getElementById("loginErr").style.display = "block";
-      doLogout(); return;
+      return;
     }
     const data = await res.json();
     const orders = data.data || [];
@@ -1292,8 +1313,9 @@ function switchView(v) {
   const dash = v === 'dash';
   document.getElementById("dashView").style.display   = dash ? "block" : "none";
   document.getElementById("ordersView").style.display = dash ? "none"  : "block";
-  document.getElementById("vbDash").classList.toggle("active", dash);
-  document.getElementById("vbOrders").classList.toggle("active", !dash);
+  document.getElementById("snDash").classList.toggle("active", dash);
+  document.getElementById("snOrders").classList.toggle("active", !dash);
+  document.getElementById("pageTitle").textContent = dash ? "📊 대시보드" : "📋 주문 목록";
   try { localStorage.setItem("soez_admin_view", v); } catch (e) {}
 }
 function _pd(s) {               // "YYYY-MM-DD HH:MM:SS" → Date
@@ -1425,6 +1447,11 @@ function renderDashboard() {
     </tbody></table>` : `<div class="dash-empty">이번 달·지난달 세금계산서 발행 대상이 없어요.</div>`;
 }
 
+function navTo(v) {            // 왼쪽 메뉴 (같은 페이지 안 전환)
+  switchView(v);
+  try { history.replaceState(null, "", "#" + v); } catch (e) {}
+  return false;
+}
 function goPending() {
   switchView('orders');
   const b = document.querySelector('.tab-btn[data-status="pending"]');
@@ -1457,6 +1484,11 @@ document.addEventListener("keydown", e => {
     closeApproveModal(); closeRejectModal(); closeRevokeModal(); closeDeleteModal();
   }
 });
+// 다른 관리 페이지에서 로그인했으면 자동 로그인
+(function autoLogin() {
+  let k = ""; try { k = sessionStorage.getItem("soez_admin_key") || ""; } catch (e) {}
+  if (k) { document.getElementById("adminKeyInput").value = k; doLogin(); }
+})();
 </script>
 </body>
 </html>
