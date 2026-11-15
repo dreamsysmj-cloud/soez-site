@@ -84,7 +84,7 @@ body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 .orders-table thead th:last-child { border-right:none; }
 /* 열 너비 드래그 핸들 */
 .col-resize-handle {
-  position:absolute; right:0; top:15%; bottom:15%; width:5px;
+  position:absolute; right:-3px; top:0; bottom:0; width:8px;
   cursor:col-resize; z-index:10; user-select:none;
   border-right:2px solid rgba(255,255,255,.25);
   border-radius:2px;
@@ -535,10 +535,19 @@ applyZoom(); // 페이지 로드 시 적용
 const COL_DEF_MAIN    = [88,108,68,108,132,60,78,80,70,86,172,72];
 const COL_DEF_DELETED = [88,108,68,132,70,80,108,88,66];
 
+/** 기본 너비 — 저장된 너비가 없을 때 화면 폭에 맞춰 한 번 늘려서 시작 (엑셀처럼 그 뒤로는 고정) */
+function colDefaults(key) {
+  const defs = key === 'deleted' ? COL_DEF_DELETED : COL_DEF_MAIN;
+  const box  = document.getElementById('ordersList');
+  const avail = (box && box.clientWidth) || (window.innerWidth - 84 - 30);
+  const sum  = defs.reduce((t, d) => t + d, 0);
+  const k    = Math.max(1, (avail - 2) / sum);
+  return defs.map(d => Math.floor(d * k));
+}
 /** 저장된 너비(없으면 기본값)로 colgroup HTML 생성 */
 function colGroupHtml(key) {
   const saved = JSON.parse(localStorage.getItem('soez_col_' + key) || '{}');
-  const defs  = key === 'deleted' ? COL_DEF_DELETED : COL_DEF_MAIN;
+  const defs  = colDefaults(key);
   const cols  = defs.map((d, i) => `<col style="width:${saved[i] || d}px">`).join('');
   return `<colgroup>${cols}</colgroup>`;
 }
@@ -549,6 +558,16 @@ function setupColResize(table, key) {
   const ths  = Array.from(table.querySelectorAll('thead th'));
   const cols = Array.from(table.querySelectorAll('col'));
   if (!ths.length || !cols.length) return;
+  // 엑셀처럼: 표 전체 폭 = 열 너비의 합 → 한 열을 바꿔도 다른 열은 그대로 (넘치면 가로 스크롤)
+  const fitTable = () => {
+    table.style.width = cols.reduce((t, c) => t + (parseInt(c.style.width) || 0), 0) + 'px';
+  };
+  fitTable();
+  const saveCols = () => {
+    const obj = {};
+    cols.forEach((c, idx) => { obj[idx] = parseInt(c.style.width) || 88; });
+    localStorage.setItem('soez_col_' + key, JSON.stringify(obj));
+  };
 
   ths.forEach((th, i) => {
     if (!cols[i]) return;
@@ -561,9 +580,16 @@ function setupColResize(table, key) {
 
     let startX = 0, startW = 0;
 
+    // 더블클릭 = 이 열만 기본 너비로
+    handle.addEventListener('dblclick', e => {
+      e.preventDefault(); e.stopPropagation();
+      cols[i].style.width = (colDefaults(key)[i] || 88) + 'px';
+      fitTable(); saveCols();
+    });
+
     handle.addEventListener('mousedown', e => {
       startX = e.clientX;
-      startW = parseInt(cols[i].style.width) || COL_DEF_MAIN[i] || 88;
+      startW = parseInt(cols[i].style.width) || 88;
       handle.classList.add('dragging');
       document.body.style.cursor = 'col-resize';
       e.preventDefault(); e.stopPropagation();
@@ -571,14 +597,12 @@ function setupColResize(table, key) {
       const onMove = ev => {
         const w = Math.max(36, startW + (ev.clientX - startX));
         cols[i].style.width = w + 'px';
+        fitTable();
       };
       const onUp = () => {
         handle.classList.remove('dragging');
         document.body.style.cursor = '';
-        // localStorage 저장
-        const obj = {};
-        cols.forEach((c, idx) => { obj[idx] = parseInt(c.style.width) || 88; });
-        localStorage.setItem('soez_col_' + key, JSON.stringify(obj));
+        saveCols();
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onUp);
       };
